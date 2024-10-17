@@ -2,9 +2,7 @@ import React from 'react'
 
 const Invertry = () => {
   return (
-    <div>
-      
-    </div>
+    <div>Invertry</div>
   )
 }
 
