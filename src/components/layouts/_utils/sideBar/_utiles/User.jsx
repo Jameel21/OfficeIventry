@@ -10,10 +10,10 @@ const User = () => {
             <AvatarImage></AvatarImage>
             <AvatarFallback>Hii</AvatarFallback>
           </Avatar>
-          <h1 className='text-xl font-medium mt-3 mx-5'>Hi ,User</h1>
+          <h1 className='text-xl font-medium mt-3 text-white mx-5'>Hi ,User</h1>
           
       </div>
-      <div className='h-hl mt-3 mx-20 justify-center bg-primary w-1/2'></div>
+      <div className='h-hl mt-3 mx-20 justify-center bg-white w-1/2'></div>
     </div>
   )
 }

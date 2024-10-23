@@ -1,17 +1,21 @@
 import React from 'react'
-import { SidebarProvider } from '@/components/ui/sidebar';
+import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import Sidebar from './_utils/sideBar/Sidebar'
+
 
 
 
 
 const Layout = () => {
   return (
-    <div>
+    <div >
         
       <SidebarProvider>
             <Sidebar/>
-        </SidebarProvider>
+            <div>
+            <SidebarTrigger />
+           </div>
+        </SidebarProvider> 
     </div>
   )
 }

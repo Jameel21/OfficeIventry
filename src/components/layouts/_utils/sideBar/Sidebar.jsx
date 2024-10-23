@@ -54,14 +54,14 @@ const SidebarList = [
  
     return(
      
-      <div className=' md:w-1/4 h-[100vh] fixed' >
+      <div className='   fixed' >
        
         <div>
-        <Sidebar side="left" variant="floating"  >
+        <Sidebar side="left"  >
           <User/>
        <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="text-xl mb-4" >Menu</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-xl mx-3 my-4" >Menu</SidebarGroupLabel>
           
           <SidebarGroupContent>
            {SidebarList.map((list,index) => (
@@ -69,8 +69,8 @@ const SidebarList = [
                  <Link to={list.path}>
                 <SidebarMenuItem >
                  
-                  <SidebarMenuButton>
-                    {list.icon} {list.topic} 
+                  <SidebarMenuButton className="m-5">
+                    <span className='p-2'>{list.icon}</span> <span>{list.topic} </span>
                   </SidebarMenuButton>
                  
                 </SidebarMenuItem> 
