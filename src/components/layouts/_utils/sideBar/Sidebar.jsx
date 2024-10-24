@@ -1,6 +1,6 @@
 import React from 'react'
 import {  Link } from 'react-router-dom'
-import { PrinterIcon,Laptop, LogOut, Bell ,FileText} from 'lucide-react'
+import { PrinterIcon,Laptop, Bell ,FileText} from 'lucide-react'
 import { Sidebar,
   SidebarContent,
   SidebarGroup,
@@ -9,81 +9,82 @@ import { Sidebar,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  useSidebar,
+
 
 } from '@/components/ui/sidebar'
 import User from './_utiles/User'
 
 
 
-export default function DemoSidebar(){
+export default function DemoSidebar () {
 
  
-const SidebarList = [
-  
-    {
-       topic:'Office equip',
-       icon: <PrinterIcon/>,
-      path:'/office-equip'
-    },
-    {
-      topic:'Employee equip',
-      icon:<Laptop/>,
-      path:'/employee-equip'
-    },
-    {
-      topic:'Logs',
-      icon:<FileText/>,
-     path:'/logs'
-    },
-    {
-      topic:'Notification',
-      icon:<Bell/>,
-       path:'/notification'
-    },
-    {
-      topic:'Logout',
-      icon:<LogOut/>,
-      path:'/login' 
-    }
-  
-  
-  ]
-  
+
 
  
     return(
      
-      <div className='   fixed' >
+       <div>
        
-        <div>
-        <Sidebar side="left"  >
+       <Sidebar >
           <User/>
        <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="text-xl mx-3 my-4" >Menu</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-xl mb-4" >Menu</SidebarGroupLabel>
           
           <SidebarGroupContent>
-           {SidebarList.map((list,index) => (
-            <SidebarMenu key={index}>
-                 <Link to={list.path}>
-                <SidebarMenuItem >
-                 
-                  <SidebarMenuButton className="m-5">
-                    <span className='p-2'>{list.icon}</span> <span>{list.topic} </span>
-                  </SidebarMenuButton>
-                 
-                </SidebarMenuItem> 
-                </Link> 
-                </SidebarMenu>
-              ))}
-            
+                  
+                  <div>
+                    <SidebarMenu >
+                      <Link to='/inventry'>
+                         <SidebarMenuItem >
+                            <SidebarMenuButton>
+                               <PrinterIcon/>  Office Equipment 
+                            </SidebarMenuButton>
+                         </SidebarMenuItem> 
+                      </Link> 
+                    </SidebarMenu>
+                 </div>
+             
+                 <div>
+                    <SidebarMenu >
+                      <Link to="/employees">
+                         <SidebarMenuItem >
+                            <SidebarMenuButton>
+                               <Laptop/>  Employee Equip
+                            </SidebarMenuButton>
+                         </SidebarMenuItem> 
+                      </Link> 
+                    </SidebarMenu>
+                 </div>
+                 <div>
+                    <SidebarMenu >
+                      <Link to="/logs">
+                         <SidebarMenuItem >
+                            <SidebarMenuButton>
+                               <FileText/>  Logs
+                            </SidebarMenuButton>
+                         </SidebarMenuItem> 
+                      </Link> 
+                    </SidebarMenu>
+                 </div>
+                 <div>
+                    <SidebarMenu >
+                      <Link to="/notification">
+                         <SidebarMenuItem >
+                            <SidebarMenuButton>
+                               <Bell/>  Notification
+                            </SidebarMenuButton>
+                         </SidebarMenuItem> 
+                      </Link> 
+                    </SidebarMenu>
+                 </div>
+                
           </SidebarGroupContent>
           
-        </SidebarGroup>
-      </SidebarContent>
-    </Sidebar>
-    </div>
-    </div>
+          </SidebarGroup>
+        </SidebarContent>
+      </Sidebar>   
+  </div>
 )}
  
