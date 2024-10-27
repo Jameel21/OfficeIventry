@@ -8,7 +8,9 @@ const Login = () => {
           navigate('/dashboard')
   }
   return (
+
     <div >
+           
       <div>
       <h1 className='mx-28 my-10'>WELCOME TO LOGIN PAGE</h1>
       </div>
