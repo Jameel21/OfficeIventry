@@ -2,8 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-.gradient-custom{
-    background-image:linear-gradient(to bottom ,gray,pink);
+.bg-secondary {
+  background-color: rgb(72, 53, 40);
+}
+.bg-primary {
+  background-color: rgb(226,232,240);
 }
 
 @layer base {
@@ -80,7 +83,7 @@
 
 @layer base {
   * {
-    @apply border-border p-0 m-0;
+    @apply p-0 m-0 border-border;
     }
   body {
     @apply bg-background text-foreground;
