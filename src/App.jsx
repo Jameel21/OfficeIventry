@@ -6,6 +6,7 @@ import Logs from './views/log/Logs'
 import Notification from './views/notification/Notification'
 import Login from './views/auth/Login'
 import Layout from './components/layouts/Layout'
+import AddForm from './views/equipments/AddForm';
 
 
      
@@ -22,6 +23,7 @@ function App () {
           <Route path='/' element={<Layout/>}>
             <Route path='inventry' element={<Officeequip/>}></Route>
             <Route path='employees' element={<Employeequip/>}></Route>
+            <Route path='add-form' element={<AddForm/>}></Route>
             <Route path='logs' element={<Logs/>}></Route>
             <Route path='notification' element={<Notification/>}></Route> 
             </Route>

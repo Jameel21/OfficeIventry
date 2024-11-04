@@ -1,16 +1,18 @@
 import React from 'react';
+//import { useController } from 'react-hook-form';
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
   } from "@/components/ui/popover"
 
-const Popover = () => {
+const Popover = ({heading,children}) => {
+ 
   return (
     <div>
       <Popover>
-  <PopoverTrigger>Open</PopoverTrigger>
-  <PopoverContent>Place content for the popover here.</PopoverContent>
+  <PopoverTrigger>{heading}</PopoverTrigger>
+  <PopoverContent>{children}</PopoverContent>
 </Popover>
     </div>
   );

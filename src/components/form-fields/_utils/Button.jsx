@@ -1,9 +1,10 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-const Button = (click) => {
+
+const Button = ({label,type}) => {
   return (
     <div>
-       <Button variant="primary">{click}</Button>
+       <Button variant="primary" type={type}>{label}</Button>
     </div>
   );
 }
