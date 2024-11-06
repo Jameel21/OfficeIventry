@@ -1,5 +1,3 @@
-
-
 import React from "react"
 import { useController } from "react-hook-form"
 import {  CalendarIcon } from "lucide-react"
@@ -26,6 +24,7 @@ import { format } from "date-fns"
  
 
   return (
+    <div className="mx-24 p-3">
     <Popover>
       <PopoverTrigger asChild>
         <Button
@@ -50,7 +49,7 @@ import { format } from "date-fns"
        />
       </PopoverContent>
     </Popover>
+    </div>
   )
 }
 export default  DatePickerDemo;
-
