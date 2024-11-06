@@ -1,16 +1,19 @@
+import Title from './_utils/Title'
 import { Button } from '@/components/ui/button'
+
 import React from 'react'
-import {  Link, useNavigate } from 'react-router-dom'
+import {  Link } from 'react-router-dom'
 const Invertry = () => {
-  const navigate = useNavigate()
-  // const handleClick =()=>{
-  //   navigate('edit-form')
-  // }
+ 
+  
   return (
-    <div>
-      <h1>INVENTRY</h1>
-      <div className='p-10'>
-       <Link to='/add-form'>  <Button >Add Equip</Button></Link>
+    <div className='container'>
+      <div>
+      <Title text1={'Equipment'} text2={'Management'}/>
+      </div>
+      <div className='bg-purple-100 lg:w-[200px] lg:h-[200px] m-4'>
+       
+       <Link to='/add-form'><Button >Add Equip</Button></Link>
       </div>
     </div>
   )

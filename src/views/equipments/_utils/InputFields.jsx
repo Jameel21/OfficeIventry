@@ -8,7 +8,7 @@ const InputField = ({type,control,name,placeholder }) => {
         name
     })
   return (
-    <div className='md:w-[400px] p-4 mx-16'>
+    <div className='md:w-[400px] '>
       <Input type={type}  placeholder={placeholder}  {...field}  
 
 

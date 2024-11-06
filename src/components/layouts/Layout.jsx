@@ -16,7 +16,7 @@ const Layout = () => {
                <SidebarTrigger/>
             </SidebarProvider> 
     </div>
-    <div className=' w-[calc(100%-300px)]  p-9 bg-slate-200'>
+    <div className=' w-[calc(100%-300px)]  p-9'>
         <Outlet/>
     </div>
 

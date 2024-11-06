@@ -2,10 +2,10 @@ import React from 'react';
 import { Label } from "@/components/ui/label"
 
 
-const LabelDemo = ({label,htmlfor}) => {
+const LabelDemo = ({label}) => {
   return (
-    <div className=' md:text-md text-lg'>
-      <Label htmlfor={htmlfor} >{label}</Label>
+    <div className=' md:text-md text-lg text-gray-600'>
+      <Label >{label}</Label>
     </div>
   );
 }

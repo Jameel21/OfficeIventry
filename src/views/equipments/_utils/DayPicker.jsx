@@ -24,7 +24,7 @@ import { format } from "date-fns"
  
 
   return (
-    <div className="mx-24 p-3">
+    <div >
     <Popover>
       <PopoverTrigger asChild>
         <Button
