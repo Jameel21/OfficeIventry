@@ -19,7 +19,7 @@ const LoginForm = () => {
 
   return (
     <form
-      className="flex flex-col gap-3 sm:gap-6 md:gap-8"
+      className="flex flex-col gap-2 sm:gap-4 md:gap-6"
       onSubmit={handleSubmit(onSubmitForm)}
     >
       <InputWithLabel

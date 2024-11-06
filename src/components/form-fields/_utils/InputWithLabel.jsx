@@ -20,11 +20,9 @@ const InputWithLabel = ({ label, type, id, placeholder, className, labelClassNam
         id={id}
         {...field}
         placeholder={placeholder}
-        className={cn("h-8 p-2 rounded-md sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 sm:rounded-lg lg:rounded-xl", inputClassName)}
+        className={cn("h-8 p-2 rounded-md sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 sm:rounded-lg lg:rounded-xl border border-gray-300 ", inputClassName)}
       />
-      {error && (
-        <p className="w-64 text-sm text-red-600">{error.message}</p>
-      )}
+      <p className="h-1 text-sm text-left text-red-600 sm:w-64 md:w-72 lg:w-80">{error ? error.message : null}</p>
     </div>
   );
 };
