@@ -1,6 +1,7 @@
 import React from 'react';
 
-const Login = () => {
+const EditForm = () => {
+
   return (
     <div>
       
@@ -8,4 +9,6 @@ const Login = () => {
   );
 }
 
-export default Login;
+export default EditForm;
+
+

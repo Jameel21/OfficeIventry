@@ -5,6 +5,12 @@
 .gradient-custom{
     background-image:linear-gradient(to bottom ,gray,pink);
 }
+.bg-primary{
+  background-color:hsl(var( --sidebar-background))
+}
+.bg-primary{
+  background-color:hsl(var( --sidebar-background))
+}
 
 @layer base {
   :root {

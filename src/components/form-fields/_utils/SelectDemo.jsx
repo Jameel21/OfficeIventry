@@ -1,25 +1,41 @@
-import React from 'react';
+import React  from 'react';
+import { useController } from 'react-hook-form';
 import {
     Select,
     SelectContent,
+    SelectGroup,
     SelectItem,
+    SelectLabel,
     SelectTrigger,
     SelectValue,
   } from "@/components/ui/select"
-  
-const SelectDemo = ({value,selectitem,placeholder}) => {
+
+ const SelectFieldDemo = ({name,control,option,placeholder ,label,className}) => {
+     const {field} =useController({
+       control,
+       defaultValue:option[0].value,
+       name
+    })
   return (
-    <div>
-      <Select>
-  <SelectTrigger className="w-[180px]">
-    <SelectValue placeholder={placeholder} />
-  </SelectTrigger>
-  <SelectContent>
-    <SelectItem value={value}>{selectitem}</SelectItem>
-  </SelectContent>
-</Select>
+    <div className={className}> 
+     <Select name={name} onValueChange={field.onChange} >
+      <SelectTrigger className="w-[240px]">
+        <SelectValue placeholder={placeholder} />
+      </SelectTrigger>
+      <SelectContent {...field}>
+        <SelectGroup>
+          <SelectLabel>{label}</SelectLabel>
+          {option.map((option,index)=>(
+            <div key={index}>
+          <SelectItem value={option.value}>{option.label}</SelectItem>
+          </div>))}
+        </SelectGroup>
+      </SelectContent>
+    </Select>
+
     </div>
   );
 }
 
-export default SelectDemo;
+export default SelectFieldDemo;
+ 
