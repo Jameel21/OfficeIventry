@@ -1,29 +1,30 @@
 import React from 'react';
 import LabelDemo from '@/components/form-fields/_utils/LabelDemo';
-import ButtonDemo from '@/components/form-fields/_utils/ButtonDemo';
+import ButtonDemo from '@/components/form-fields/_utils/Button';
 import InputField from '@/components/form-fields/_utils/InputFeild';
 import DatePickerDemo from '@/components/form-fields/_utils/DayPicker';
 import SelectFieldDemo from '@/components/form-fields/_utils/SelectDemo';
 import { currentStatus } from '@/assets/assets';
 import { useForm } from 'react-hook-form';
-import { useEqipmentAddHooks } from '@/store/hooks/EquipmentsHooks';
+// import { useEqipmentAddHooks } from '@/store/hooks/EquipmentsHooks';
 
 
 
 const EquipForm = () => {
   const{control,handleSubmit}=useForm();
-  const { mutateAsync  } = useEqipmentAddHooks()
+  // const { mutateAsync  } = useEqipmentAddHooks()
 
   const onSubmit =async(formData) => {
-      await mutateAsync(formData)
+      // await mutateAsync(formData)
+      console.log(formData)
      
   }
   return (
-    <div className='bg-white  rounded-md flex flex-col items-center md:m-12 md:mx-24 md:p-7'>
+    <div className='flex flex-col items-center bg-white rounded-md md:m-12 md:mx-24 md:p-7'>
       
      
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className=' flex flex-col items-start'>
+      <div className='flex flex-col items-start '>
         <div className='flex flex-row gap-3 p-3 '>
        <LabelDemo label={'Equipmant Name :'} ></LabelDemo>
        <InputField  type={'text'} control={control} placeholder={'Enter Equipment Name'} name={'equipmentname'}/>
@@ -41,7 +42,7 @@ const EquipForm = () => {
        <LabelDemo label={'Date of Purchase :'}></LabelDemo>
        <DatePickerDemo control={control} name={'purshasedate'}/>
        </div>
-       <div className='flex flex-row gap-3 p-3  '>
+       <div className='flex flex-row gap-3 p-3 '>
        <LabelDemo label={'Warranty Period:'} ></LabelDemo>
        <InputField type={'string'} name={'warantyperiod'}  control={control} placeholder={'Warranty Period'}/>
        </div>

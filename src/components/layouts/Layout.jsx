@@ -18,7 +18,7 @@ const Layout = () => {
                <DemoSidebar/>
             </SidebarProvider> 
     </div>
-    <div className=' w-[calc(100%-300px)]  p-9'>
+    <div className=' w-[calc(100%-300px)]  p-9 bg-primary'>
         <Outlet/>
     </div>
 

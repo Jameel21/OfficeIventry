@@ -1,4 +1,4 @@
-import { Laptop, Bell ,FileText, Building2} from 'lucide-react'
+import { Laptop, Bell ,FileText, Building2, User} from 'lucide-react'
 
 
 
@@ -22,23 +22,28 @@ export  const currentStatus = [
 export const sidebarMenu ={
   admin:[
     {
-      icon: '<Building2/>' ,
+      icon: Building2 ,
       url:'/inventry',
       menu:'Office Equip'
     },
     {
-      icon:'<Laptop/>',
-      url:'/employees',
+      icon:Laptop,
+      url:'/inventry',
       menu:'Employee Euip'
     },
     {
-      icon:'<FileText/>',
+      icon:User,
+      url:'/employee',
+      menu:'Employee'
+    },
+    {
+      icon:FileText,
       url:'/logs',
       menu:'Logs'
     },
 
     {
-      icon:'<Bell/>',
+      icon:Bell,
       url:'/notification',
       menu:'Notification'
     },

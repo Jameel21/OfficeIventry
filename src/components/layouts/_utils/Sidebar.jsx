@@ -39,7 +39,7 @@ const DemoSidebar = ( ) => {
       <Sidebar>
        <SidebarContent>
        <SidebarGroup>
-       <SidebarGroupLabel className="text-xl mb-4" >Menu</SidebarGroupLabel>
+       <SidebarGroupLabel className="mb-4 text-xl" >Menu</SidebarGroupLabel>
        <SidebarGroupContent>
          <SidebarMenu >
         
@@ -47,7 +47,7 @@ const DemoSidebar = ( ) => {
                     <Link key={index} to={option.url}>
                     <SidebarMenuItem  >
                     <SidebarMenuButton>
-                    <span>{option.icon} </span> {option.menu }
+                    <span><option.icon/> </span> {option.menu }
                     </SidebarMenuButton>
                     </SidebarMenuItem> 
                     </Link>)) }

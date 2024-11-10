@@ -1,4 +1,4 @@
-import ButtonDemo from '@/components/form-fields/_utils/ButtonDemo'
+import ButtonDemo from '@/components/form-fields/_utils/Button'
 import Title from '@/components/form-fields/_utils/Title'
 import { Building2 } from 'lucide-react';
 import { TableProperties } from 'lucide-react';
