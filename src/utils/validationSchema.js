@@ -20,7 +20,7 @@ export const registerSchema = yup.object().shape({
 export const employeeSchema = yup.object().shape({
   username: yup.string().required("username is required"),
   employee_id: yup.string().required("employee ID is required"),
-  department: yup.string().required("department is required"),
+  department_name: yup.string().required("department is required"),
   equipment_name: yup.string().required("equipment name is required"),
   issue_date: yup.string().required("issue date is required"),
   expected_return: yup.string().required("expected return is required "),

@@ -62,6 +62,7 @@ const LoginForm = () => {
         control={control}
         name="username"
         placeholder="Enter your username"
+        inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
       />
       <InputWithLabel
         label="Password"
@@ -70,6 +71,7 @@ const LoginForm = () => {
         control={control}
         name="password"
         placeholder="Enter your password"
+        inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
       />
       <span className="text-xs text-right cursor-pointer sm:text-sm md:text-base">
         Forgot Password?

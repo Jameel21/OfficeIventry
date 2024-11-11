@@ -8,8 +8,10 @@ import Login from './views/auth/Login'
 import Layout from './components/layouts/Layout'
 import AddForm from './views/equipments/AddForm';
 import List from './views/equipments/List';
-import Employees from './views/employees/Employees';
 import Register from './views/auth/Register';
+import Employee from './views/employees/Employee';
+import ViewRequest from './views/employees/ViewRequest';
+import RequestForm from './views/employees/RequestForm';
 
 function App () {
   
@@ -23,7 +25,9 @@ function App () {
             <Route path='inventry' element={<Officeequip/>}></Route>
             <Route path='inventry' element={<Officeequip/>}></Route>
             <Route path='add-form' element={<AddForm/>}></Route>
-            <Route path='employee' element={<Employees/>}></Route>
+            <Route path='employee' element={<Employee/>}></Route>
+            <Route path="viewEmployee" element={<ViewRequest />} />
+            <Route path="requestForm" element={<RequestForm />} />
             <Route path='list' element={<List/>}></Route>
             <Route path='register' element={<Register/>}></Route>
             <Route path='logs' element={<Logs/>}></Route>

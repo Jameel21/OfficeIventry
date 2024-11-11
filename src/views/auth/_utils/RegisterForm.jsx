@@ -11,23 +11,27 @@ const RegisterForm = () => {
   const { control, handleSubmit, reset } = useForm({
     resolver: yupResolver(registerSchema),
   });
-  
+
   const registerMutation = useRegisterUser();
-  
+
   const onSubmitForm = (data) => {
-    registerMutation.mutate(data, {onSuccess: (response) => {
-      const { role } = response.data.data;
-      toast.success(`User created as role: ${role} successfully`);
-      if (reset) {
-        reset();
-      }
-    },
-    onError: (error) => {
-      const errorMessage = error.response?.data?.message || "User registration failed. Please try again.";
-      toast.error(errorMessage);
-    },});
-    console.log(data)
-    reset()
+    registerMutation.mutate(data, {
+      onSuccess: (response) => {
+        const { role } = response.data.data;
+        toast.success(`User created as role: ${role} successfully`);
+        if (reset) {
+          reset();
+        }
+      },
+      onError: (error) => {
+        const errorMessage =
+          error.response?.data?.message ||
+          "User registration failed. Please try again.";
+        toast.error(errorMessage);
+      },
+    });
+    console.log(data);
+    reset();
   };
 
   const roleOptions = ["superadmin", "admin", "hr", "employee"];
@@ -44,6 +48,7 @@ const RegisterForm = () => {
         control={control}
         name="username"
         placeholder="username"
+        inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
       />
       <InputWithLabel
         label="Email"
@@ -52,6 +57,7 @@ const RegisterForm = () => {
         control={control}
         name="email"
         placeholder="email"
+        inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
       />
       <DropDown
         label="Role"
@@ -59,7 +65,7 @@ const RegisterForm = () => {
         name="role"
         options={roleOptions}
         placeholder="Select a role"
-        dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
+        dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
       />
       <InputWithLabel
         label="Password"
@@ -68,9 +74,15 @@ const RegisterForm = () => {
         control={control}
         name="password"
         placeholder="password"
+        inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
       />
       <div className="flex justify-center mt-2 mr-8">
-        <UiButton variant="secondary" type="submit" buttonName="Save" className="w-24 h-8 sm:w-28 sm:h-8 md:w-32 md:h-10 lg:w-36 lg:h-12"/>
+        <UiButton
+          variant="secondary"
+          type="submit"
+          buttonName="Save"
+          className="w-24 h-8 sm:w-28 sm:h-8 md:w-32 md:h-10 lg:w-36 lg:h-12"
+        />
       </div>
     </form>
   );
