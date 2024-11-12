@@ -26,3 +26,20 @@ export const employeeSchema = yup.object().shape({
   expected_return: yup.string().required("expected return is required "),
   reason: yup.string().required("reason is required"),
 });
+
+
+export const employeequipSchema = yup.object().shape({
+     equipment_name:yup.string().required("equipmentname is required"),
+     equipment_model: yup.string().required("equipmentmodel is required"),
+     serial_no:yup.string().required("Serial number is required"),
+     purshase_date:yup.string().required("purchase date is required"),
+     warranty_period:yup.string().required("warranty period is required"),
+     current_status: yup.string().required("Current Status is required")
+})
+
+export const officeequipSchema = yup.object().shape({
+     equipment_name : yup.string().required("equipmentname is required"),
+     equipment_count:yup.number().required("Count is required"),
+     equipment_price:yup.number().required("Price is required"),
+     equipment_availability:yup.string().required("Required")
+})

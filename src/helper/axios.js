@@ -1,9 +1,8 @@
 
-// import axios from "axios";
-// import { error } from "console";
-// export const instance  = axios.create({
-//     baseURL:"https://672388ca493fac3cf24b474f.mockapi.io"
-// })
+import axios from "axios";
+export const instance  = axios.create({
+         baseURL:"https://672388ca493fac3cf24b474f.mockapi.io"
+})
 // instance.interceptors.request.use(config=>{   
 //     return config
 // })

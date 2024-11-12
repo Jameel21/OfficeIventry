@@ -1,11 +1,12 @@
 import React from 'react';
-import EquipForm from './_utils/EquipmentForm';
+import EquipForm from '../_utils/EquipmentForm';
 
 
 const AddForm = () => {
     
   return (
     <div>
+      <h1 className='sm:text-lg'>Employee Equipment Addform</h1>
       <EquipForm/>
     </div>
   );

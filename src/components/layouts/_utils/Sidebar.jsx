@@ -9,11 +9,17 @@ import { Sidebar,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from '@/components/ui/sidebar'
+import User from './User';
 
 
 const DemoSidebar = ( ) => {
-    
+
+    const {toggleSidebar,
+            isMobile,
+            setOpenMobile,
+             isOpen     }= useSidebar();
    const role = "admin";
     let option; 
     switch (role) { 
@@ -28,17 +34,14 @@ const DemoSidebar = ( ) => {
       break;
     }
   
-   //  const role ="admin"
-   //  const option = role ==="admin"? sidebarMenu.admin 
-   //                :role ==="hr"?sidebarMenu.hr
-   //                :sidebarMenu.employee
 
   
   return (
     <div>
-      <Sidebar>
+      <Sidebar collapsible='icon'>
        <SidebarContent>
        <SidebarGroup>
+        <User/>
        <SidebarGroupLabel className="mb-4 text-xl" >Menu</SidebarGroupLabel>
        <SidebarGroupContent>
          <SidebarMenu >
@@ -47,7 +50,7 @@ const DemoSidebar = ( ) => {
                     <Link key={index} to={option.url}>
                     <SidebarMenuItem  >
                     <SidebarMenuButton>
-                    <span><option.icon/> </span> {option.menu }
+                    <option.icon /><span>{option.menu }</span> 
                     </SidebarMenuButton>
                     </SidebarMenuItem> 
                     </Link>)) }

@@ -3,10 +3,10 @@ import ButtonDemo from '@/components/form-fields/_utils/Button';
 import React from 'react';
 
 const List = () => {
-    // const { data, isLoading ,error}= useEqipmentgetHooks();
-    //   console.log(data)
-    //     if(isLoading)return'LOaDiNg......'
-    //     if(error) return 'A error has Occured  '+ error.message
+    const { data, isLoading ,error}= useEqipmentgetHooks();
+     console.log(data)
+         if(isLoading)return'LOaDiNg......'
+         if(error) return 'A error has Occured  '+ error.message
   return (
     <div>
         <table>
@@ -22,7 +22,7 @@ const List = () => {
                     <th className='p-2 px-10'>Action</th>
                 </tr>
             </thead>
-              {/* <tbody>
+               <tbody>
                   {data.data?.map((item)=>(
                     <tr key={item}>
                         <td>{item.id}</td>
@@ -35,7 +35,7 @@ const List = () => {
                         <td className='text-center'><span> <ButtonDemo className={'mx-4 bg-green-800 rounded-md px-4 m-3 text-white py-3'} label={'Edit'}/>
                         </span><ButtonDemo className={'mx-4 bg-red-800 p-3 rounded-md text-white'} label={'Delete'}/></td>
                     </tr> ))}                
-              </tbody> */}
+              </tbody> 
         </table>
     </div>
   );

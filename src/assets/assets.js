@@ -23,7 +23,7 @@ export const sidebarMenu ={
   admin:[
     {
       icon: Building2 ,
-      url:'/inventry',
+      url:'/office-inventry',
       menu:'Office Equip'
     },
     {
