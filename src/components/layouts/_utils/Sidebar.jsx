@@ -1,66 +1,91 @@
-import { sidebarMenu } from '@/assets/assets';
-import React from 'react';
-import {  Link } from 'react-router-dom'
-import { Sidebar,
+import { sidebarMenu } from "@/assets/assets";
+import {useState} from "react";
+import { Link } from "react-router-dom";
+import {
+  Sidebar,
   SidebarContent,
   SidebarGroup,
   SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarMenu,
+  SidebarMenuSub,
+  SidebarMenuSubItem,
   SidebarMenuButton,
   SidebarMenuItem,
-  useSidebar,
-} from '@/components/ui/sidebar'
-import User from './User';
+  SidebarMenuSubButton,
+  // useSidebar,
+} from "@/components/ui/sidebar";
+import User from "./User";
 
-
-const DemoSidebar = ( ) => {
-
-    const {toggleSidebar,
-            isMobile,
-            setOpenMobile,
-             isOpen     }= useSidebar();
-   const role = "admin";
-    let option; 
-    switch (role) { 
-      case "admin": 
-      option = sidebarMenu.admin; 
-      break; 
-      case "hr": 
-      option = sidebarMenu.hr; 
-      break; 
-      default: 
-      option = sidebarMenu.employee; 
+const DemoSidebar = () => {
+  // const { toggleSidebar, isMobile, setOpenMobile, isOpen } = useSidebar();
+  const [expanded, setExpanded] = useState({});
+  const role = localStorage.getItem("userRole")
+  let option;
+  switch (role) {
+    case "superadmin":
+      option = sidebarMenu.superadmin;
       break;
-    }
-  
+    case "employee":
+      option = sidebarMenu.employee;
+      break;
+    default:
+      option = sidebarMenu.employee;
+      break;
+  }
 
-  
+  const handleToggle = (index) => {
+    setExpanded((prevState) =>({
+      ...prevState,
+      [index]: !prevState[index], 
+    }))
+  }
   return (
     <div>
-      <Sidebar collapsible='icon'>
-       <SidebarContent>
-       <SidebarGroup>
-        <User/>
-       <SidebarGroupLabel className="mb-4 text-xl" >Menu</SidebarGroupLabel>
-       <SidebarGroupContent>
-         <SidebarMenu >
-        
-                     {option.map((option,index)=>(
-                    <Link key={index} to={option.url}>
-                    <SidebarMenuItem  >
-                    <SidebarMenuButton>
-                    <option.icon /><span>{option.menu }</span> 
-                    </SidebarMenuButton>
-                    </SidebarMenuItem> 
-                    </Link>)) }
-                    </SidebarMenu>
-               </SidebarGroupContent>    
-            </SidebarGroup>      
-         </SidebarContent>     
-       </Sidebar>
+      <Sidebar collapsible="icon">
+        <SidebarContent>
+          <SidebarGroup>
+            <User />
+            <SidebarGroupContent className="mt-6">
+              <SidebarMenu className="gap-2 sm:gap-4">
+                {option.map((option, index) => (
+                  <div key={index}>
+                    {option.submenu ? (
+                      <SidebarMenuItem>
+                        <SidebarMenuButton onClick={() => handleToggle(index)} className="gap-3 sm:text-lg">
+                          <option.icon/> <span>{option.menu}</span>
+                        </SidebarMenuButton>
+                        {expanded[index] && (<SidebarMenuSub className="gap-2 mt-2">
+                          {option.submenu.map((subItem, subIndex) => (
+                            <Link key={subIndex} to={subItem.url}>
+                              <SidebarMenuSubItem >
+                                <SidebarMenuSubButton className="gap-3 sm:text-base">
+                                  <subItem.icon /> <span>
+                                    {subItem.menu}
+                                  </span>
+                                </SidebarMenuSubButton>
+                              </SidebarMenuSubItem>
+                            </Link>
+                          ))}
+                        </SidebarMenuSub>)}
+                      </SidebarMenuItem>
+                    ) : (
+                      <Link key={index} to={option.url}>
+                        <SidebarMenuItem>
+                          <SidebarMenuButton className="gap-3 sm:text-lg">
+                            <option.icon /> <span>{option.menu}</span>
+                          </SidebarMenuButton>
+                        </SidebarMenuItem>
+                      </Link>
+                    )}
+                  </div>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+      </Sidebar>
     </div>
   );
-}
+};
 
 export default DemoSidebar;

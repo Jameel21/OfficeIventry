@@ -1,6 +1,5 @@
 import {
   Breadcrumb,
-  BreadcrumbEllipsis,
   BreadcrumbItem,
   BreadcrumbList,
 } from "@/components/ui/breadcrumb"
@@ -10,19 +9,17 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Menu } from "lucide-react";
 
 
-const BreadCrumbs = ({data, value, onChange}) => {
+const BreadCrumbs = ({data, onChange}) => {
   return (
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
-          <p className="w-24">{value}</p>
-        </BreadcrumbItem>
-        <BreadcrumbItem>
           <DropdownMenu>
-            <DropdownMenuTrigger className="flex items-center gap-1">
-              <BreadcrumbEllipsis className="w-4 h-4" />
+            <DropdownMenuTrigger className="flex items-center gap-1 outline-none">
+              <Menu className="w-5 h-5" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start">
             {data.map((item, index) => (

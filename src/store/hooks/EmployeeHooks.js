@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery} from "@tanstack/react-query";
 import employeeService from "../services/EmployeeService";
 
 export const useAddRequest = () => {
@@ -7,26 +7,47 @@ export const useAddRequest = () => {
   });
 };
 
-export const useGetRequest = ({ username }) => {
+export const useGetRequest = () => {
   return useQuery({
-    queryKey: ["equipmentRequest", username],
+    queryKey: ["equipmentRequest"],
     queryFn: async () => {
-      const response = await employeeService.getRequest(username);
+      const response = await employeeService.getRequest();
       return response?.data?.data || [];
     },
   });
 };
 
-export const useUpdateRequest = ({ username }) => {
-  const refetch = useQueryClient();
+export const useGetPendingRequests = (status) => {
+  return useQuery({
+    queryKey: ["pendingRequests", status],
+    queryFn: async () => {
+      const response = await employeeService.getPendingRequests(status);
+      return response?.data?.data || []
+    },
+    enabled: !!status,
+  })
+}
+
+export const useGetPendingRequestById = (id) => {
+  return useQuery({
+   queryKey: ["pendingRequestById", id],
+   queryFn: async () => {
+     const response = await employeeService.getRequestById(id);
+     return response?.data?.data || []
+   },
+   enabled: !!id,
+  })
+ };
+
+ export const useUpdateRequestFields = () => {
   return useMutation({
     mutationFn: employeeService.updateRequest,
-    onSuccess: () => {
-      refetch.refetchQueries({ queryKey: ["equipmentRequest", username] });
-    },
-    onError: (error) => {
-      console.log(error);
-      
-    },
+    
+  });
+};
+
+export const useUpdatePendingRequest = () => {
+  return useMutation({
+    mutationFn:employeeService.updatePendingRequest,
   });
 };

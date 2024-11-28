@@ -9,7 +9,7 @@ const UiInput = ({ type, placeholder, inputClassName }) => {
         type={type}
         placeholder={placeholder}
         className={cn(
-          "border sm:rounded-lg lg:rounded-xl  border-gray-300 p-2 text-sm transition-all focus:ring-1 focus:ring-ring focus:outline-none bg-ternary",
+          "border sm:rounded-lg lg:rounded-xl  border-gray-300 p-2 text-sm transition-all focus:ring-1 focus:ring-ring focus:outline-none ",
           inputClassName
         )}
       />

@@ -18,15 +18,16 @@ const LoginForm = () => {
   const onSubmitForm = (data) => {
     loginMutation.mutate(data, {
       onSuccess: (response) => {
-        const { username, token, role } = response.data.data;
+        const { username, token, role, id } = response.data.data;
         localStorage.setItem("authToken", token);
         localStorage.setItem("userName", username);
         localStorage.setItem("userRole", role);
+        localStorage.setItem("userId", id);
         toast.success(`Login Successful, welcome ${role}`);
 
         switch (role) {
           case "superadmin":
-            navigate("/register");
+            navigate("/admin");
             break;
           case "admin":
             navigate("/");
@@ -35,7 +36,7 @@ const LoginForm = () => {
             navigate("/");
             break;
           case "employee":
-            navigate("/");
+            navigate("/viewEmployee");
             break;
           default:
             navigate("/auth/login");

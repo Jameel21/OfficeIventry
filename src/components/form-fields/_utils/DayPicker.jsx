@@ -27,7 +27,7 @@ const DatePickerDemo = ({ control, name, placeholder, className }) => {
           <Button
             variant={"outline"}
             className={cn(
-              "justify-start text-left font-normal rounded-md sm:rounded-lg lg:rounded-xl text-sm transition-all focus:ring-1 focus:ring-ring border bg-ternary border-gray-300 focus:outline-none",
+              "justify-start text-left font-normal rounded-md sm:rounded-lg lg:rounded-xl text-sm transition-all focus:ring-1 focus:ring-ring border border-gray-300 focus:outline-none",
               !field.value && "text-muted-foreground", className
             )}
           >

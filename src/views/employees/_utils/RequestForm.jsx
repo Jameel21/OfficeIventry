@@ -8,10 +8,15 @@ import { useAddRequest } from "@/store/hooks/EmployeeHooks";
 import DatePickerDemo from "@/components/form-fields/_utils/DayPicker";
 import toast from "react-hot-toast";
 import { format } from "date-fns";
+import { useGetDepartment, useGetEquipment } from "@/store/hooks/NameHooks";
 
-const EmployeeForm = () => {
+const RequestForm = () => {
+  const { control, handleSubmit, reset } = useForm({
+    resolver: yupResolver(employeeSchema),
+  });
 
-  const { control, handleSubmit, reset } = useForm({resolver: yupResolver(employeeSchema),});
+  const { data: departmentNames } = useGetDepartment();
+    const { data: equipmentNames } = useGetEquipment();
 
   const requestMutation = useAddRequest();
 
@@ -25,10 +30,9 @@ const EmployeeForm = () => {
         ? format(new Date(data.issue_date), "yyyy-MM-dd")
         : "",
     };
+    console.log("formattedData", formattedData)
     requestMutation.mutate(formattedData, {
-      onSuccess: (response) => {
-        const responseData = response.data.data;
-        console.log(responseData);
+      onSuccess: () => {
         toast.success("Equipment request was sent successfully");
       },
       onError: (error) => {
@@ -39,80 +43,65 @@ const EmployeeForm = () => {
         toast.error(errorMessage);
       },
     });
-    console.log(formattedData);
     reset();
   };
 
-  const departmentOptions = ["Business Analyst", "Developer", "Tester", "SEO"];
-  const equipmentOptions = [
-    "Laptop",
-    "Monitor",
-    "Keyboard",
-    "Mouse",
-    "Chair",
-    "Table",
-  ];
+  const departmentOptions =
+    departmentNames?.map((department) => ({
+      label: department.department_name,
+      value: department._id,
+    })) || [];
+
+  const equipmentOptions = equipmentNames?.map((equipment) => ({
+    label: equipment.equipment_name,
+    value: equipment._id,
+  })) || [];
+
   return (
     <form onSubmit={handleSubmit(onSubmitForm)}>
-      <div className="grid gap-8 mt-4 md:grid-cols-2 lg:grid-cols-3">
-        <InputWithLabel
-          type="text"
-          name="username"
-          placeholder="Username"
-          control={control}
-          inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
-        />
-        <InputWithLabel
-          type="text"
-          name="employee_id"
-          placeholder="Employee ID"
-          control={control}
-          inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
-        />
+      <div className="grid grid-cols-1 gap-1 mt-4 lg:gap-8 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
         <DropDown
           control={control}
-          name="department_name"
+          name="department"
           options={departmentOptions}
           placeholder="Select a department"
-          dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
+          dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
         />
         <DropDown
           control={control}
-          name="equipment_name"
+          name="equipment"
           options={equipmentOptions}
           placeholder="Select a equipment"
-          dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
+          dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 w-52  sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
         />
         <DatePickerDemo
           control={control}
           name="issue_date"
           placeholder="Issue date"
-          className="h-8 p-2 mt-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 bg-ternary"
+          className="h-8 p-2 mt-2 w-52 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 "
         />
         <DatePickerDemo
           control={control}
           name="expected_return"
           placeholder="Expected return"
-          className="h-8 p-2 mt-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 bg-ternary"
+          className="h-8 p-2 mt-2 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 "
         />
         <InputWithLabel
           type="text"
           name="reason"
           placeholder="Reason"
           control={control}
-          inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
+          inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80"
         />
-        <div className="flex mt-4 mr-10 lg:justify-end lg:col-start-3">
-          <UiButton
-            variant="secondary"
-            type="submit"
-            buttonName="Save"
-            className="w-24 h-8 sm:w-28 sm:h-8 md:w-32 md:h-10 lg:w-36 lg:h-12"
-          />
-        </div>
+        <UiButton
+          variant="secondary"
+          type="submit"
+          buttonName="Save"
+          className="w-24 h-8 mt-3 sm:w-28 sm:h-8 md:w-32 md:h-10 lg:w-80 lg:h-12"
+        />
       </div>
     </form>
   );
 };
 
-export default EmployeeForm;
+export default RequestForm;

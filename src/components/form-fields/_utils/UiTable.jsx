@@ -5,12 +5,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { cn } from "@/lib/utils";
 
-const UiTable = ({ headers, children}) => {
+const UiTable = ({ headers, children, headerClass}) => {
   return (
     <Table className="border border-gray-300">
       <TableHeader>
-        <TableRow isHeaderRow className="border border-gray-300">
+        <TableRow className={cn("border border-gray-300", headerClass)}>
           {headers.map((header, index) => (
             <TableHead key={index} className="">
               {header}
@@ -18,7 +19,7 @@ const UiTable = ({ headers, children}) => {
           ))}
         </TableRow>
       </TableHeader>
-      <TableBody className="border border-gray-300 bg-ternary">
+      <TableBody className="border border-gray-300 cursor-pointer">
         {children}
       </TableBody>
     </Table>

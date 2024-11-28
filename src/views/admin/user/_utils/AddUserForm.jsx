@@ -1,18 +1,23 @@
 import { useForm } from "react-hook-form";
+import { useQueryClient } from "@tanstack/react-query";
 import { yupResolver } from "@hookform/resolvers/yup";
 import InputWithLabel from "@/components/form-fields/_utils/InputWithLabel";
 import UiButton from "@/components/form-fields/_utils/Button";
 import DropDown from "@/components/form-fields/_utils/DropDown";
 import { registerSchema } from "@/utils/validationSchema";
-import { useRegisterUser } from "@/store/hooks/AuthHooks";
 import { toast } from "react-hot-toast";
+import { useAddUser } from "@/store/hooks/UserHooks";
+import { useGetRoles } from "@/store/hooks/NameHooks";
 
-const RegisterForm = () => {
+const AddUserForm = () => {
+  const refetch = useQueryClient();
   const { control, handleSubmit, reset } = useForm({
     resolver: yupResolver(registerSchema),
   });
 
-  const registerMutation = useRegisterUser();
+  const { data: roles } = useGetRoles();
+
+  const registerMutation = useAddUser();
 
   const onSubmitForm = (data) => {
     registerMutation.mutate(data, {
@@ -22,6 +27,7 @@ const RegisterForm = () => {
         if (reset) {
           reset();
         }
+        refetch.refetchQueries({ queryKey: ["AllUsers"] });
       },
       onError: (error) => {
         const errorMessage =
@@ -30,15 +36,18 @@ const RegisterForm = () => {
         toast.error(errorMessage);
       },
     });
-    console.log(data);
     reset();
   };
 
-  const roleOptions = ["superadmin", "admin", "hr", "employee"];
+  const roleOptions =
+    roles?.map((role) => ({
+      label: role.role,
+      value: role._id,
+    })) || [];
 
   return (
     <form
-      className="flex flex-col gap-3 sm:gap-2 md:gap-5"
+      className="flex flex-col gap-2 sm:gap-2 md:gap-3"
       onSubmit={handleSubmit(onSubmitForm)}
     >
       <InputWithLabel
@@ -48,7 +57,7 @@ const RegisterForm = () => {
         control={control}
         name="username"
         placeholder="username"
-        inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
+        inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-96"
       />
       <InputWithLabel
         label="Email"
@@ -57,15 +66,24 @@ const RegisterForm = () => {
         control={control}
         name="email"
         placeholder="email"
-        inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
+        inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-96"
+      />
+      <InputWithLabel
+        label="Employee ID"
+        type="text"
+        id="employee_id"
+        control={control}
+        name="employee_id"
+        placeholder="employee id"
+        inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-96"
       />
       <DropDown
-        label="Role"
+        labelName="Role"
         control={control}
         name="role"
         options={roleOptions}
         placeholder="Select a role"
-        dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
+        dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-96 hover:bg-accent hover:text-accent-foreground"
       />
       <InputWithLabel
         label="Password"
@@ -74,18 +92,18 @@ const RegisterForm = () => {
         control={control}
         name="password"
         placeholder="password"
-        inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
+        inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-96"
       />
-      <div className="flex justify-center mt-2 mr-8">
+      <div className="flex gap-6 mt-2 md:gap-10 lg:gap-24">
         <UiButton
           variant="secondary"
           type="submit"
           buttonName="Save"
-          className="w-24 h-8 sm:w-28 sm:h-8 md:w-32 md:h-10 lg:w-36 lg:h-12"
+          className="w-20 h-8 sm:w-28 sm:h-8 md:w-32 md:h-10 lg:w-44 lg:h-12"
         />
       </div>
     </form>
   );
 };
 
-export default RegisterForm;
+export default AddUserForm;

@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-const UiButton = ({ buttonName, variant, className, type }) => {
+const UiButton = ({ buttonName, variant, className, type, onClick }) => {
   return (
     <div>
       <Button
+        onClick={onClick}
         variant={variant}
         type={type}
         className={cn(

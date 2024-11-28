@@ -8,8 +8,3 @@ export const useLoginUser = () => {
   });
 };
 
-export const useRegisterUser = () => {
-  return useMutation({
-    mutationFn: authService.userRegister  
-  });
-};
