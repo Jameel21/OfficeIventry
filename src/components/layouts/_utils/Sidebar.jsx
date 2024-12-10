@@ -15,11 +15,12 @@ import {
   // useSidebar,
 } from "@/components/ui/sidebar";
 import User from "./User";
+import { getDecodedData } from "@/utils/encryptDecrypt";
 
 const DemoSidebar = () => {
   // const { toggleSidebar, isMobile, setOpenMobile, isOpen } = useSidebar();
   const [expanded, setExpanded] = useState({});
-  const role = localStorage.getItem("userRole")
+  const role = getDecodedData("userRole")
   let option;
   switch (role) {
     case "superadmin":

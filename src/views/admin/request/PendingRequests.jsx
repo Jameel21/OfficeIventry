@@ -9,12 +9,13 @@ const PendingRequests = () => {
   const headers = [
     "Username",
     "Equipment",
-    "Department",
-    "Issue Date",
+    "Request Date",
     "Expected Return",
     "Reason",
   ];
   const { data:pendingRequest, isLoading, error } = useGetPendingRequests("pending");
+  console.log("pendingRequest", pendingRequest)
+  
  
   const handleApprove = (id, equipmentId) => {
     navigate(`/admin/approveRequest/${id}`, { state: { equipmentId } });
@@ -45,20 +46,19 @@ const PendingRequests = () => {
               pendingRequest.map((item, index) => (
               <TableRow
                 key={index}
-                onClick={() => handleApprove(item._id, item.equipment_id
+                onClick={() => handleApprove(item._id, item.equipmentId.equipmentNameId
                 )}
                 className={`border border-gray-300 hover:bg-red-50 h-10 ${
                   index % 2 === 0 ? "bg-gray-200" : "bg-slate-100"
                 } `}
               >
-                <TableCell className="flex gap-4">{item.username}</TableCell>
-                <TableCell>{item.equipment_name}</TableCell>
-                <TableCell>{item.department_name}</TableCell>
+                <TableCell className="flex gap-4">{item.employeeId.userName}</TableCell>
+                <TableCell>{item.equipmentId.equipmentNameId.equipmentName}</TableCell>
                 <TableCell>
-                  {new Date(item.issue_date).toLocaleDateString("en-GB")}
+                  {new Date(item.requestDate).toLocaleDateString("en-GB")}
                 </TableCell>
                 <TableCell>
-                  {new Date(item.expected_return).toLocaleDateString("en-GB")}
+                  {new Date(item.expectedReturn).toLocaleDateString("en-GB")}
                 </TableCell>
                 <TableCell>{item.reason}</TableCell>
               </TableRow>

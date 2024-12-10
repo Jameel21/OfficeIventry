@@ -12,12 +12,12 @@ const DropDown = ({ labelName, control, name, options, placeholder, labelClassNa
     defaultValue:'',
   });
 
+  const isPlaceholder = !field.value;
+  const selectedLabel = (options || []).find((option) => option.value === field.value)?.label || placeholder;
+
   const handleSelect = (value) => {
     field.onChange(value);
   };
-
-  const isPlaceholder = !field.value;
-  const selectedLabel = (options || []).find((option) => option.value === field.value)?.label || placeholder;
 
   return (
     <div className="grid w-full max-w-sm items-center gap-1.5">
@@ -33,14 +33,12 @@ const DropDown = ({ labelName, control, name, options, placeholder, labelClassNa
         </DropdownMenuTrigger>
         <DropdownMenuContent className="z-50 w-64 overflow-y-auto rounded-md shadow-lg bg-primary max-h-40">
           <DropdownMenuRadioGroup value={field.value} onValueChange={handleSelect}>
-          {options.length > 0 ? (
+          {options && (
               options.map((option, index) => (
                 <DropdownMenuRadioItem key={index} value={option.value}>
                   {option.label}
                 </DropdownMenuRadioItem>
               ))
-            ) : (
-              <p className="p-2 text-sm text-muted-foreground">No options available</p>
             )}
           </DropdownMenuRadioGroup>
         </DropdownMenuContent>

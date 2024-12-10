@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
 import DropDown from "@/components/form-fields/_utils/DropDown";
@@ -16,40 +16,78 @@ import {
 import toast from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
 import RequestDialogBox from "./_utils/RequestDialogBox";
-import { useGetBrand } from "@/store/hooks/NameHooks";
+import { useGetEquipmentName, useGetSerialNumbers } from "@/store/hooks/NameHooks";
 
 const ApproveRequests = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { id } = useParams();
   const { equipmentId } = location.state || {}; 
+  console.log("equipmentId", equipmentId)
   const refetch = useQueryClient();
 
-  const { data, isLoading, error } = useGetPendingRequestById(id);
-  const { data:brandNames } = useGetBrand(equipmentId);
-
-  const { control, handleSubmit, reset } = useForm({
+  const { control, handleSubmit, reset, watch } = useForm({
     resolver: yupResolver(requestSchema),
   });
+  const {data:equipmentNames} = useGetEquipmentName("Employee Equipment")
+  const { data:userData, isLoading, error } = useGetPendingRequestById(id);
+
+  const [brandId, setBrandId] = useState(null);
+  const selectedBrandId = watch("brandId");
+const newEquipmentId = equipmentId._id
+console.log("newEquipmentId", newEquipmentId)
+
+  const { data: serialNumbers } = useGetSerialNumbers(newEquipmentId, brandId);
+  console.log("serialNumber",serialNumbers)
+
+  const selectedEquipment = equipmentNames?.find((item) => item._id === equipmentId._id)
+ console.log("selectedEquipment", selectedEquipment)
+  
+ const brandOptions = selectedEquipment?.brands?.map((brand) => ({
+  label: brand.brand,
+  value: brand._id
+}))
+
+const serialNumOptions =
+serialNumbers?.map((serial) => ({
+  label: serial,
+  value: serial,
+})) || [{ label: "No serial numbers available", value: "" }];
+
+console.log("serialNumOptions", serialNumOptions)
+
+useEffect(() => {
+  if (selectedBrandId) {
+    setBrandId(selectedBrandId); // Set brandId for fetching serial numbers
+  }
+}, [selectedBrandId]);
+console.log("brandId", brandId)
 
   useEffect(() => {
-    if (data) {
+    if (userData) {
       reset({
-        ...data,
-        issue_date: new Date(data.issue_date).toLocaleDateString("en-GB"),
-        expected_return: new Date(data.expected_return).toLocaleDateString(
+        employeeId: userData?.employeeId.userName,
+        equipmentId:userData?.equipmentId.equipmentNameId.equipmentName,
+        requestDate: new Date(userData.requestDate).toLocaleDateString("en-GB"),
+        expectedReturn: new Date(userData.expectedReturn).toLocaleDateString(
           "en-GB"
         ),
+        reason:userData.reason
       });
     }
-  }, [data, reset]);
+  }, [userData, reset]);
 
   const updateMutation = useUpdatePendingRequest();
 
   const handleReject = (reason) => {
+    if (!reason) {
+      toast.error("Rejection reason is required");
+      return;
+    }
+
     const payload = {
       status: "rejected",
-      rejected_reason: reason,
+      rejectedReason: reason,
     };
 
     updateMutation.mutate(
@@ -57,7 +95,7 @@ const ApproveRequests = () => {
       {
         onSuccess: () => {
           toast.error("Request rejected successfully");
-          refetch.refetchQueries({ queryKey: ["equipmentRequest"] });
+          refetch.refetchQueries({ queryKey: ["pendingRequests"] });
           navigate("/admin/pendingRequests");
         },
         onError: (error) => {
@@ -68,16 +106,16 @@ const ApproveRequests = () => {
   };
 
   const onSubmitForm = (formData, status) => {
-    console.log(formData);
-    if (!["approved", "rejected"].includes(status)) {
+    if (!["approved"].includes(status)) {
       console.error("Invalid status provided");
       return;
     }
     const payload = {
       status,
-      brand: formData.brand,
-      serial_number: formData.serial_number,
+      brandId: formData.brandId,
+      serialNumber: formData.serialNumber,
     };
+    console.log("payload",payload)
     updateMutation.mutate(
       { id, data: payload },
       {
@@ -85,10 +123,9 @@ const ApproveRequests = () => {
           console.log("updated successfully");
           if (status === "approved") {
             toast.success("Request approved successfully");
-          } else if (status === "rejected") {
-            toast.error("Request rejected successfully");
           }
           refetch.refetchQueries({ queryKey: ["pendingRequests"] });
+          reset();
           navigate("/admin/pendingRequests"); // Redirect on success
         },
         onError: (error) => {
@@ -96,21 +133,10 @@ const ApproveRequests = () => {
         },
       }
     );
-    reset({
-      username: "",
-      department_name: "",
-      equipment_name: "",
-      issue_date: "",
-      expected_return: "",
-      reason: "",
-    });
+    
   };
 
-  const brandOptions = (brandNames && brandNames.length > 0 ? brandNames.map((item) => ({
-    label: item.brand,
-    value: item._id
-  })) : [{label:"none", value:"none"}])
-  const serialNumOptions =[]
+
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p>Error fetching request: {error.message}</p>;
@@ -124,7 +150,7 @@ const ApproveRequests = () => {
     navigate("/admin/pendingRequests");
   };
   return (
-    <div className="h-screen">
+    <div className="">
       <div>
         <CircleArrowLeft
           className="cursor-pointer hover:opacity-90"
@@ -133,12 +159,12 @@ const ApproveRequests = () => {
       </div>
       <div className="mt-4">Assign Equipment</div>
       <div>
-        <form>
+        <form onSubmit={handleSubmit(onSubmitForm)}>
           <div className="grid grid-cols-1 gap-1 mt-4 lg:gap-8 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
             <InputWithLabel
               type="text"
               label="Username"
-              name="username"
+              name="employeeId"
               placeholder="Username"
               control={control}
               readOnly={true}
@@ -146,17 +172,8 @@ const ApproveRequests = () => {
             />
             <InputWithLabel
               type="text"
-              label="Department"
-              name="department_name"
-              placeholder="Deoartment"
-              control={control}
-              readOnly={true}
-              inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
-            />
-            <InputWithLabel
-              type="text"
               label="Equipment"
-              name="equipment_name"
+              name="equipmentId"
               placeholder="Equipment"
               control={control}
               readOnly={true}
@@ -165,7 +182,7 @@ const ApproveRequests = () => {
             <InputWithLabel
               type="text"
               label="Issue Date"
-              name="issue_date"
+              name="requestDate"
               placeholder="Issue date"
               control={control}
               readOnly={true}
@@ -174,7 +191,7 @@ const ApproveRequests = () => {
             <InputWithLabel
               type="text"
               label="Expected Return"
-              name="expected_return"
+              name="expectedReturn"
               placeholder="Expected Return"
               control={control}
               readOnly={true}
@@ -191,7 +208,7 @@ const ApproveRequests = () => {
             />
             <DropDown
               control={control}
-              name="brand"
+              name="brandId"
               labelName="Brand"
               options={brandOptions}
               placeholder="Select a Brand"
@@ -199,22 +216,23 @@ const ApproveRequests = () => {
             />
             <DropDown
               control={control}
-              name="serial_number"
+              name="serialNumber"
               labelName="Serial Number"
               options={serialNumOptions}
               placeholder="Serial Number"
               dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 w-52  sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
             />
-            <RequestDialogBox onReject={handleReject}/>
-            <UiButton
+             <UiButton
               variant="secondary"
-              type="button"
+              type="submit"
               buttonName="Approve"
               onClick={handleSubmit((formData) =>
                 onSubmitForm(formData, "approved")
               )}
-              className="w-24 h-8 mt-3 sm:w-28 sm:h-8 md:w-32 md:h-10 lg:w-52 lg:h-12"
+              className="w-24 h-8 mt-10 sm:w-28 sm:h-8 md:w-32 md:h-10 lg:w-52 lg:h-12"
             />
+            <RequestDialogBox onReject={handleReject}/>
+           
           </div>
         </form>
       </div>

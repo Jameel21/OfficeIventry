@@ -3,12 +3,13 @@ import logout from "@assets/logout1.png";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { getDecodedData } from "@/utils/encryptDecrypt";
 
 const User = () => {
   const navigate = useNavigate()
-  const user = localStorage.getItem("userName")
-  const role = localStorage.getItem("userRole")
-  const userId = localStorage.getItem("userId");
+  const user = getDecodedData("userName")
+  const role = getDecodedData("userRole")
+  const userId = getDecodedData("userId");
 
   const handleProfile = () => {
     navigate(`/viewProfile/${userId}`)
@@ -25,7 +26,7 @@ const User = () => {
 
   return (
     <div>
-      <div className="flex flex-row items-center gap-10 mt-3 text-primary">
+      <div className="flex flex-row items-center gap-6 mt-3 md:justify-between sm:gap-10 text-primary">
         <div onClick={handleProfile}>
           <Avatar className="cursor-pointer">
             <AvatarImage src={user_icon}/>
@@ -33,7 +34,7 @@ const User = () => {
           </Avatar>
         </div>
         <div className="">
-            <h1 className="text-lg text-slate-200">{user}</h1>
+            <h1 className="text-base sm:text-lg text-slate-200">{user}</h1>
             <p className="text-sm text-slate-400">{role}</p>
         </div>
          <div onClick={handleLogout}>

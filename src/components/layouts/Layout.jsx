@@ -8,9 +8,9 @@ const Layout = () => {
     <div className="flex">
       <div className="w-[5%] md:w-[272px]">
         <SidebarProvider>
-          <main>
+        <DemoSidebar />
+          <main className="md:hidden">
             <SidebarTrigger className="text-primary h-11" />
-            <DemoSidebar />
           </main>
         </SidebarProvider>
       </div>

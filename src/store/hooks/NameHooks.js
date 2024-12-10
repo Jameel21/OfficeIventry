@@ -21,22 +21,25 @@ export const useGetDepartment = () => {
   })
 }
 
-export const useGetEquipment = () => {
+export const useGetEquipmentName = (equipmentType) => {
   return useQuery({
-    queryKey: ["equipment"],
+    queryKey: ["equipmentName", equipmentType],
     queryFn:async () => {
-      const response = await nameService.getEquipmentsName();
+      const response = await nameService.getEquipmentsName(equipmentType);
       return response?.data?.data
     }
   })
 }
 
-export const useGetBrand = (id) => {
+
+export const useGetSerialNumbers = (equipmentId, brandId) => {
   return useQuery({
-    queryKey:["brand"],
+    queryKey: ["serialNumbers", equipmentId, brandId],
     queryFn: async () => {
-      const response = await nameService.getBrandNames(id)
-      return response?.data?.data
-    }
-  })
-}
+      if (!equipmentId || !brandId) return []; 
+      const response = await nameService.getSerialNumbers(equipmentId, brandId);
+      return response?.data?.data; // Access the serial numbers array
+    },
+    enabled: !!equipmentId && !!brandId, // Only run the query if both IDs are available
+  });
+};

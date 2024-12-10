@@ -1,7 +1,8 @@
 import { Navigate, Outlet } from "react-router-dom";
+import { getDecodedData } from "./encryptDecrypt";
 
 const AuthUser = () => {
-  const token = localStorage.getItem("authToken");
+  const token = getDecodedData("authToken");
 
   if (!token) {
     // Redirect to login if there is no tkn

@@ -1,7 +1,5 @@
-import UiButton from "@/components/form-fields/_utils/Button";
 import UiTable from "@/components/form-fields/_utils/UiTable";
 import { TableCell, TableRow } from "@/components/ui/table";
-import { MoveRight } from "lucide-react";
 
 
 const MaintenanceLog = () => {
@@ -14,11 +12,8 @@ const MaintenanceLog = () => {
     return_date: "05/30/2024"
   }];
   return (
-    <div className="relative p-4">
-      <div>
-        <UiButton variant="secondary" buttonName="Maintenance Log" className="w-full h-11" />
-        <MoveRight className="absolute text-slate-300 right-10 top-7"/>
-      </div>
+    <div>
+      <div className="mt-2 text-lg font-medium text-slate-700">Maintenance Log</div>
       <div className="mt-12">
         <UiTable headers={headers} headerClass={"h-12 text-lg"}>
           {data && data.length > 0 ? (

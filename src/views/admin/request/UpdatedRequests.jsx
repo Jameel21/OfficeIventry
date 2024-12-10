@@ -10,11 +10,12 @@ import toast from "react-hot-toast";
 import LoadSpinner from "@/components/spinner/LoadSpinner";
 
 const UpdatedRequests = () => {
-  const { data, isLoading, error } = useGetPendingRequests([
+  const { data:userData, isLoading, error } = useGetPendingRequests([
     "approved",
     "rejected",
     "completed"
   ]);
+  console.log("updatedRequest", userData)
   
   const refetch = useQueryClient();
   const headers = [
@@ -32,14 +33,12 @@ const UpdatedRequests = () => {
   const handleCheckboxChange = (id, currentValue) => {
     const payload = {
       id,
-      mark_as_return: !currentValue,
-      current_status: !currentValue ? "Available" : "UnAvailable",
+      markAsReturn: !currentValue,
+      currentStatus: !currentValue ? "Available" : "In Use",
       status: !currentValue ? "completed" : "approved",
     };
-    console.log("Payload being sent:", payload);
     updateRequestMutation.mutate(payload, {
       onSuccess: () => {
-        console.log("Request updated successfully!");
         toast.success("updated successFully");
         refetch.refetchQueries({ queryKey: ["pendingRequests"] });
       },
@@ -72,35 +71,35 @@ const UpdatedRequests = () => {
                   {error.message}
                 </TableCell>
               </TableRow>
-            ) :data?.length > 0 ? (
-            data.map((item, index) => (
+            ) :userData?.length > 0 ? (
+              userData.map((item, index) => (
               <TableRow
                 key={index}
                 className={`border border-gray-300 hover:bg-red-50 h-10 ${
                   index % 2 === 0 ? "bg-gray-200" : "bg-slate-100"
                 } `}
               >
-                <TableCell> {item.username}</TableCell>
-                <TableCell> {item.equipment_name}</TableCell>
+                <TableCell> {item.employeeId.userName}</TableCell>
+                <TableCell> {item.equipmentId.equipmentNameId.equipmentName}</TableCell>
                 <TableCell>
-                  {new Date(item.issue_date).toLocaleDateString("en-GB")}
+                  {new Date(item.issueDate).toLocaleDateString("en-GB")}
                 </TableCell>
                 <TableCell>
-                  {new Date(item.expected_return).toLocaleDateString("en-GB")}
+                  {new Date(item.expectedReturn).toLocaleDateString("en-GB")}
                 </TableCell>
                 <TableCell> {item.status}</TableCell>
                 <TableCell>
                   {item.status !== "rejected" && (
                     <Checkbox
                       className="text-white md:ml-10 bg-secondary"
-                      checked={item.mark_as_return}
+                      checked={item.markAsReturn}
                       onCheckedChange={() =>
-                        handleCheckboxChange(item._id, item.mark_as_return)
+                        handleCheckboxChange(item._id, item.markAsReturn)
                       }
                     />
                   )}
                 </TableCell>
-                <TableCell> {item.current_status}</TableCell>
+                <TableCell> {item.equipmentId.currentStatus}</TableCell>
               </TableRow>
             ))
           ) : (

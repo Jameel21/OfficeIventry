@@ -1,4 +1,4 @@
-import API from "@/configs/AxiosConfig";
+import API from "@/helper/AxiosConfig";
 
 const getRolesName = async () => {
   const response = await API.get("/role/getAll");
@@ -6,23 +6,28 @@ const getRolesName = async () => {
 }
 
 const getDepartmentsName = async () => {
-  const response = await API.get("/department/getDepartments");
+  const response = await API.get("/master/department/getAllDepartment");
   return response
 }
 
-const getEquipmentsName = async () => {
-  const response = await API.get("/Inventory/master/getall");
+const getEquipmentsName = async (equipmentType) => {
+  const response = await API.get("/master/category/getall", {
+    params: { equipment_type: equipmentType },
+  });
   return response
 }
 
-const getBrandNames = async (id) => {
-  const response = await API.get(`/Inventory/getBrands/${id}`)
-  return response
-}
+
+const getSerialNumbers = async (equipmentId, brandId) => {
+  const response = await API.get("/equipment/getSerialNumber", {
+    params: { equipmentId, brandId }, // Pass as query parameters
+  });
+  return response;
+};
 
 export default {
   getRolesName,
   getDepartmentsName,
   getEquipmentsName,
-  getBrandNames
+  getSerialNumbers
 }

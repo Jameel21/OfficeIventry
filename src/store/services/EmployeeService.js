@@ -1,43 +1,43 @@
-import API from "@/configs/AxiosConfig";
+import API from "@/helper/AxiosConfig";
 
 const addRequest = async (data) => {
-  const response = await API.post("/equipment/requestEquipment", data);
+  const response = await API.post("/equipmentRequest/addRequest", data);
   return response;
 };
 const getRequest = async () => {
-  const response = await API.get("/equipment/employeeRequest");
+  const response = await API.get("/equipmentRequest/getEmployeeRequest");
   return response;
 };
 
 const getPendingRequests = async (status) => {
-  const response = await API.get("/equipment/pendingRequest", {
+  const response = await API.get("/equipmentRequest/getAllRequests", {
     params: { status },
   });
   return response;
 };
 
 export const getRequestById = async (id) => {
-  const response = await API.get(`/equipment/pendingRequest/${id}`);
+  const response = await API.get(`/equipmentRequest/getRequest/${id}`);
   return response;
 };
 
-const updateRequest = async ({ id, ...fields }) => {
+const updateReturn = async ({ id, ...fields }) => {
   const response = await API.patch(
-    `/equipment/updatingReqFields/${id}`,
+    `/equipmentRequest/updatingReturn/${id}`,
     fields
   );
   return response;
 };
 
 const updatePendingRequest = async ({ id, data }) => {
-  const response = await API.put(`/equipment/updateRequest/${id}`, data);
+  const response = await API.put(`/equipmentRequest/updateRequest/${id}`, data);
   return response;
 };
 
 export default {
   addRequest,
   getRequest,
-  updateRequest,
+  updateReturn,
   getRequestById,
   getPendingRequests,
   updatePendingRequest,

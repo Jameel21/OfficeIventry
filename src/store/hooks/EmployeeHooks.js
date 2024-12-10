@@ -22,7 +22,7 @@ export const useGetPendingRequests = (status) => {
     queryKey: ["pendingRequests", status],
     queryFn: async () => {
       const response = await employeeService.getPendingRequests(status);
-      return response?.data?.data || []
+      return response?.data?.data?.responseData || []
     },
     enabled: !!status,
   })
@@ -41,8 +41,7 @@ export const useGetPendingRequestById = (id) => {
 
  export const useUpdateRequestFields = () => {
   return useMutation({
-    mutationFn: employeeService.updateRequest,
-    
+    mutationFn: employeeService.updateReturn, 
   });
 };
 

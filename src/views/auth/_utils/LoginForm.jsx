@@ -6,6 +6,7 @@ import { loginSchema } from "@/utils/validationSchema";
 import { useLoginUser } from "@/store/hooks/AuthHooks";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
+import { setEncodedData } from "@/utils/encryptDecrypt";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -18,14 +19,16 @@ const LoginForm = () => {
   const onSubmitForm = (data) => {
     loginMutation.mutate(data, {
       onSuccess: (response) => {
-        const { username, token, role, id } = response.data.data;
-        localStorage.setItem("authToken", token);
-        localStorage.setItem("userName", username);
-        localStorage.setItem("userRole", role);
-        localStorage.setItem("userId", id);
-        toast.success(`Login Successful, welcome ${role}`);
+        const { userName, token, _id, } = response.data.data;
+        const { roleId } = response.data.data;
+        const userRole = roleId?.role;
+        setEncodedData("authToken", token);
+        setEncodedData("userName", userName);
+        setEncodedData("userRole", userRole);
+        setEncodedData("userId", _id);
+        toast.success(`Login Successful, welcome ${userRole}`);
 
-        switch (role) {
+        switch (userRole) {
           case "superadmin":
             navigate("/admin");
             break;
@@ -48,7 +51,6 @@ const LoginForm = () => {
         toast.error(errorMessage);
       },
     });
-    console.log(data);
   };
 
   return (
@@ -59,9 +61,9 @@ const LoginForm = () => {
       <InputWithLabel
         label="Username"
         type="text"
-        id="username"
+        id="userName"
         control={control}
-        name="username"
+        name="userName"
         placeholder="Enter your username"
         inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
       />
@@ -74,9 +76,9 @@ const LoginForm = () => {
         placeholder="Enter your password"
         inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
       />
-      <span className="text-xs text-right cursor-pointer sm:text-sm md:text-base">
+      {/* <span className="text-xs text-right cursor-pointer sm:text-sm md:text-base">
         Forgot Password?
-      </span>
+      </span> */}
       <div className="flex justify-center mt-2">
         <UiButton
           variant="secondary"

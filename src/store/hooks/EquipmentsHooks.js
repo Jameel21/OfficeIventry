@@ -1,26 +1,33 @@
- import { instance } from "@/helper/axios"
- import { useMutation } from "@tanstack/react-query"
- import { useQuery } from "@tanstack/react-query"
+import { useMutation, useQuery} from "@tanstack/react-query";
+import equipmentService from "../services/EquipmentService";
 
+export const useAddEquipment = (equipmentType) => {
+   return useMutation({
+      mutationFn: async (data ) => {
+         const response = await equipmentService.addEquipment(data, equipmentType);
+         return response
+      }
+   })
+}
 
- export const useEqipmentAddHooks =()=>{
-     return useMutation({ mutationFn: async(formData) => {
-     await instance.post('/equip',formData)}     
-   }
- )
- 
- }  
-      
- export const useEqipmentEditHooks = ()=>{
-    return useMutation({mutationFn: async(formData)=> await instance.put(`/equip/${data.id}`,formData)})
- }
+export const useGetAllEquipment = (page, limit, equipmentType) => {
+   return useQuery({
+      queryKey: ["ListAllEquipment", page, limit, equipmentType],
+      queryFn: async () => {
+         const response = await equipmentService.getAllEquipment(page, limit, equipmentType);
+         return response?.data?.data?.equipment || []
+      },
+      enabled: !!page && !!limit && !!equipmentType,
+   })
+}
 
- export const useEqipmentDeleteHooks = ()=>{
-    return useMutation({mutationFn: async(formData)=> await instance.delete(`/equip/${data.id}`,formData)})
- }
- export const useEqipmentgetHooks = (formData) =>{
-     return useQuery({ queryKey:['equip'],queryFn:async()=> {
-              return  await instance.get('/equip')}
-    
-})
- }
+export const useGetSingleEquipment = (id) => {
+   return useQuery({
+      queryKey: ["LisSingleEquipment",id],
+      queryFn: async () => {
+         const response = await equipmentService.getSingleEquipment(id);
+         return response?.data?.data || []
+      },
+      enabled: !!id
+   })
+}

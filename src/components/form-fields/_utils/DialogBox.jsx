@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,8 +11,19 @@ import { cn } from "@/lib/utils";
 import UiButton from "./Button";
 import InputWithLabel from "./InputWithLabel";
 
-const DialogBox = ({ className, triggerName,dialogTitle, control,
-  onSubmit,name,placeholder,buttonName, type }) => {
+const DialogBox = ({
+  className,
+  triggerName,
+  dialogTitle,
+  control,
+  onSubmit,
+  firstName,
+  firstPlaceholder,
+  secondName,
+  secondPlaceholder,
+  buttonName,
+  type,
+}) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -32,17 +42,33 @@ const DialogBox = ({ className, triggerName,dialogTitle, control,
           <DialogTitle>{dialogTitle}</DialogTitle>
         </DialogHeader>
         <form onSubmit={onSubmit}>
-          <div className="flex items-center space-x-2">
-            <div className="grid flex-1 gap-2">
-              <InputWithLabel
-                type={type}
-                name={name}
-                placeholder={placeholder}
-                control={control}
-                inputClassName="h-7 sm:h-8 md:h-10 lg:h-12 w-52 sm:w-64  md:w-72 lg:w-96"
-              />
+          <div className="gap-4">
+            <div className="flex items-center space-x-2">
+              <div className="grid flex-1 gap-2">
+                <InputWithLabel
+                  type={type}
+                  name={firstName}
+                  placeholder={firstPlaceholder}
+                  control={control}
+                  inputClassName="h-7 sm:h-8 md:h-10 lg:h-12 w-52 sm:w-64  md:w-72 lg:w-96"
+                />
+              </div>
             </div>
+            {secondName && secondPlaceholder && ( 
+              <div className="flex items-center space-x-2">
+                <div className="grid flex-1 gap-2">
+                  <InputWithLabel
+                    type={type}
+                    name={secondName}
+                    placeholder={secondPlaceholder}
+                    control={control}
+                    inputClassName="h-7 sm:h-8 md:h-10 lg:h-12 w-52 sm:w-64  md:w-72 lg:w-96"
+                  />
+                </div>
+              </div>
+            )}
           </div>
+
           <DialogFooter className="mt-6 sm:justify-center">
             <UiButton
               variant="secondary"

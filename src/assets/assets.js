@@ -1,6 +1,4 @@
-import { Lock, Bell ,FileText, Building2, User, BadgeCheck, GitPullRequestArrow,Monitor,Paintbrush,SquareCheckBig} from 'lucide-react'
-
-
+import { Lock, Bell ,FileText, Building2, User, GitPullRequestArrow,Monitor,Paintbrush,SquareCheckBig,UserRoundPen,CirclePlus, Plus} from 'lucide-react'
 
 
 export  const currentStatus = [
@@ -28,39 +26,81 @@ export const sidebarMenu ={
     },
     {
       icon:Building2,
+      menu:'Masters',
+      submenu: [
+        {
+          icon:Monitor,
+          url:'/admin/department',
+          menu:'Department'
+        },
+        {
+          icon:GitPullRequestArrow,
+          url:'/admin/role',
+          menu:'Role'
+        },
+        {
+          icon:Monitor,
+          url:'/admin/brand',
+          menu:'Brand'
+        },
+        {
+          icon:GitPullRequestArrow,
+          url:'/admin/category',
+          menu:'Category'
+        },
+        // {
+        //   icon:GitPullRequestArrow,
+        //   url:'/admin/menu',
+        //   menu:'Menu'
+        // },
+      ]
+    },
+    {
+      icon:Building2,
       menu:'Inventry',
       submenu: [
         {
           icon:Monitor,
-          url:'/inventry',
+          url:'/admin/officeEquipment',
           menu:'Office Equipment'
         },
         {
           icon:GitPullRequestArrow,
-          url:'/admin/pendingRequests',
+          url:'/admin/employeeEquipment',
           menu:'Employee Equipment'
         },
       ]
     },
     {
-      icon:User,
-      menu:'Employee',
+      icon:UserRoundPen,
+      menu:'User',
       submenu: [
         {
-          icon:Monitor,
-          url:'/viewEmployee',
-          menu:'Equipment'
+          icon:FileText,
+          url:'/admin/viewAllUser',
+          menu:'Add User'
+        },
+      ]
+    },
+    {
+      icon:CirclePlus,
+      menu:'Request',
+      submenu: [
+        {
+          icon:Plus,
+          url:'/viewRequest',
+          menu:'My Request'
         },
         {
           icon:GitPullRequestArrow,
           url:'/admin/pendingRequests',
-          menu:'Requests'
+          menu:'All Request'
         },
-        {
-          icon:BadgeCheck,
-          url:'/admin/updatedRequests',
-          menu:'Updated'
-        },
+        // {
+        //   icon:BadgeCheck,
+        //   url:'/admin/updatedRequests',
+        //   menu:'Updated Request'
+        // },
       ]
     },
     {
@@ -70,22 +110,22 @@ export const sidebarMenu ={
         {
           icon:User,
           url:'/admin/employeeLog',
-          menu: 'Employee'
+          menu: 'Employee Log'
         },
         {
           icon:Building2,
           url:'/admin/equipmentLog',
-          menu: 'Equipment'
+          menu: 'Equipment Log'
         },
         {
           icon:SquareCheckBig,
           url:'/admin/allocationLog',
-          menu: 'Allocation'
+          menu: 'Allocation Log'
         },
         {
           icon:Paintbrush,
           url:'/admin/maintenanceLog',
-          menu: 'Maintenance'
+          menu: 'Maintenance Log'
         },
       ]
     },
@@ -122,12 +162,12 @@ export const sidebarMenu ={
 employee:[
   {
     icon:User,
-    menu:'Employee',
+    menu:'Request',
     submenu: [
       {
         icon:Monitor,
         url:'/viewEmployee',
-        menu:'Equipment'
+        menu:'Add Request'
       },
     ]
   },
@@ -137,8 +177,8 @@ employee:[
     submenu:[
       {
         icon:User,
-        url:'/employeeLog',
-        menu: 'Employee'
+        url:'/viewEmployee',
+        menu: 'Request Log'
       }]
   },
 

@@ -5,12 +5,13 @@ import { useGetRequest } from "@/store/hooks/EmployeeHooks";
 
 const EmployeeTable = () => {
  
-  const { data, isLoading, error } = useGetRequest();
+  const { data: userData , isLoading, error } = useGetRequest();
+  console.log("userData", userData)
 
   const headers = [
     "Employee Name",
     "Equipment",
-    "Issue date",
+    "Request date",
     "Expected Return",
     "status",
   ];
@@ -42,21 +43,21 @@ const EmployeeTable = () => {
             {error.message}
           </TableCell>
         </TableRow>
-      ) : data && data.length > 0 ? (
-        data.map((item, index) => (
+      ) : userData && userData.length > 0 ? (
+        userData.map((item, index) => (
           <TableRow
             key={index}
             className={`border border-gray-300 hover:bg-red-50 h-10 ${
               index % 2 === 0 ? "bg-gray-200" : "bg-slate-100"
             } `}
           >
-            <TableCell>{item.username}</TableCell>
-            <TableCell>{item.equipment_name}</TableCell>
+            <TableCell>{item.employeeId.userName}</TableCell>
+            <TableCell>{item.equipmentId.equipmentNameId.equipmentName}</TableCell>
             <TableCell>
-              {new Date(item.issue_date).toLocaleDateString("en-GB")}
+              {new Date(item.requestDate).toLocaleDateString("en-GB")}
             </TableCell>
             <TableCell>
-              {new Date(item.expected_return).toLocaleDateString("en-GB")}
+              {new Date(item.expectedReturn).toLocaleDateString("en-GB")}
             </TableCell>
             <TableCell>{item.status}</TableCell>
           </TableRow>

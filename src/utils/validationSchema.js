@@ -1,7 +1,7 @@
 import * as yup from "yup";
 
 export const loginSchema = yup.object().shape({
-  username: yup.string().required("username is required"),
+  userName: yup.string().required("username is required"),
   password: yup
     .string()
     .required("password is required")
@@ -11,46 +11,39 @@ export const loginSchema = yup.object().shape({
 
 
 export const registerSchema = yup.object().shape({
-  username: yup.string().required("username is required"),
+  userName: yup.string().required("username is required"),
   email: yup.string().email("invalid email").required("email is required"),
-  employee_id:yup.string().required("employee id is required"),
-  role:yup.string().required('role is required'),
+  employeeId:yup.string().required("employee id is required"),
+  departmentId:yup.string().required("department is required"),
+  roleId:yup.string().required('role is required'),
   password: yup.string().required("password is required").min(8, "password must be atleast 8 characters").max(16, "password cannot exceed 16 characters")
 })
 
 export const employeeSchema = yup.object().shape({
-  department: yup.string().required("department is required"),
-  equipment: yup.string().required("equipment name is required"),
-  issue_date: yup.string().required("issue date is required"),
-  expected_return: yup.string().required("expected return is required "),
+  equipmentId: yup.string().required("equipment name is required"),
+  requestDate: yup.string().required("request date is required"),
+  expectedReturn: yup.string().required("expected return is required "),
   reason: yup.string().required("reason is required"),
 });
 
 export const requestSchema = yup.object().shape({
-  brand: yup.string().required("brand is required"),
+  brandId: yup.string().required("brand is required"),
   
 });
 
 export const rejectedSchema = yup.object().shape({
-  rejected_reason: yup.string().required("Rejected reason is required"), 
+  rejectedReason: yup.string().required("Rejected reason is required"), 
 });
 
 export const updatePasswordSchema = yup.object().shape({
-  password: yup.string().required("password is required"), 
+  currentPassword: yup.string().required("current password is required"),
+  newPassword: yup.string().required("new password is required"), 
 });
 
-export const employeequipSchema = yup.object().shape({
-     equipment_name:yup.string().required("equipmentname is required"),
-     equipment_model: yup.string().required("equipmentmodel is required"),
-     serial_no:yup.string().required("Serial number is required"),
-     purshase_date:yup.string().required("purchase date is required"),
-     warranty_period:yup.string().required("warranty period is required"),
-     current_status: yup.string().required("Current Status is required")
-})
-
-export const officeequipSchema = yup.object().shape({
-     equipment_name : yup.string().required("equipmentname is required"),
-     equipment_count:yup.number().required("Count is required"),
-     equipment_price:yup.number().required("Price is required"),
-     equipment_availability:yup.string().required("Required")
+export const equipmentSchema = yup.object().shape({
+     equipmentNameId:yup.string().required("equipment is required"),
+     dateOfPurchase:yup.string().required("purchase date is required"),
+     price:yup.string().required("price is required"),
+     quantity:yup.string().required("quantity is required"),
+  
 })
