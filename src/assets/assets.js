@@ -61,26 +61,21 @@ export const sidebarMenu ={
       submenu: [
         {
           icon:Monitor,
-          url:'/admin/officeEquipment',
+          url:'/admin/list-office-equipment',
           menu:'Office Equipment'
         },
         {
           icon:GitPullRequestArrow,
-          url:'/admin/employeeEquipment',
+          url:'/admin/list-employee-equipment',
           menu:'Employee Equipment'
         },
       ]
     },
     {
       icon:UserRoundPen,
-      menu:'User',
-      submenu: [
-        {
-          icon:FileText,
-          url:'/admin/viewAllUser',
-          menu:'Add User'
-        },
-      ]
+      url:'/admin/viewAllUser',
+      menu:'Add User'
+      
     },
     {
       icon:CirclePlus,

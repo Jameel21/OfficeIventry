@@ -2,7 +2,7 @@ import API from "@/helper/AxiosConfig";
 
 
 const addEquipment = async (data, equipmentType) => {
-  const response = await API.post("/equipment/create",
+  const response = await API.post("/equipment/create/",
     data, {
       params:{equipmentType}
     }
@@ -11,7 +11,7 @@ const addEquipment = async (data, equipmentType) => {
 }
 
 const getAllEquipment = async (page, limit, equipmentType) => {
-  const response = await API.get(`/equipment/getAll`, {
+  const response = await API.get(`/equipment/getAll/`, {
     params:{
       page,
       limit,
@@ -26,5 +26,13 @@ const getSingleEquipment = async (id) => {
   return response
 }
 
+const updateEquipment = async ()=>{
+  const response = await API.put(`/equipment/update/${id}`,data)
+  return response
+}
 
-export default {addEquipment, getAllEquipment,getSingleEquipment}
+const deleteEquipment = async ()=>{
+  const response = await API.delete(`/equipment/delete/${id}`)
+  return response
+}
+export default {addEquipment, getAllEquipment,getSingleEquipment,updateEquipment,deleteEquipment}
