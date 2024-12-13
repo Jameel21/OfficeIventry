@@ -39,7 +39,7 @@ const LoginForm = () => {
             navigate("/");
             break;
           case "Employee":
-            navigate("/viewEmployee");
+            navigate("/viewRequest");
             break;
           default:
             navigate("/auth/login");
