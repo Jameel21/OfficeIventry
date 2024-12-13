@@ -15,7 +15,7 @@ export const useGetAllEquipment = (page, limit, equipmentType) => {
       queryKey: ["AllEquipment", page, limit, equipmentType],
       queryFn: async () => {
          const response = await equipmentService.getAllEquipment(page, limit, equipmentType);
-         return response?.data?.data?.equipment || []
+         return response?.data?.data?.equipment || []  
       },
       enabled: !!page && !!limit && !!equipmentType,
    })

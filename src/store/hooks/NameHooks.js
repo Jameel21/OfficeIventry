@@ -38,8 +38,8 @@ export const useGetSerialNumbers = (equipmentId, brandId) => {
     queryFn: async () => {
       if (!equipmentId || !brandId) return []; 
       const response = await nameService.getSerialNumbers(equipmentId, brandId);
-      return response?.data?.data; // Access the serial numbers array
+      return response?.data?.data; 
     },
-    enabled: !!equipmentId && !!brandId, // Only run the query if both IDs are available
+    enabled: !!equipmentId && !!brandId, 
   });
 };

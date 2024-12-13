@@ -36,13 +36,15 @@ const EquipmentForm = ({
           inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80"
         />
       )}
-      <InputWithLabel
-        type="number"
-        name="quantity"
-        placeholder="quantity"
-        control={control}
-        inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80"
-      />
+      {!isSerialNumber && (
+        <InputWithLabel
+          type="number"
+          name="quantity"
+          placeholder="quantity"
+          control={control}
+          inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80"
+        />
+      )}
       <InputWithLabel
         type="text"
         name="price"

@@ -21,7 +21,7 @@ const EditCategory = () => {
   });
 
   const { data: categoryData } = useGetCategory(id);
-  console.log("categoryData", categoryData)
+  
   const { mutate: updateCategory } = useUpdateCategory();
   const { data: brandData } = useGetAllBrand();
 

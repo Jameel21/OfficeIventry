@@ -54,7 +54,6 @@ const ApproveRequests = () => {
     value: serial.serialNumber,
   })) || [{ label: "No serial numbers available", value: "" }];
 
-
   useEffect(() => {
     if (selectedBrandId) {
       setBrandId(selectedBrandId);
@@ -150,7 +149,9 @@ const ApproveRequests = () => {
           onClick={handlePreviousPage}
         />
       </div>
-      <div className="mt-4">Assign Equipment</div>
+      <div className="mt-4 text-lg font-medium text-slate-700">
+        Assign Equipment
+      </div>
       <div>
         <form onSubmit={handleSubmit(onSubmitForm)}>
           <div className="grid grid-cols-1 gap-1 mt-4 lg:gap-8 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
@@ -215,16 +216,18 @@ const ApproveRequests = () => {
               placeholder="Serial Number"
               dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 w-52  sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
             />
-            <UiButton
-              variant="secondary"
-              type="submit"
-              buttonName="Approve"
-              onClick={handleSubmit((formData) =>
-                onSubmitForm(formData, "approved")
-              )}
-              className="w-24 h-8 mt-10 sm:w-28 sm:h-8 md:w-32 md:h-10 lg:w-52 lg:h-12"
-            />
-            <RequestDialogBox onReject={handleReject} />
+            <div className="flex gap-4 sm:gap-16 lg:gap-0 lg:flex-none lg:justify-between xl:w-[620px]">
+              <UiButton
+                variant="secondary"
+                type="submit"
+                buttonName="Approve"
+                onClick={handleSubmit((formData) =>
+                  onSubmitForm(formData, "approved")
+                )}
+                className="w-24 h-8 mt-10 text-white sm:w-28 sm:h-8 md:w-28 md:h-10 lg:w-32 xl:w-52 lg:h-12"
+              />
+              <RequestDialogBox onReject={handleReject} />
+            </div>
           </div>
         </form>
       </div>

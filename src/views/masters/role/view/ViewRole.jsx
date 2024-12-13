@@ -19,6 +19,7 @@ const ViewRole = () => {
   const [permissions, setPermissions] = useState({});
 
   const headers = ["Menu", "Create", "Update", "Delete", "View"];
+  
   const { data: menuData, isLoading: menuLoading } = useGetAllMenu();
   const { data: roleData, isLoading: roleLoading, error } = useGetRole(id);
 

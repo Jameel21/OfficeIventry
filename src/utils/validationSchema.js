@@ -44,6 +44,5 @@ export const equipmentSchema = yup.object().shape({
      equipmentNameId:yup.string().required("equipment is required"),
      dateOfPurchase:yup.string().required("purchase date is required"),
      price:yup.string().required("price is required"),
-     quantity:yup.string().required("quantity is required"),
   
 })

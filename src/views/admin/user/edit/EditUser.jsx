@@ -14,6 +14,7 @@ const EditUser = () => {
   const { id } = useParams();
   const refetch = useQueryClient();
   const navigate = useNavigate();
+  
   const { data: userData, isLoading } = useGetSingleUser(id);
   const { data: roles } = useGetRoles();
   const { data: departmentNames } = useGetDepartment();

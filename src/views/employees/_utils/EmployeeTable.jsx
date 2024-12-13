@@ -6,7 +6,6 @@ import { useGetRequest } from "@/store/hooks/EmployeeHooks";
 const EmployeeTable = () => {
  
   const { data: userData , isLoading, error } = useGetRequest();
-  console.log("userData", userData)
 
   const headers = [
     "Employee Name",

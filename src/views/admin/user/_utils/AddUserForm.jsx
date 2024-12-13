@@ -21,7 +21,6 @@ const AddUserForm = () => {
   const registerMutation = useAddUser();
 
   const onSubmitForm = (data) => {
-    console.log(data)
     registerMutation.mutate(data, {
       onSuccess: (response) => {
         const {roleId} = response.data.data

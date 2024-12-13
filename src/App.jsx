@@ -18,12 +18,9 @@ import EquipmentLog from "./views/log/EquipmentLog";
 import AllocationLog from "./views/log/AllocationLog";
 import MaintenanceLog from "./views/log/MaintenanceLog";
 import AuthUser from "./utils/AuthUser";
-import EmployeeEquipment from "./views/equipments/employee/list/EmployeeEquipment";
-import AddOfficeEquipment from "./views/equipments/office/create/AddOfficeEquipment";
-import OfficeEquipment from "./views/equipments/office/list/OfficeEquipment";
-import AddEmployeeEquipment from "./views/equipments/employee/create/AddEmployeeEquipment";
-import ListAllUser from "./views/admin/user/List/ListAllUser";
+import EditEmployeeEquipment from "./views/equipments/employee/edit/EditEmployeeEquipment";
 import ViewEmployeeEquipment from "./views/equipments/employee/view/ViewEmployeeEquipment";
+import ListAllUser from "./views/admin/user/List/ListAllUser";
 import AddBrand from "./views/masters/brand/create/AddBrand";
 import ListAllBrand from "./views/masters/brand/list/ListAllBrand";
 import ListAllRole from "./views/masters/role/list/ListAllRole";
@@ -41,10 +38,12 @@ import ViewBrand from "./views/masters/brand/view/ViewBrand";
 import EditBrand from "./views/masters/brand/edit/EditBrand";
 import ViewCategory from "./views/masters/category/view/ViewCategory";
 import EditCategory from "./views/masters/category/edit/EditCategory";
-import EditEmployeeEquipment from "./views/equipments/employee/edit/EditEmployeeEquipment";
-import RequestLog from "./views/employees/list/RequestLog";
 import ViewOfficeEquipment from "./views/equipments/office/view/ViewOfficeEquipment";
 import EditOfficeEquipment from "./views/equipments/office/edit/EditOfficeEquipment";
+import AddOfficeEquipment from "./views/equipments/office/create/AddOfficeEquipment";
+import OfficeEquipment from "./views/equipments/office/list/OfficeEquipment";
+import AddEmployeeEquipment from "./views/equipments/employee/create/AddEmployeeEquipment";
+import EmployeeEquipment from "./views/equipments/employee/list/EmployeeEquipment";
 
 
 function App() {
@@ -61,7 +60,6 @@ function App() {
               <Route path="viewProfile/:id" element={<ViewProfile />} />
               <Route path="addRequest" element={<AddRequest />} />
               <Route path="viewUser/:id" element={<ViewUser />} />
-              <Route path="requestLog" element={<RequestLog />} />
               <Route path="notification" element={<Notification />}></Route>
             </Route>
           </Route>
@@ -82,7 +80,7 @@ function App() {
 
               <Route path="requests" element={<Requests />} />
               <Route path="approveRequest/:id" element={<ApproveRequests />} />
-
+              
               <Route path="viewAllUser" element={<ListAllUser />} />
               <Route path="editUser/:id" element={<EditUser />} />
               <Route path="addUser" element={<AddUser />}></Route>

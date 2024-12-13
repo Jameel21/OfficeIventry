@@ -57,8 +57,6 @@ const AddRoleForm = () => {
       })),
     };
 
-    console.log("Payload:", payload);
-
     addRoleMutation.mutate(payload, {
       onSuccess: () => {
         toast.success("Role was created successfully");

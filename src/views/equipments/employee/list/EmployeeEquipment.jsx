@@ -1,24 +1,20 @@
 import { useNavigate } from "react-router-dom";
 import {
-  useDeleteEquipment,
   useGetAllEquipment,
 } from "@/store/hooks/EquipmentsHooks";
 import { useState } from "react";
-import toast from "react-hot-toast";
-import { useQueryClient } from "@tanstack/react-query";
 import EquipmentTable from "../../_utils/EquipmentTable";
 import EquipmentHeader from "../../_utils/EquipmentHeader";
 
 const EmployeeEquipment = () => {
   const navigate = useNavigate();
-  const refetch = useQueryClient();
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const handleAddForm = () => {
     navigate("/admin/addEmployeeEquipment");
   };
 
-  const menu = ["view", "edit", "delete"];
+  const menu = ["view", "edit"];
   const headers = ["Equipment", "brand", "Price", "Date Of Purchase"];
 
   const { data, isLoading, error } = useGetAllEquipment(
@@ -26,8 +22,6 @@ const EmployeeEquipment = () => {
     limit,
     "Employee Equipment"
   );
-
-  const { mutate: deleteEquipment } = useDeleteEquipment();
 
   const handlePageChange = (newPage) => {
     setPage(newPage);
@@ -48,27 +42,15 @@ const EmployeeEquipment = () => {
         navigate(`/admin/editEmployeeEquip/${equipmentId}`);
         break;
       case "delete":
-        deleteEquipment(equipmentId, {
-          onSuccess: () => {
-            refetch.refetchQueries(["AllEquipment"]);
-            toast.error("Equipment deleted successfully");
-          },
-          onError: (error) => {
-            toast.error(
-              `Failed to delete Equipment: ${
-                error.response?.data?.message || error.message
-              }`
-            );
-          },
-        });
+        console.log("deleted");
     }
   };
   return (
     <div className="w-full overflow-y-auto">
-      <EquipmentHeader 
-      title={"Employee Equipment"}
-      buttonName={"Add Equipment"}
-      onClick={handleAddForm}
+      <EquipmentHeader
+        title={"Employee Equipment"}
+        buttonName={"Add Equipment"}
+        onClick={handleAddForm}
       />
       <div className="mt-8">
         <EquipmentTable

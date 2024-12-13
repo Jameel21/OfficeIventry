@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import InputWithLabel from "@/components/form-fields/_utils/InputWithLabel";
-import UiButton from "@/components/form-fields/_utils/Button";
 import { useNavigate, useParams } from "react-router-dom";
 import { CircleArrowLeft } from "lucide-react";
 import { useEffect } from "react";
@@ -13,8 +12,10 @@ const ViewProfile = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const refetch = useQueryClient();
-  const { data, isLoading } = useGetSingleUser(id);
+
   const { control, reset } = useForm({});
+
+  const { data, isLoading } = useGetSingleUser(id);
   const { mutate: updateUser } = useUpdateUser();
 
   useEffect(() => {
@@ -22,7 +23,7 @@ const ViewProfile = () => {
       reset({
         ...data,
         roleId: data?.roleId?.role,
-        departmentId: data?.departmentId?.department
+        departmentId: data?.departmentId?.department,
       });
     }
   }, [data, reset]);
@@ -59,72 +60,71 @@ const ViewProfile = () => {
 
   return (
     <div className="w-full">
-      <div>
-        <CircleArrowLeft
-          className="fixed w-4 cursor-pointer sm:w-auto hover:opacity-90"
-          onClick={handlePreviousPage}
-        />
-      </div>
-      <div className="flex flex-col">
-        <div className="mt-24 ml-12 sm:mt-12 md:ml-12 lg:ml-24">
-          <UiButton
-            variant="secondary"
-            buttonName="User Profile"
-            className="h-8 cursor-default w-28 sm:w-28 sm:h-8 md:w-36 md:h-10 lg:w-52 lg:h-12"
-          ></UiButton>
+      <div className="flex gap-14 md:gap-16 lg:gap-32">
+        <div>
+          <CircleArrowLeft
+            className="w-4 h-4 mt-1 cursor-pointer lg:mt-0 md:w-5 md:h-5 lg:w-6 lg:h-6 hover:opacity-90"
+            onClick={handlePreviousPage}
+          />
         </div>
-
-        <form className="flex flex-col gap-1 mt-8 sm:gap-2 md:gap-3">
-          <InputWithLabel
-            type="text"
-            id="userName"
-            control={control}
-            readOnly={true}
-            name="userName"
-            placeholder="username"
-            inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
-          />
-          <InputWithLabel
-            type="text"
-            id="email"
-            control={control}
-            readOnly={true}
-            name="email"
-            placeholder="email"
-            inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
-          />
-          <InputWithLabel
-            type="text"
-            id="employeeId"
-            control={control}
-            readOnly={true}
-            name="employeeId"
-            placeholder="employee id"
-            inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
-          />
-          <InputWithLabel
-            type="text"
-            id="roleId"
-            control={control}
-            name="roleId"
-            readOnly={true}
-            placeholder="role"
-            inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
-          />
-            <InputWithLabel
-            type="text"
-            id="departmentId"
-            control={control}
-            name="departmentId"
-            readOnly={true}
-            placeholder="department"
-            inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
-          />
-          <div className="flex items-center gap-4 ml-44">
-            <PasswordDialogBox onClick={handleChangePassword} />
-          </div>
-        </form>
+        <div className="text-lg font-medium lg:text-xl text-slate-700">User Details</div>
       </div>
+
+      <form className="flex flex-col gap-1 mt-4 lg:gap-2">
+        <InputWithLabel
+          type="text"
+          label="Username"
+          id="userName"
+          control={control}
+          readOnly={true}
+          name="userName"
+          placeholder="username"
+          inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
+        />
+        <InputWithLabel
+          type="text"
+          label="Email"
+          id="email"
+          control={control}
+          readOnly={true}
+          name="email"
+          placeholder="email"
+          inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
+        />
+        <InputWithLabel
+          type="text"
+          label="Employee Id"
+          id="employeeId"
+          control={control}
+          readOnly={true}
+          name="employeeId"
+          placeholder="employee id"
+          inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
+        />
+        <InputWithLabel
+          type="text"
+          label="Role"
+          id="roleId"
+          control={control}
+          name="roleId"
+          readOnly={true}
+          placeholder="role"
+          inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
+        />
+        <InputWithLabel
+          type="text"
+          label="Department"
+          id="departmentId"
+          control={control}
+          name="departmentId"
+          readOnly={true}
+          placeholder="department"
+          inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
+        />
+        <div className="flex items-center gap-4 text-white">
+          <PasswordDialogBox onClick={handleChangePassword} />
+        </div>
+      </form>
     </div>
   );
 };

@@ -51,6 +51,10 @@ const AddOfficeEquipment = () => {
       delete formattedData.serialNumber;
     }
 
+    if (!data.quantity) {
+      delete formattedData.quantity;
+    }
+
     if (!data.warrantyPeriod) {
       delete formattedData.warrantyPeriod;
     }

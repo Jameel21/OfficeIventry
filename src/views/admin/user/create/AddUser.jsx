@@ -11,7 +11,6 @@ const AddUser = () => {
     <div className="flex flex-col w-full h-full lg:items-start lg:justify-start">
       <div>
         <CircleArrowLeft
-        // size={16}
           className="w-4 h-4 cursor-pointer md:w-5 md:h-5 hover:opacity-90 "
           onClick={handlePreviousPage}
         />

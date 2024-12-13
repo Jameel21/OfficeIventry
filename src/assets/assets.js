@@ -18,7 +18,7 @@ export  const currentStatus = [
 ]
 
 export const sidebarMenu ={
-  superadmin:[
+  SuperAdmin:[
     {
       icon: Lock ,
       url:'/admin',
@@ -48,11 +48,6 @@ export const sidebarMenu ={
           url:'/admin/category',
           menu:'Category'
         },
-        // {
-        //   icon:GitPullRequestArrow,
-        //   url:'/admin/menu',
-        //   menu:'Menu'
-        // },
       ]
     },
     {
@@ -148,7 +143,7 @@ export const sidebarMenu ={
 //   }
 
 //   ],
-employee:[
+Employee:[
   {
     icon:User,
     menu:'Request',

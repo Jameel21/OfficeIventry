@@ -43,7 +43,6 @@ const AddCategoryForm = ({ equipmentType }) => {
       isSerialNumber: data.isSerialNumber,
       brandIds: data.brandIds,
     };
-    console.log("formData", formData);
     addCategoryMutation.mutate(formData, {
       onSuccess: () => {
         toast.success("Category was created successfully");

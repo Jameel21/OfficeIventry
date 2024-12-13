@@ -15,7 +15,7 @@ const RequestDialogBox = ({onReject}) => {
 
   return (
     <DialogBox
-      className="w-24 h-8 mt-9 sm:w-28 sm:h-8 md:w-32 md:h-10 lg:w-52 lg:h-12"
+      className="w-24 h-8 mt-10 text-white sm:w-28 sm:h-8 md:w-28 md:h-10 lg:w-32 xl:w-52 lg:h-12"
       triggerName="Reject"
       dialogTitle="Reason for rejection"
       firstName="rejectedReason"

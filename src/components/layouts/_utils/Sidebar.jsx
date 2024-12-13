@@ -23,14 +23,14 @@ const DemoSidebar = () => {
   const role = getDecodedData("userRole")
   let option;
   switch (role) {
-    case "superadmin":
-      option = sidebarMenu.superadmin;
+    case "SuperAdmin":
+      option = sidebarMenu.SuperAdmin;
       break;
-    case "employee":
-      option = sidebarMenu.employee;
+    case "Employee":
+      option = sidebarMenu.Employee;
       break;
     default:
-      option = sidebarMenu.employee;
+      option = sidebarMenu.Employee;
       break;
   }
 

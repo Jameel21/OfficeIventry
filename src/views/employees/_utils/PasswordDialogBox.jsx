@@ -15,7 +15,7 @@ const PasswordDialogBox = ({onClick}) => {
 
   return (
     <DialogBox
-      className="w-24 h-8 mt-3 sm:w-28 sm:h-8 md:w-32 md:h-10 lg:w-52 lg:h-12"
+      className="w-32 h-8 mt-3 text-white sm:w-28 sm:h-8 md:w-32 md:h-10 lg:w-52 lg:h-12"
       triggerName="Change password"
       dialogTitle="Change Password"
       firstName="currentPassword"

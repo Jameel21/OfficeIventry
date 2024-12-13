@@ -13,7 +13,6 @@ const AddDepartmentForm = () => {
   const addDepartmentMutation = useAddDepartment()
 
   const onSubmitForm = (data) => {
-    console.log(data)
     addDepartmentMutation.mutate(data, {
       onSuccess: () => {
         toast.success("Department was created successfully");

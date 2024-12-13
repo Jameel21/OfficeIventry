@@ -77,6 +77,7 @@ const Requests = () => {
   const handleApprove = (id, equipmentId) => {
     navigate(`/admin/approveRequest/${id}`, { state: { equipmentId } });
   };
+  
   return (
     <div>
       <div></div>

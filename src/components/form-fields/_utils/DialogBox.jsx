@@ -30,7 +30,7 @@ const DialogBox = ({
         <Button
           variant="secondary"
           className={cn(
-            "text-sm rounded-lg text-slate-300 md:text-base lg:text-lg bg-secondary sm:rounded-xl",
+            "text-sm rounded-lg text-slate-300 md:text-sm lg:text-lg bg-secondary sm:rounded-xl",
             className
           )}
         >

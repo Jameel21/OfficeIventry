@@ -1,24 +1,20 @@
 import { useNavigate } from "react-router-dom";
 import {
-  useDeleteEquipment,
   useGetAllEquipment,
 } from "@/store/hooks/EquipmentsHooks";
 import { useState } from "react";
-import toast from "react-hot-toast";
-import { useQueryClient } from "@tanstack/react-query";
 import EquipmentTable from "../../_utils/EquipmentTable";
 import EquipmentHeader from "../../_utils/EquipmentHeader";
 
 const OfficeEquipment = () => {
   const navigate = useNavigate();
-  const refetch = useQueryClient();
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const handleAddForm = () => {
     navigate("/admin/addOfficeEquipment");
   };
 
-  const menu = ["view", "edit", "delete"];
+  const menu = ["view", "edit",];
   const headers = ["Equipment", "brand", "Price", "Date Of Purchase"];
 
   const { data, isLoading, error } = useGetAllEquipment(
@@ -27,8 +23,6 @@ const OfficeEquipment = () => {
     "Office Equipment"
   );
   
-  const { mutate: deleteEquipment } = useDeleteEquipment();
-
   const handlePageChange = (newPage) => {
     setPage(newPage);
   };
@@ -48,19 +42,7 @@ const OfficeEquipment = () => {
         navigate(`/admin/editOfficeEquip/${equipmentId}`);
         break;
       case "delete":
-        deleteEquipment(equipmentId, {
-          onSuccess: () => {
-            refetch.refetchQueries(["AllEquipment"]);
-            toast.error("Equipment deleted successfully");
-          },
-          onError: (error) => {
-            toast.error(
-              `Failed to delete Equipment: ${
-                error.response?.data?.message || error.message
-              }`
-            );
-          },
-        });
+        console.log("deleted")
     }
   };
   return (

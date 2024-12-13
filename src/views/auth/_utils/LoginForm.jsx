@@ -29,16 +29,16 @@ const LoginForm = () => {
         toast.success(`Login Successful, welcome ${userRole}`);
 
         switch (userRole) {
-          case "superadmin":
+          case "SuperAdmin":
             navigate("/admin");
             break;
-          case "admin":
+          case "Admin":
             navigate("/");
             break;
-          case "hr":
+          case "HR":
             navigate("/");
             break;
-          case "employee":
+          case "Employee":
             navigate("/viewEmployee");
             break;
           default:
