@@ -43,7 +43,7 @@ const ViewProfile = () => {
         onSuccess: () => {
           toast.success("Password updated successfully");
           refetch.refetchQueries(["SingleUser", id]);
-          navigate("/viewEmployee");
+          navigate("/viewRequest");
         },
         onError: (error) => {
           const errorMessage =
