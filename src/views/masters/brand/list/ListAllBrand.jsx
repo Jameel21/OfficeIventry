@@ -50,11 +50,11 @@ const ListAllBrand = () => {
   return (
     <div className="w-full">
       <div className="flex items-center justify-between">
-        <div className="text-lg font-medium text-slate-700">Brand</div>
+        <div className="text-base font-normal md:text-lg md:font-medium text-slate-700">Brand</div>
         <div className="flex items-center gap-2">
           <UiButton
             onClick={handleAddUser}
-            className={"w-40 h-11 text-white"}
+            className={"w-28 h-7 md:w-40 md:h-11 text-white"}
             variant={"secondary"}
             buttonName={"Add Brand"}
           />
@@ -62,7 +62,7 @@ const ListAllBrand = () => {
       </div>
       <div className="mt-8">
         <div className="overflow-y-auto h-[500px]">
-          <UiTable headers={headers} headerClass={"h-12 text-lg"}>
+          <UiTable headers={headers} headerClass={"h-12 text-sm md:text-lg"}>
             {isLoading ? (
               <TableRow className="h-12">
                 <TableCell colSpan={headers.length}>

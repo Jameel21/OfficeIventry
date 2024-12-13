@@ -62,7 +62,10 @@ const EditUser = () => {
           navigate("/admin/viewAllUser");
         },
         onError: (error) => {
-          toast.error(`Failed to update user: ${error.message}`);
+          const errorMessage =
+            error.response?.data?.message ||
+            "Updating Role failed. Please try again.";
+          toast.error(errorMessage);
         },
       }
     );

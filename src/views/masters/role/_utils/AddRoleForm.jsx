@@ -92,7 +92,7 @@ const AddRoleForm = () => {
           <h1 className="text-xs font-medium sm:text-sm md:text-bold lg:text-lg text-slate-700">
             Role Permissions
           </h1>
-          <UiTable headers={headers} headerClass={"h-12 text-lg "}>
+          <UiTable headers={headers} headerClass={"h-12 text-sm md:text-lg "}>
             {menuData && menuData?.length > 0 ? (
               menuData.map((item, index) => (
                 <TableRow

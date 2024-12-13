@@ -9,7 +9,7 @@ const getRequest = async () => {
   return response;
 };
 
-const getPendingRequests = async (status) => {
+const getAllRequests = async (status) => {
   const response = await API.get("/equipmentRequest/getAllRequests", {
     params: { status },
   });
@@ -22,7 +22,7 @@ export const getRequestById = async (id) => {
 };
 
 const updateReturn = async ({ id, ...fields }) => {
-  const response = await API.patch(
+  const response = await API.put(
     `/equipmentRequest/updatingReturn/${id}`,
     fields
   );
@@ -39,6 +39,6 @@ export default {
   getRequest,
   updateReturn,
   getRequestById,
-  getPendingRequests,
+  getAllRequests,
   updatePendingRequest,
 };

@@ -2,7 +2,7 @@ import UiTable from "@/components/form-fields/_utils/UiTable";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
-  useGetPendingRequests,
+  useGetAllRequests,
   useUpdateRequestFields,
 } from "@/store/hooks/EmployeeHooks";
 import { useQueryClient } from "@tanstack/react-query";
@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 import LoadSpinner from "@/components/spinner/LoadSpinner";
 
 const UpdatedRequests = () => {
-  const { data:userData, isLoading, error } = useGetPendingRequests([
+  const { data:userData, isLoading, error } = useGetAllRequests([
     "approved",
     "rejected",
     "completed"

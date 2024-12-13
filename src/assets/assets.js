@@ -73,14 +73,8 @@ export const sidebarMenu ={
     },
     {
       icon:UserRoundPen,
+      url: '/admin/viewAllUser',
       menu:'User',
-      submenu: [
-        {
-          icon:FileText,
-          url:'/admin/viewAllUser',
-          menu:'Add User'
-        },
-      ]
     },
     {
       icon:CirclePlus,
@@ -93,14 +87,9 @@ export const sidebarMenu ={
         },
         {
           icon:GitPullRequestArrow,
-          url:'/admin/pendingRequests',
+          url:'/admin/requests',
           menu:'All Request'
         },
-        // {
-        //   icon:BadgeCheck,
-        //   url:'/admin/updatedRequests',
-        //   menu:'Updated Request'
-        // },
       ]
     },
     {
@@ -166,22 +155,11 @@ employee:[
     submenu: [
       {
         icon:Monitor,
-        url:'/viewEmployee',
+        url:'/viewRequest',
         menu:'Add Request'
       },
     ]
   },
-  {
-    icon:FileText,
-    menu:'Logs',
-    submenu:[
-      {
-        icon:User,
-        url:'/viewEmployee',
-        menu: 'Request Log'
-      }]
-  },
-
   {
     icon:Bell,
     url:'/notification',

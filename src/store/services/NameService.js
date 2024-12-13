@@ -11,8 +11,8 @@ const getDepartmentsName = async () => {
 }
 
 const getEquipmentsName = async (equipmentType) => {
-  const response = await API.get("/master/category/getall", {
-    params: { equipment_type: equipmentType },
+  const response = await API.get("/master/category/getNames", {
+    params: { equipmentType },
   });
   return response
 }
@@ -20,7 +20,7 @@ const getEquipmentsName = async (equipmentType) => {
 
 const getSerialNumbers = async (equipmentId, brandId) => {
   const response = await API.get("/equipment/getSerialNumber", {
-    params: { equipmentId, brandId }, // Pass as query parameters
+    params: { equipmentId, brandId },
   });
   return response;
 };

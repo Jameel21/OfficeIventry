@@ -5,17 +5,18 @@ import { TableCell, TableRow } from "@/components/ui/table";
 
 const AllocationLog = () => {
 
-  const headers = ["Equipment", "Issue date", "Return date"];
+  const headers = ["Equipment", "Allocated To", "Allocated By", "Date"];
 
   const data = [{
     equipment: "Laptop",
-    issue_date: "01/13/2024",
-    return_date: "05/15/2024"
+    allocatedTo: "Rio",
+    allocatedBy: "Raj",
+    date: "05/15/2024"
   }];
   return (
     <div >
       <div className="mt-2 text-lg font-medium text-slate-700">Allocation Log</div>
-      <div className="mt-12">
+      <div className="mt-8">
         <UiTable headers={headers} headerClass={"h-12 text-lg"}>
           {data && data.length > 0 ? (
             data.map((item, index) => (
@@ -27,10 +28,13 @@ const AllocationLog = () => {
               >
                 <TableCell>{item.equipment}</TableCell>
                 <TableCell>
-                  {new Date(item.issue_date).toLocaleDateString("en-GB")}
+                  {item.allocatedTo}
                 </TableCell>
                 <TableCell>
-                  {new Date(item.return_date).toLocaleDateString("en-GB")}
+                  {item.allocatedBy}
+                </TableCell>
+                <TableCell>
+                  {new Date(item.date).toLocaleDateString("en-GB")}
                 </TableCell>
               </TableRow>
             ))

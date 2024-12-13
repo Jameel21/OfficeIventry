@@ -26,7 +26,7 @@ export const useGetEquipmentName = (equipmentType) => {
     queryKey: ["equipmentName", equipmentType],
     queryFn:async () => {
       const response = await nameService.getEquipmentsName(equipmentType);
-      return response?.data?.data
+      return response?.data?.data || []
     }
   })
 }

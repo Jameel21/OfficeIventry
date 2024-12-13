@@ -45,8 +45,10 @@ const deleteDepartment = async (id) =>{
 }
 
 //category
-const addCategory = async (data) => {
-  const response = await API.post("master/category/create", data);
+const addCategory = async (data, equipmentType) => {
+  const response = await API.post("master/category/create",data,{
+    params:{equipmentType},
+  });
   return response;
 };
 const getAllCategory = async (equipmentType) => {
@@ -55,6 +57,18 @@ const getAllCategory = async (equipmentType) => {
   });
   return response;
 };
+const getCategoryById = async (id) => {
+  const response = await API.get(`/master/category/getById/${id}`);
+  return response;
+};
+const updateCategory = async(id, data) => {
+  const response = await API.put(`/master/category/update/${id}`, data);
+  return response
+}
+const deleteCategory = async (id) =>{
+  const response = await API.delete(`/master/category/delete/${id}`);
+  return response
+}
 
 //role
 const addRole = async (data) => {
@@ -85,23 +99,7 @@ const getAllMenu = async () => {
 };
 
 
-export default {
-  addRole,
-  getAllRole,
-  getRoleById,
-  updateRole,
-  deleteRole,
-  getAllMenu,
-  addBrand,
-  getAllBrand,
-  getBrandById,
-  updateBrand,
-  deleteBrand,
-  addCategory,
-  getAllCategory,
-  addDepartment,
-  getAllDepartment,
-  getDepartmentById,
-  updateDepartment,
-  deleteDepartment
+export default {addRole,getAllRole,getRoleById,updateRole,deleteRole,getAllMenu,addBrand,getAllBrand,getBrandById,
+updateBrand,deleteBrand,addCategory,getAllCategory,getCategoryById,updateCategory,deleteCategory,addDepartment,
+getAllDepartment,getDepartmentById,updateDepartment,deleteDepartment
 };

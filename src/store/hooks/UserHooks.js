@@ -1,10 +1,10 @@
 import { useMutation, useQuery} from "@tanstack/react-query";
-import UserService from "../services/UserService";
+import userService from "../services/UserService";
 
 
 export const useAddUser = () => {
   return useMutation({
-    mutationFn: UserService.adduser,  
+    mutationFn: userService.adduser,  
   });
 };
 
@@ -12,7 +12,7 @@ export const useGetAllUsers = ({ page = 1, limit = 10 }) => {
   return useQuery({
     queryKey:["AllUsers",page, limit],
     queryFn: async () => {
-     const response = await UserService.getAllUser({ page, limit })
+     const response = await userService.getAllUser({ page, limit })
      return response?.data?.data || []
     } 
   })
@@ -22,7 +22,7 @@ export const useGetSingleUser = (id) => {
   return useQuery({
     queryKey: ["SingleUser", id],
     queryFn: async () => {
-      const response = await UserService.getSingleUser(id);
+      const response = await userService.getSingleUser(id);
       return response?.data?.data || null;
     },
     enabled: !!id, // get only if the particular id exists
@@ -31,12 +31,12 @@ export const useGetSingleUser = (id) => {
 
 export const useUpdateUser = () => {
   return useMutation({
-    mutationFn: ({id,data}) => UserService.updateUser(id,data)
+    mutationFn: ({id,data}) => userService.updateUser(id,data)
   })
 }
 
 export const useDeleteUser = () => {
   return useMutation({
-    mutationFn:UserService.deleteUser
+    mutationFn:userService.deleteUser
   })
 }

@@ -9,17 +9,18 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { cn } from "@/lib/utils";
 import { Menu } from "lucide-react";
 
 
-const BreadCrumbs = ({data, onChange}) => {
+const BreadCrumbs = ({data, onChange, className}) => {
   return (
-    <Breadcrumb>
+    <Breadcrumb >
       <BreadcrumbList>
         <BreadcrumbItem>
           <DropdownMenu>
             <DropdownMenuTrigger className="flex items-center gap-1 outline-none">
-              <Menu className="w-5 h-5" />
+              <Menu className={cn("w-5 h-5", className)} />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start">
             {data.map((item, index) => (

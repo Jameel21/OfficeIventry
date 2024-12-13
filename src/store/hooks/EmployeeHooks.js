@@ -17,12 +17,12 @@ export const useGetRequest = () => {
   });
 };
 
-export const useGetPendingRequests = (status) => {
+export const useGetAllRequests = (status) => {
   return useQuery({
     queryKey: ["pendingRequests", status],
     queryFn: async () => {
-      const response = await employeeService.getPendingRequests(status);
-      return response?.data?.data?.responseData || []
+      const response = await employeeService.getAllRequests(status);
+      return response?.data?.data?.equipmentRequests || []
     },
     enabled: !!status,
   })

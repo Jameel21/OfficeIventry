@@ -23,7 +23,7 @@ const EditRole = () => {
   const refetch = useQueryClient();
   const { control, handleSubmit, reset } = useForm({});
   const [permissions, setPermissions] = useState({});
-  const [roleName, setRoleName] = useState("");
+ 
 
   const headers = ["Menu", "Create", "Update", "Delete", "View"];
 
@@ -43,9 +43,11 @@ const EditRole = () => {
         };
       });
       setPermissions(initialPermissions);
-      setRoleName(roleData.role); 
+      reset({
+        role:roleData?.role
+      });
     }
-  }, [menuData, roleData]);
+  }, [menuData, roleData, reset]);
 
   const handleCheckboxChange = (menuId, action) => {
     setPermissions((prev) => ({
@@ -59,7 +61,7 @@ const EditRole = () => {
 
   const onSubmitForm = (data) => {
     const payload = {
-      role: data.role || roleName,
+      role: data.role || roleData.role,
       permissions: Object.keys(permissions).map((menuId) => ({
         menu: menuId,
         ...permissions[menuId],
@@ -111,14 +113,14 @@ const EditRole = () => {
           id="role"
           control={control}
           name="role"
-          placeholder={roleData?.role}
+          placeholder="role"
           inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
         />
         <div>
           <h1 className="text-xs font-medium sm:text-sm md:text-bold lg:text-lg text-slate-700">
             Role Permissions
           </h1>
-          <UiTable headers={headers} headerClass={"h-12 text-lg"}>
+          <UiTable headers={headers} headerClass={"h-12 text-sm md:text-lg"}>
             {menuData && menuData?.length > 0 ? (
               menuData.map((item, index) => (
                 <TableRow

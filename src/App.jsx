@@ -1,21 +1,17 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-// import Officeequip from "./views/equipments/Invertry";
 import EmployeeLog from "./views/log/EmployeeLog";
 import Notification from "./views/notification/Notification";
 import Login from "./views/auth/Login";
 import Layout from "./components/layouts/Layout";
-// import AddForm from "./views/equipments/AddForm";
-// import List from "./views/equipments/List";
 import AddUser from "./views/admin/user/create/AddUser";
 import ViewRequest from "./views/employees/view/ViewRequest";
 import AddRequest from "./views/employees/create/AddRequest";
 import AdminDashboard from "./views/admin/AdminDashboard";
 import ViewUser from "./views/admin/user/View/ViewUser";
-import PendingRequests from "./views/admin/request/PendingRequests";
-import ApproveRequests from "./views/admin/request/ApproveRequests";
-import UpdatedRequests from "./views/admin/request/UpdatedRequests";
+import Requests from "./views/admin/request/list/Requests";
+import ApproveRequests from "./views/admin/request/edit/ApproveRequests";
 import EditUser from "./views/admin/user/edit/EditUser";
 import ViewProfile from "./views/employees/profile/ViewProfile";
 import EquipmentLog from "./views/log/EquipmentLog";
@@ -43,6 +39,12 @@ import ViewDepartment from "./views/masters/department/view/ViewDepartment";
 import EditDepartment from "./views/masters/department/edit/EditDepartment";
 import ViewBrand from "./views/masters/brand/view/ViewBrand";
 import EditBrand from "./views/masters/brand/edit/EditBrand";
+import ViewCategory from "./views/masters/category/view/ViewCategory";
+import EditCategory from "./views/masters/category/edit/EditCategory";
+import EditEmployeeEquipment from "./views/equipments/employee/edit/EditEmployeeEquipment";
+import RequestLog from "./views/employees/list/RequestLog";
+import ViewOfficeEquipment from "./views/equipments/office/view/ViewOfficeEquipment";
+import EditOfficeEquipment from "./views/equipments/office/edit/EditOfficeEquipment";
 
 
 function App() {
@@ -55,16 +57,11 @@ function App() {
 
           <Route element={<AuthUser />}>
             <Route path="/" element={<Layout />}>
-              {/* <Route path="inventry" element={<Officeequip />}></Route> */}
-              {/* <Route path="inventry" element={<Officeequip />}></Route> */}
-              {/* <Route path="add-form" element={<AddForm />}></Route> */}
-              {/* <Route path="employee" element={<Employee />}></Route> */}
               <Route path="viewRequest" element={<ViewRequest />} />
               <Route path="viewProfile/:id" element={<ViewProfile />} />
-              <Route path="requestForm" element={<AddRequest />} />
-              {/* <Route path="list" element={<List />}></Route> */}
+              <Route path="addRequest" element={<AddRequest />} />
               <Route path="viewUser/:id" element={<ViewUser />} />
-              <Route path="employeeLog" element={<EmployeeLog />}></Route>
+              <Route path="requestLog" element={<RequestLog />} />
               <Route path="notification" element={<Notification />}></Route>
             </Route>
           </Route>
@@ -72,20 +69,18 @@ function App() {
           <Route element={<AuthUser />}>
             <Route path="/admin" element={<Layout />}>
               <Route index element={<AdminDashboard />} />
-              {/* <Route path="inventry" element={<Officeequip />}></Route> */}
-              {/* <Route path="inventry" element={<Officeequip />}></Route> */}
-              {/* <Route path="add-form" element={<AddForm />}></Route> */}
 
-              <Route path="addOfficeEquipment" element={<AddOfficeEquipment />} />
+              <Route path="addOfficeEquipment" element={<AddOfficeEquipment />}/>
               <Route path="officeEquipment" element={<OfficeEquipment />} />
-              <Route path="addEmployeeEquipment" element={<AddEmployeeEquipment />} />
-              <Route path="employeeEquipment" element={<EmployeeEquipment />} />
-              <Route path="viewEmployeeEquip/:id" element={<ViewEmployeeEquipment />} />
+              <Route path="viewOfficeEquip/:id" element={<ViewOfficeEquipment />}/>
+              <Route path="editOfficeEquip/:id" element={<EditOfficeEquipment />}/>
 
-              <Route path="requestForm" element={<AddRequest />} />
-              {/* <Route path="list" element={<List />}></Route> */}
-              <Route path="pendingRequests" element={<PendingRequests />} />
-              <Route path="updatedRequests" element={<UpdatedRequests />} />
+              <Route path="addEmployeeEquipment" element={<AddEmployeeEquipment />}/>
+              <Route path="employeeEquipment" element={<EmployeeEquipment />} />
+              <Route path="viewEmployeeEquip/:id" element={<ViewEmployeeEquipment />}/>
+              <Route path="editEmployeeEquip/:id" element={<EditEmployeeEquipment />}/>
+
+              <Route path="requests" element={<Requests />} />
               <Route path="approveRequest/:id" element={<ApproveRequests />} />
 
               <Route path="viewAllUser" element={<ListAllUser />} />
@@ -106,6 +101,8 @@ function App() {
 
               <Route path="category" element={<ListAllCategory />}></Route>
               <Route path="addCategory" element={<AddCategory />}></Route>
+              <Route path="viewCategory/:id" element={<ViewCategory />}></Route>
+              <Route path="editCategory/:id" element={<EditCategory />}></Route>
 
               <Route path="brand" element={<ListAllBrand />}></Route>
               <Route path="addBrand" element={<AddBrand />}></Route>

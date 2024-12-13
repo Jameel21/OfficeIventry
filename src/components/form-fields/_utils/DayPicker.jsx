@@ -1,4 +1,4 @@
-import React from "react";
+import { Label } from "@/components/ui/label";
 import { useController } from "react-hook-form";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -11,9 +11,17 @@ import {
 } from "@/components/ui/popover";
 import { format } from "date-fns";
 
-const DatePickerDemo = ({ control, name, placeholder, className }) => {
+const DatePickerDemo = ({
+  control,
+  name,
+  placeholder,
+  className,
+  label,
+  labelClassName,
+}) => {
   const {
-    field, fieldState: { error },
+    field,
+    fieldState: { error },
   } = useController({
     control,
     name,
@@ -21,18 +29,31 @@ const DatePickerDemo = ({ control, name, placeholder, className }) => {
   });
 
   return (
-    <div>
+    <div className="flex flex-col">
+      <Label
+        className={cn(
+          "text-xs sm:text-sm md:text-base lg:text-lg text-slate-700",
+          labelClassName
+        )}
+      >
+        {label}
+      </Label>
       <Popover>
         <PopoverTrigger asChild>
           <Button
             variant={"outline"}
             className={cn(
               "justify-start text-left font-normal rounded-md sm:rounded-lg lg:rounded-xl text-sm transition-all focus:ring-1 focus:ring-ring border border-gray-300 focus:outline-none",
-              !field.value && "text-muted-foreground", className
+              !field.value && "text-muted-foreground",
+              className
             )}
           >
             <CalendarIcon />
-            {field.value ? format(field.value, "PPP") : <span>{placeholder}</span>}
+            {field.value ? (
+              format(field.value, "PPP")
+            ) : (
+              <span>{placeholder}</span>
+            )}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0">

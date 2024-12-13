@@ -1,17 +1,17 @@
 import { useMutation, useQuery} from "@tanstack/react-query";
-import MasterService from "../services/MasterService"
+import masterService from "../services/MasterService"
 
 //brand
 export const useAddBrand = () => {
   return useMutation({
-    mutationFn:MasterService.addBrand
+    mutationFn:masterService.addBrand
   })
 }
 export const useGetAllBrand = () => {
   return useQuery({
     queryKey: ["AllBrand"],
     queryFn: async () => {
-      const response = await MasterService.getAllBrand()
+      const response = await masterService.getAllBrand()
       return response?.data?.data || []
     }
   })
@@ -20,33 +20,33 @@ export const useGetBrand = (id) => {
   return useQuery({
     queryKey: ["Brand"],
     queryFn: async () => {
-      const response = await MasterService.getBrandById(id)
+      const response = await masterService.getBrandById(id)
       return response?.data?.data || []
     }
   })
 }
 export const useUpdateBrand = () => {
   return useMutation({
-    mutationFn: ({id, data}) => MasterService.updateBrand(id,data)
+    mutationFn: ({id, data}) => masterService.updateBrand(id,data)
   })
 }
 export const useDeleteBrand= () => {
   return useMutation({
-    mutationFn: MasterService.deleteBrand
+    mutationFn: masterService.deleteBrand
   })
 }
 
 //department
 export const useAddDepartment = () => {
   return useMutation({
-    mutationFn:MasterService.addDepartment
+    mutationFn:masterService.addDepartment
   })
 }
 export const useGetAllDepartment = () => {
   return useQuery({
     queryKey: ["AllDepartment"],
     queryFn: async () => {
-      const response = await MasterService.getAllDepartment()
+      const response = await masterService.getAllDepartment()
       return response?.data?.data || []
     }
   })
@@ -55,35 +55,54 @@ export const useGetDepartment = (id) => {
   return useQuery({
     queryKey: ["Department"],
     queryFn: async () => {
-      const response = await MasterService.getDepartmentById(id)
+      const response = await masterService.getDepartmentById(id)
       return response?.data?.data || []
     }
   })
 }
 export const useUpdateDepartment = () => {
   return useMutation({
-    mutationFn: ({id, data}) => MasterService.updateDepartment(id,data)
+    mutationFn: ({id, data}) => masterService.updateDepartment(id,data)
   })
 }
 export const useDeleteDepartment = () => {
   return useMutation({
-    mutationFn: MasterService.deleteDepartment
+    mutationFn: masterService.deleteDepartment
   })
 }
 
 //category
-export const useAddCategory = () => {
+export const useAddCategory = (equipmentType) => {
   return useMutation({
-    mutationFn:MasterService.addCategory
+    mutationFn:((data) => masterService.addCategory(data, equipmentType))
   })
 }
 export const useGetAllCategory = (equipmentType) => {
   return useQuery({
     queryKey: ["AllCategory", equipmentType],
     queryFn: async () => {
-      const response = await MasterService.getAllCategory(equipmentType)
+      const response = await masterService.getAllCategory(equipmentType)
       return response?.data?.data || []
     }
+  })
+}
+export const useGetCategory = (id) => {
+  return useQuery({
+    queryKey: ["Category"],
+    queryFn: async () => {
+      const response = await masterService.getCategoryById(id)
+      return response?.data?.data || []
+    }
+  })
+}
+export const useUpdateCategory = () => {
+  return useMutation({
+    mutationFn: ({id, data}) => masterService.updateCategory(id,data)
+  })
+}
+export const useDeleteCategory = () => {
+  return useMutation({
+    mutationFn: masterService.deleteCategory
   })
 }
 
@@ -91,14 +110,14 @@ export const useGetAllCategory = (equipmentType) => {
 //role
 export const useAddRole = () => {
   return useMutation({
-    mutationFn:MasterService.addRole
+    mutationFn:masterService.addRole
   })
 }
 export const useGetAllRole = () => {
   return useQuery({
     queryKey: ["AllRole"],
     queryFn: async () => {
-      const response = await MasterService.getAllRole()
+      const response = await masterService.getAllRole()
       return response?.data?.data || []
     }
   })
@@ -107,19 +126,19 @@ export const useGetRole = (id) => {
   return useQuery({
     queryKey: ["Role"],
     queryFn: async () => {
-      const response = await MasterService.getRoleById(id)
+      const response = await masterService.getRoleById(id)
       return response?.data?.data || []
     }
   })
 }
 export const useUpdateRole = () => {
   return useMutation({
-    mutationFn: ({id, data}) => MasterService.updateRole(id,data)
+    mutationFn: ({id, data}) => masterService.updateRole(id,data)
   })
 }
 export const useDeleteRole = () => {
   return useMutation({
-    mutationFn: MasterService.deleteRole
+    mutationFn: masterService.deleteRole
   })
 }
 
@@ -128,7 +147,7 @@ export const useGetAllMenu = () => {
   return useQuery({
     queryKey: ["AllMenu"],
     queryFn: async () => {
-      const response = await MasterService.getAllMenu()
+      const response = await masterService.getAllMenu()
       return response?.data?.data || []
     }
   })

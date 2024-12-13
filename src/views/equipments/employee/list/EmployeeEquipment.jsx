@@ -1,14 +1,17 @@
 import { useNavigate } from "react-router-dom";
-import UiButton from "@/components/form-fields/_utils/Button";
-import UiTable from "@/components/form-fields/_utils/UiTable";
-import { TableCell, TableRow } from "@/components/ui/table";
-import BreadCrumbs from "@/components/form-fields/_utils/BreadCrumbs";
-import { useGetAllEquipment } from "@/store/hooks/EquipmentsHooks";
-import LoadSpinner from "@/components/spinner/LoadSpinner";
+import {
+  useDeleteEquipment,
+  useGetAllEquipment,
+} from "@/store/hooks/EquipmentsHooks";
 import { useState } from "react";
+import toast from "react-hot-toast";
+import { useQueryClient } from "@tanstack/react-query";
+import EquipmentTable from "../../_utils/EquipmentTable";
+import EquipmentHeader from "../../_utils/EquipmentHeader";
 
 const EmployeeEquipment = () => {
   const navigate = useNavigate();
+  const refetch = useQueryClient();
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const handleAddForm = () => {
@@ -16,129 +19,103 @@ const EmployeeEquipment = () => {
   };
 
   const menu = ["view", "edit", "delete"];
-const headers = ["Equipment", "brand", "Price", "Date Of Purchase",];
+  const headers = ["Equipment", "brand", "Price", "Date Of Purchase"];
 
-const {data, isLoading, error} = useGetAllEquipment(page, limit, "Employee Equipment");
+  const { data, isLoading, error } = useGetAllEquipment(
+    page,
+    limit,
+    "Employee Equipment"
+  );
 
-const handlePageChange = (newPage) => {
-  setPage(newPage);
-};
+  const { mutate: deleteEquipment } = useDeleteEquipment();
 
-const handleLimitChange = (e) => {
-  const newLimit = parseInt(e.target.value) || 10;
-  setLimit(newLimit);
-  setPage(1);
-};
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
+  };
 
-const handleMenuChange = (value, equipmentId) => {
-  switch (value) {
-    case "view":
-      navigate(`/admin/viewEmployeeEquip/${equipmentId}`);
-      break;
-    case "edit":
-      navigate(`/admin/viewEmployeeEquip/${equipmentId}`);
-      break;
-    case "delete":
-       console.log("deleted")
-      }
-  }
+  const handleLimitChange = (e) => {
+    const newLimit = parseInt(e.target.value) || 10;
+    setLimit(newLimit);
+    setPage(1);
+  };
+
+  const handleMenuChange = (value, equipmentId) => {
+    switch (value) {
+      case "view":
+        navigate(`/admin/viewEmployeeEquip/${equipmentId}`);
+        break;
+      case "edit":
+        navigate(`/admin/editEmployeeEquip/${equipmentId}`);
+        break;
+      case "delete":
+        deleteEquipment(equipmentId, {
+          onSuccess: () => {
+            refetch.refetchQueries(["AllEquipment"]);
+            toast.error("Equipment deleted successfully");
+          },
+          onError: (error) => {
+            toast.error(
+              `Failed to delete Equipment: ${
+                error.response?.data?.message || error.message
+              }`
+            );
+          },
+        });
+    }
+  };
   return (
     <div className="w-full overflow-y-auto">
-      <div className="flex items-center justify-between">
-        <div className="text-lg font-medium text-slate-700">Employee Equipment</div>
-        <div className="flex items-center gap-2">
-          <UiButton
-            onClick={handleAddForm}
-            className={"w-40 h-11"}
-            variant={"secondary"}
-            buttonName={"Add Equipment"}
+      <EquipmentHeader 
+      title={"Employee Equipment"}
+      buttonName={"Add Equipment"}
+      onClick={handleAddForm}
+      />
+      <div className="mt-8">
+        <EquipmentTable
+          data={data}
+          menu={menu}
+          headers={headers}
+          isLoading={isLoading}
+          error={error}
+          handleMenuChange={handleMenuChange}
+        />
+      </div>
+
+      <div className="flex items-center justify-between mt-4">
+        <div className="items-center hidden gap-2 sm:flex">
+          <label htmlFor="itemsPerPage">Items per page:</label>
+          <input
+            id="itemsPerPage"
+            type="number"
+            value={limit}
+            onChange={handleLimitChange}
+            className="w-20 p-2 border"
           />
         </div>
-      </div>
-      <div className="mt-8">
-        <div className="overflow-y-auto h-[500px]">
-        <UiTable headers={headers} headerClass={"h-12 text-lg"}>
-          {isLoading ? (
-            <TableRow className="h-12">
-              <TableCell colSpan={headers.length}>
-                <div className="flex justify-center h-full">
-                  <LoadSpinner/>
-                </div>
-              </TableCell>
-            </TableRow>
-          ) : error ? (
-            <TableRow className="h-12">
-              <TableCell
-                colSpan={headers.length}
-                className="font-medium text-center text-md text-muted-foreground"
-              >
-                {error.message}
-              </TableCell>
-            </TableRow>
-          ) : data && data?.length > 0 ? (
-            data.map((item, index) => (
-              <TableRow
-                key={index}
-                className={`border border-gray-300 hover:bg-red-50 h-10 ${
-                  index % 2 === 0 ? "bg-gray-200" : "bg-slate-100"
-                } `}
-              >
-                <TableCell className="flex gap-3 ">
-                  <BreadCrumbs
-                    data={menu}
-                    onChange={(value) => handleMenuChange(value, item._id)}
-                  />
-                  {item.equipmentNameId.equipmentName}
-                </TableCell>
-
-                <TableCell>{item.brandId.brand}</TableCell>
-                <TableCell>{item.price}</TableCell>
-                <TableCell>{new Date(item.dateOfPurchase).toLocaleDateString("en-GB")}</TableCell>
-              </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={headers.length} className="text-center">No data available</TableCell>
-            </TableRow>
-          )}
-        </UiTable>
-        </div>
-      </div>
-      
-      <div className="flex items-center justify-between mt-4">
-        <div className="flex items-center gap-2">
-        <label htmlFor="itemsPerPage">Items per page:</label>
-        <input
-              id="itemsPerPage"
-              type="number"
-              value={limit}
-              onChange={handleLimitChange}
-              className="w-20 p-2 border"
-            />
-        </div>
 
         <div className="flex items-center gap-2">
-        <button
-              onClick={() => handlePageChange(page - 1)}
-              disabled={page === 1}
-              className={`px-2 py-2 text-white ${ page === 1 ? "bg-gray-400" : "bg-gray-500"}`}
-            >
-              Prev
-            </button>
-            <span>Page {page}</span>
-            <button
-              onClick={() => handlePageChange(page + 1)}
-              disabled={data && page >= data.totalPages}
-              className={`px-2 py-2 text-white ${
-                data && page >= data.totalPages ? "bg-gray-400" : "bg-gray-500"
-              }`}
-            >
-              Next
-            </button>
+          <button
+            onClick={() => handlePageChange(page - 1)}
+            disabled={page === 1}
+            className={`p-1 sm:px-2 sm:py-2 text-base sm:text-md text-white ${
+              page === 1 ? "bg-gray-400" : "bg-gray-500"
+            }`}
+          >
+            Prev
+          </button>
+          <span className="text-sm sm:text-md">Page {page}</span>
+          <button
+            onClick={() => handlePageChange(page + 1)}
+            disabled={data && page >= data.totalPages}
+            className={`p-1 sm:px-2 sm:py-2 text-base sm:text-md text-white ${
+              data && page >= data.totalPages ? "bg-gray-400" : "bg-gray-500"
+            }`}
+          >
+            Next
+          </button>
         </div>
       </div>
     </div>
-
   );
 };
 

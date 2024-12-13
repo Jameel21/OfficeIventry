@@ -5,13 +5,13 @@ import { useNavigate } from "react-router-dom";
 const ViewRequest = () => {
   const navigate = useNavigate()
   const handleRequest = () => {
-    navigate('/requestForm')
+    navigate('/addRequest')
   }
   return (
     <div>
       <div className="flex justify-between mt-2">
         <h1 className="text-lg font-medium text-slate-700">Add Request</h1>
-        <UiButton buttonName={"Create Request"} onClick={handleRequest}/>
+        <UiButton className="text-white" buttonName={"Add Request"} onClick={handleRequest}/>
       </div>
       <div className="mt-6">
         <EmployeeTable />

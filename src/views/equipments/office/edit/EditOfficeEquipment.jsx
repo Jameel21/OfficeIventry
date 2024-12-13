@@ -14,20 +14,20 @@ import { format } from "date-fns";
 import { useGetEquipmentName } from "@/store/hooks/NameHooks";
 import DatePickerDemo from "@/components/form-fields/_utils/DayPicker";
 
-const EditEmployeeEquipment = () => {
+const EditOfficeEquipment = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const { data: userData, isLoading } = useGetSingleEquipment(id);
   const equipmentId = userData?.equipmentNameId?._id;
 
-  const { data: equipmentNames } = useGetEquipmentName("Employee Equipment");
+  const { data: equipmentNames } = useGetEquipmentName("Office Equipment");
 
   const selectedEquipment = equipmentNames?.find(
     (equipment) => equipment._id === equipmentId
   );
 
-  const { mutate: updateEquipment } = useUpdateEquipment("Employee Equipment");
+  const { mutate: updateEquipment } = useUpdateEquipment("Office Equipment");
   const { control, handleSubmit, reset } = useForm({});
 
   useEffect(() => {
@@ -63,7 +63,7 @@ const EditEmployeeEquipment = () => {
       {
         onSuccess: () => {
           toast.success("Equipment updated successfully");
-          navigate("/admin/employeeEquipment");
+          navigate("/admin/officeEquipment");
         },
         onError: (error) => {
           const errorMessage =
@@ -84,7 +84,7 @@ const EditEmployeeEquipment = () => {
     return <div>Loading...</div>;
   }
   const handlePreviousPage = () => {
-    navigate("/admin/employeeEquipment");
+    navigate("/admin/OfficeEquipment");
   };
   return (
     <div className="w-full">
@@ -118,6 +118,7 @@ const EditEmployeeEquipment = () => {
               labelName={"Brand"}
               name="brandId"
               options={filteredBrands}
+              defaultValue={userData?.brandId?._id}
               placeholder={userData?.brandId?.brand}
               dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-56 md:w-60 lg:w-96 hover:bg-accent hover:text-accent-foreground"
             />
@@ -181,4 +182,4 @@ const EditEmployeeEquipment = () => {
   );
 };
 
-export default EditEmployeeEquipment;
+export default EditOfficeEquipment;

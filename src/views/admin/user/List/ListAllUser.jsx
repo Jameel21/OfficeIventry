@@ -17,7 +17,7 @@ const ListAllUser = () => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
 
-  const headers = ["Username", "Email", "Employee Id", "Role", "Status"];
+  const headers = ["Username", "Email", "Id", "Role", "Status"];
   const { data, isLoading, error } = useGetAllUsers({ page, limit });
   const userData = data?.users;
   const { mutate: deleteUser } = useDeleteUser();
@@ -88,22 +88,22 @@ const ListAllUser = () => {
     <div className="w-full overflow-y-auto">
       <div className="flex items-center justify-between">
         <div className="text-lg font-medium text-slate-700">Users</div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 w-">
           <UiInput
             placeholder={"Search by keyword"}
-            inputClassName="h-11 w-96"
+            inputClassName="md:h-9 md:w-40 lg:h-11 lg:w-96 hidden sm:flex"
           />
           <UiButton
             onClick={handleAddUser}
-            className={"w-40 h-11"}
+            className={"md:w-24 md:h-9 lg:w-40 lg:h-11 text-white"}
             variant={"secondary"}
             buttonName={"Create User"}
           />
         </div>
       </div>
       <div className="mt-8">
-        <div className="overflow-y-auto h-[500px]">
-          <UiTable headers={headers} headerClass={"h-12 text-lg"}>
+        <div className="overflow-y-auto h-[440px] sm:h-[500px]">
+          <UiTable headers={headers} headerClass={"h-12 text-sm md:text-base lg:text-lg"}>
             {isLoading ? (
               <TableRow className="h-12">
                 <TableCell colSpan={headers.length}>
@@ -172,7 +172,7 @@ const ListAllUser = () => {
       </div>
 
       <div className="flex items-center justify-between mt-4">
-        <div className="flex items-center gap-2">
+        <div className="items-center hidden gap-2 sm:flex">
           <label htmlFor="itemsPerPage">Items per page:</label>
           <input
             id="itemsPerPage"
@@ -187,7 +187,7 @@ const ListAllUser = () => {
           <button
             onClick={() => handlePageChange(page - 1)}
             disabled={page === 1}
-            className={`px-2 py-2 text-white ${
+            className={`p-1 sm:px-2 sm:py-2 text-base sm:text-md text-white ${
               page === 1 ? "bg-gray-400" : "bg-gray-500"
             }`}
           >
@@ -197,7 +197,7 @@ const ListAllUser = () => {
           <button
             onClick={() => handlePageChange(page + 1)}
             disabled={data && page >= data.totalPages}
-            className={`px-2 py-2 text-white ${
+            className={`p-1 sm:px-2 sm:py-2 text-base sm:text-md text-white ${
               data && page >= data.totalPages ? "bg-gray-400" : "bg-gray-500"
             }`}
           >

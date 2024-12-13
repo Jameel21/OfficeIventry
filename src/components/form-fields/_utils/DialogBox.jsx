@@ -14,7 +14,7 @@ import InputWithLabel from "./InputWithLabel";
 const DialogBox = ({
   className,
   triggerName,
-  dialogTitle,
+  dialogTitle = "Title",
   control,
   onSubmit,
   firstName,

@@ -4,17 +4,17 @@ import { TableCell, TableRow } from "@/components/ui/table";
 
 const MaintenanceLog = () => {
 
-  const headers = ["Equipment", "Issue date", "Return date"];
+  const headers = ["Equipment", "Price", "Date of Service"];
 
   const data = [{
     equipment: "Laptop",
-    issue_date: "02/23/2024",
-    return_date: "05/30/2024"
+    price: "1000",
+    dateOfService: "05/30/2024"
   }];
   return (
     <div>
       <div className="mt-2 text-lg font-medium text-slate-700">Maintenance Log</div>
-      <div className="mt-12">
+      <div className="mt-8">
         <UiTable headers={headers} headerClass={"h-12 text-lg"}>
           {data && data.length > 0 ? (
             data.map((item, index) => (
@@ -26,10 +26,10 @@ const MaintenanceLog = () => {
               >
                 <TableCell>{item.equipment}</TableCell>
                 <TableCell>
-                  {new Date(item.issue_date).toLocaleDateString("en-GB")}
+                  {item.price}
                 </TableCell>
                 <TableCell>
-                  {new Date(item.return_date).toLocaleDateString("en-GB")}
+                  {new Date(item.dateOfService).toLocaleDateString("en-GB")}
                 </TableCell>
               </TableRow>
             ))

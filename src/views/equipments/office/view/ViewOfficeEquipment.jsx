@@ -5,7 +5,7 @@ import { CircleArrowLeft } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 
-const ViewEmployeeEquipment = () => {
+const ViewOfficeEquipment = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { data: userData, isLoading } = useGetSingleEquipment(id);
@@ -34,7 +34,7 @@ const ViewEmployeeEquipment = () => {
     return <div>Loading...</div>;
   }
   const handlePreviousPage = () => {
-    navigate("/admin/employeeEquipment");
+    navigate("/admin/officeEquipment");
   };
   return (
     <div className="w-full">
@@ -141,4 +141,4 @@ const ViewEmployeeEquipment = () => {
   );
 };
 
-export default ViewEmployeeEquipment;
+export default ViewOfficeEquipment;

@@ -25,7 +25,7 @@ const EmployeeLog = () => {
   return (
     <div >
        <div className="mt-2 text-lg font-medium text-slate-700">Employee Log</div>
-      <div className="mt-12">
+      <div className="mt-8">
         <div className="overflow-y-auto h-[500px]">
           <UiTable headers={headers} headerClass={"h-12 text-lg"}>
             {isLoading ? (

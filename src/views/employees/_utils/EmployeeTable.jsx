@@ -59,7 +59,7 @@ const EmployeeTable = () => {
             <TableCell>
               {new Date(item.expectedReturn).toLocaleDateString("en-GB")}
             </TableCell>
-            <TableCell>{item.status}</TableCell>
+            <TableCell>{item.requestLogId.status}</TableCell>
           </TableRow>
         ))
       ) : (

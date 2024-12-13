@@ -9,8 +9,11 @@ import DatePickerDemo from "@/components/form-fields/_utils/DayPicker";
 import toast from "react-hot-toast";
 import { format } from "date-fns";
 import { useGetEquipmentName } from "@/store/hooks/NameHooks";
+import { useNavigate } from "react-router-dom";
 
 const RequestForm = () => {
+
+  const navigate = useNavigate()
   const { control, handleSubmit, reset } = useForm({
     resolver: yupResolver(employeeSchema),
   });
@@ -32,6 +35,7 @@ const RequestForm = () => {
     requestMutation.mutate(formattedData, {
       onSuccess: () => {
         toast.success("Equipment request was sent successfully");
+        navigate("/viewRequest")
       },
       onError: (error) => {
         const errorMessage =

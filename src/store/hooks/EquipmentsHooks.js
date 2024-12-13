@@ -12,7 +12,7 @@ export const useAddEquipment = (equipmentType) => {
 
 export const useGetAllEquipment = (page, limit, equipmentType) => {
    return useQuery({
-      queryKey: ["ListAllEquipment", page, limit, equipmentType],
+      queryKey: ["AllEquipment", page, limit, equipmentType],
       queryFn: async () => {
          const response = await equipmentService.getAllEquipment(page, limit, equipmentType);
          return response?.data?.data?.equipment || []
@@ -23,11 +23,23 @@ export const useGetAllEquipment = (page, limit, equipmentType) => {
 
 export const useGetSingleEquipment = (id) => {
    return useQuery({
-      queryKey: ["LisSingleEquipment",id],
+      queryKey: ["SingleEquipment",id],
       queryFn: async () => {
          const response = await equipmentService.getSingleEquipment(id);
          return response?.data?.data || []
       },
       enabled: !!id
+   })
+}
+
+export const useUpdateEquipment = (equipmentType) => {
+   return useMutation({
+      mutationFn: ({id,data}) => equipmentService.updateEquipment(id,data, equipmentType)
+   })
+}
+
+export const useDeleteEquipment = () => {
+   return useMutation({
+      mutationFn:equipmentService.deleteEquipment
    })
 }
