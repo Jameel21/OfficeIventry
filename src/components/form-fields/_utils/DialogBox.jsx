@@ -21,7 +21,8 @@ const DialogBox = ({
   firstPlaceholder,
   secondName,
   secondPlaceholder,
-  buttonName,
+  firstButtonName,
+  secondButtonName,
   type,
 }) => {
   return (
@@ -43,18 +44,21 @@ const DialogBox = ({
         </DialogHeader>
         <form onSubmit={onSubmit}>
           <div className="gap-4">
-            <div className="flex items-center space-x-2">
-              <div className="grid flex-1 gap-2">
-                <InputWithLabel
-                  type={type}
-                  name={firstName}
-                  placeholder={firstPlaceholder}
-                  control={control}
-                  inputClassName="h-7 sm:h-8 md:h-10 lg:h-12 w-52 sm:w-64  md:w-72 lg:w-96"
-                />
+            {firstName && firstPlaceholder && (
+              <div className="flex items-center space-x-2">
+                <div className="grid flex-1 gap-2">
+                  <InputWithLabel
+                    type={type}
+                    name={firstName}
+                    placeholder={firstPlaceholder}
+                    control={control}
+                    inputClassName="h-7 sm:h-8 md:h-10 lg:h-12 w-52 sm:w-64  md:w-72 lg:w-96"
+                  />
+                </div>
               </div>
-            </div>
-            {secondName && secondPlaceholder && ( 
+            )}
+
+            {secondName && secondPlaceholder && (
               <div className="flex items-center space-x-2">
                 <div className="grid flex-1 gap-2">
                   <InputWithLabel
@@ -70,12 +74,23 @@ const DialogBox = ({
           </div>
 
           <DialogFooter className="mt-6 sm:justify-center">
-            <UiButton
-              variant="secondary"
-              type="submit"
-              buttonName={buttonName}
-              className="w-24 h-8 mt-3 sm:w-28 sm:h-8 md:w-32 md:h-10 lg:w-28 lg:h-12"
-            />
+            {firstButtonName && (
+              <UiButton
+                variant="secondary"
+                type="submit"
+                buttonName={firstButtonName}
+                className="w-24 h-8 mt-3 sm:w-28 sm:h-8 md:w-32 md:h-10 lg:w-28 lg:h-12"
+              />
+            )}
+
+            {secondButtonName && (
+              <UiButton
+                variant="secondary"
+                type="submit"
+                buttonName={secondButtonName}
+                className="w-24 h-8 mt-3 sm:w-28 sm:h-8 md:w-32 md:h-10 lg:w-28 lg:h-12"
+              />
+            )}
           </DialogFooter>
         </form>
       </DialogContent>

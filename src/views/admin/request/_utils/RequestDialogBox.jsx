@@ -19,7 +19,7 @@ const RequestDialogBox = ({onReject}) => {
       triggerName="Reject"
       dialogTitle="Reason for rejection"
       firstName="rejectedReason"
-      buttonName="Save"
+      firstButtonName="Save"
       type="text"
       firstPlaceholder="Rejected reason"
       control={control}

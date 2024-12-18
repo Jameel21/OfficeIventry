@@ -55,7 +55,7 @@ const ViewProfile = () => {
   };
 
   const handlePreviousPage = () => {
-    navigate("/viewRequest");
+    navigate("/viewMyRequest");
   };
 
   return (

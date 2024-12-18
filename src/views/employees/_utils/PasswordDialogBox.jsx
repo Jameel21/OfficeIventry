@@ -22,7 +22,7 @@ const PasswordDialogBox = ({onClick}) => {
       secondName="newPassword"
       firstPlaceholder="current password"
       secondPlaceholder="new password"
-      buttonName="Save"
+      firstButtonName="Save"
       type="password"
       control={control}
       onSubmit={onSubmit}
