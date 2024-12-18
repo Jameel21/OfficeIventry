@@ -17,11 +17,15 @@ const Notification = () => {
   const navigate = useNavigate();
   const refetch = useQueryClient();
   const [notificationId, setNotificationId] = useState();
-  const headers = [""];
+  const headers = ["Message"];
 
   const { data: notificationData, isLoading, error } = useGetAllNotifications();
 
-  const handleView = async (Id, tagId) => {
+  const handleView = async (Id, tagId, isRead) => {
+    if (isRead) {
+      // Exit early if the notification is already read
+      return;
+    }
     try {
       setNotificationId(Id);
       await refetch.refetchQueries({ queryKey: ["allNotifications"] });
@@ -37,12 +41,12 @@ const Notification = () => {
       refetch.refetchQueries(["allNotifications"]);
       navigate(`/viewRequest/${data.tagId._id}`);
     }
-  }, [data, navigate,refetch]);
-  
-const{mutate:deleteNotification} = useDeleteNotifications()
+  }, [data, navigate, refetch]);
+
+  const { mutate: deleteNotification } = useDeleteNotifications();
 
   const handleClearNotifications = () => {
-    deleteNotification(undefined,{
+    deleteNotification(undefined, {
       onSuccess: () => {
         refetch.refetchQueries(["allNotifications"]);
         toast.success("Notifications cleared successfully");
@@ -53,8 +57,8 @@ const{mutate:deleteNotification} = useDeleteNotifications()
             error.response?.data?.message || error.message
           }`
         );
-      }
-    })
+      },
+    });
   };
 
   return (
@@ -97,12 +101,15 @@ const{mutate:deleteNotification} = useDeleteNotifications()
               notificationData.map((item, index) => (
                 <TableRow
                   key={index}
-                  onClick={() => handleView(item._id, item.tagId._id)}
+                  onClick={() => handleView(item._id, item.tagId._id, item.read)}
                   className={`border border-gray-300 h-10 text-lg ${
                     item.read ? "bg-gray-50" : "bg-gray-200"
                   }`}
                 >
-                  <TableCell>{item.message}</TableCell>
+                  <TableCell>
+                    <div>{item.message}</div>
+                    <div className="text-sm text-gray-500">{new Date(item.createdAt).toLocaleTimeString()}{new Date(item.createdAt).toLocaleDateString()}</div>
+                  </TableCell>
                 </TableRow>
               ))
             ) : (
