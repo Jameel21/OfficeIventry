@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 .bg-secondary {
-  background-color: rgb(72, 53, 40);
+  background-color: rgb(12, 56, 108);
 }
 .bg-primary {
   background-color: rgb(226,232,240);
@@ -39,7 +39,7 @@
         --chart-4:43 74% 66%;
         --chart-5:27 87% 67%;
         --radius:0.5rem;
-        --sidebar-background:25, 29%, 22%;
+        --sidebar-background:212, 80%, 24%;
         --sidebar-foreground:229, 100%, 98%;
         --sidebar-primary:229, 100%, 98%;
         --sidebar-primary-foreground:0 0% 98%;

@@ -10,7 +10,7 @@ import { requestSchema } from "@/utils/validationSchema";
 import { CircleArrowLeft } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
-  useGetPendingRequestById,
+  useGetRequestById,
   useUpdatePendingRequest,
 } from "@/store/hooks/EmployeeHooks";
 import toast from "react-hot-toast";
@@ -32,7 +32,7 @@ const ApproveRequests = () => {
     resolver: yupResolver(requestSchema),
   });
   const { data: equipmentNames } = useGetEquipmentName("Employee Equipment");
-  const { data: userData, isLoading, error } = useGetPendingRequestById(id);
+  const { data: userData, isLoading, error } = useGetRequestById(id);
 
   const [brandId, setBrandId] = useState(null);
   const selectedBrandId = watch("brandId");
@@ -142,7 +142,7 @@ const ApproveRequests = () => {
     navigate("/admin/requests");
   };
   return (
-    <div className="">
+    <div>
       <div>
         <CircleArrowLeft
           className="cursor-pointer hover:opacity-90"
@@ -175,7 +175,7 @@ const ApproveRequests = () => {
             />
             <InputWithLabel
               type="text"
-              label="Issue Date"
+              label="Request Date"
               name="requestDate"
               placeholder="Issue date"
               control={control}

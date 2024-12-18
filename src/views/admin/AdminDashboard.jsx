@@ -1,6 +1,11 @@
+
 const AdminDashboard = () => {
   return (
-   <div>Dashboard</div>
+    <div>
+      <div>Dashboard</div>
+     
+    </div>
+   
   );
 };
 

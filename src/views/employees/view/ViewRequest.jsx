@@ -11,7 +11,7 @@ const ViewRequest = () => {
     <div>
       <div className="flex justify-between mt-2">
         <h1 className="text-lg font-medium text-slate-700">Add Request</h1>
-        <UiButton className="text-white" buttonName={"Add Request"} onClick={handleRequest}/>
+        <UiButton className="text-white md:w-24 md:h-9 lg:w-40 lg:h-11" variant={"secondary"} buttonName={"Add Request"} onClick={handleRequest}/>
       </div>
       <div className="mt-6">
         <EmployeeTable />

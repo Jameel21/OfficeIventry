@@ -71,6 +71,10 @@ const TableGrid = ({ headers,isLoading,data,error, headerClass , handleMenuChang
         </TableBody>
       </Table>
   );
+
+  // headerClassName="h-12 text-sm md:text-base lg:text-lg" 
+  // bodyClassName="text-lg" 
+  // tableClassName="w-full"
 }
 
 export default TableGrid;

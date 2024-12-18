@@ -1,7 +1,10 @@
 import UiTable from "@/components/form-fields/_utils/UiTable";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { useNavigate } from "react-router-dom";
-import { useGetAllRequests, useUpdateRequestFields } from "@/store/hooks/EmployeeHooks";
+import {
+  useGetAllRequests,
+  useUpdateRequestFields,
+} from "@/store/hooks/EmployeeHooks";
 import BreadCrumbs from "@/components/form-fields/_utils/BreadCrumbs";
 import { Checkbox } from "@/components/ui/checkbox";
 import LoadSpinner from "@/components/spinner/LoadSpinner";
@@ -9,10 +12,9 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
 
-
 const Requests = () => {
   const navigate = useNavigate();
-  const refetch = useQueryClient()
+  const refetch = useQueryClient();
 
   const headersMapping = {
     Pending: [
@@ -22,7 +24,21 @@ const Requests = () => {
       "Expected Return",
       "Reason",
     ],
-    Approved: ["Username", "Equipment", "Issue Date","Mark as Return", "Brand", "Serial Number"],
+    Canceled: [
+      "Username",
+      "Equipment",
+      "Request Date",
+      "Expected Return",
+      "Reason",
+    ],
+    Approved: [
+      "Username",
+      "Equipment",
+      "Issue Date",
+      "Mark as Return",
+      "Brand",
+      "Serial Number",
+    ],
     Completed: [
       "Username",
       "Equipment",
@@ -48,7 +64,7 @@ const Requests = () => {
     error,
   } = useGetAllRequests(selectedRequests.toLowerCase());
 
-  const mainMenu = ["Pending", "Approved", "Completed", "Rejected"];
+  const mainMenu = ["Pending", "Approved", "Completed", "Rejected", "Canceled"];
   const menu = ["view"];
 
   const handleMainMenuChange = (value) => {
@@ -62,7 +78,7 @@ const Requests = () => {
       id,
       markAsReturn: !currentValue,
     };
-    console.log("payload", payload)
+    console.log("payload", payload);
     updateRequestMutation.mutate(payload, {
       onSuccess: () => {
         toast.success("updated successFully");
@@ -77,20 +93,22 @@ const Requests = () => {
   const handleApprove = (id, equipmentId) => {
     navigate(`/admin/approveRequest/${id}`, { state: { equipmentId } });
   };
-  
+
   return (
     <div>
-      <div></div>
-      <div className="mt-2 text-lg font-medium text-slate-700">
-        {selectedRequests} requests
+      <div  className="flex items-center justify-between mt-2">
+        <div className="text-lg font-medium text-slate-700">
+          {selectedRequests} requests
+        </div>
+        <div>
+          <BreadCrumbs
+            className="h-7 w-7"
+            data={mainMenu}
+            onChange={(value) => handleMainMenuChange(value)}
+          />
+        </div>
       </div>
-      <div className="mt-2">
-        <BreadCrumbs
-          className="h-7 w-7"
-          data={mainMenu}
-          onChange={(value) => handleMainMenuChange(value)}
-        />
-      </div>
+
       <div className="mt-8">
         <UiTable headers={headers} headerClass={"h-12 text-lg"}>
           {isLoading ? (
@@ -139,6 +157,7 @@ const Requests = () => {
 
                 {(selectedRequests === "Pending" ||
                   selectedRequests === "Completed" ||
+                  selectedRequests === "Canceled" ||
                   selectedRequests === "Rejected") && (
                   <TableCell>
                     {new Date(item.requestDate).toLocaleDateString("en-GB")}
@@ -151,20 +170,22 @@ const Requests = () => {
                       {new Date(item.issueDate).toLocaleDateString("en-GB")}
                     </TableCell>
                     <TableCell>
-                    <Checkbox
-                      className="text-white md:ml-10 bg-secondary"
-                      checked={item.markAsReturn}
-                      onCheckedChange={() =>
-                        handleCheckboxChange(item._id, item.markAsReturn)
-                      }
-                    />
-                </TableCell>
+                      <Checkbox
+                        className="text-white md:ml-10 bg-secondary"
+                        checked={item.markAsReturn}
+                        onCheckedChange={() =>
+                          handleCheckboxChange(item._id, item.markAsReturn)
+                        }
+                      />
+                    </TableCell>
                     <TableCell>{item.equipmentId.brandId.brand}</TableCell>
-                    <TableCell>{item.equipmentId.serialNumber || "none"}</TableCell>
+                    <TableCell>
+                      {item.equipmentId.serialNumber || "none"}
+                    </TableCell>
                   </>
                 )}
 
-                {selectedRequests === "Pending" && (
+                {(selectedRequests === "Pending" || selectedRequests === "Canceled")  && (
                   <TableCell>
                     {new Date(item.expectedReturn).toLocaleDateString("en-GB")}
                   </TableCell>
@@ -177,6 +198,7 @@ const Requests = () => {
                 )}
 
                 {(selectedRequests === "Pending" ||
+                selectedRequests === "Canceled" ||
                   selectedRequests === "Completed") && (
                   <TableCell>{item.reason}</TableCell>
                 )}

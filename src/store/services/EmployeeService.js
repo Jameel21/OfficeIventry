@@ -4,7 +4,7 @@ const addRequest = async (data) => {
   const response = await API.post("/equipmentRequest/addRequest", data);
   return response;
 };
-const getRequest = async () => {
+const getMyRequest = async () => {
   const response = await API.get("/equipmentRequest/getEmployeeRequest");
   return response;
 };
@@ -34,11 +34,17 @@ const updatePendingRequest = async ({ id, data }) => {
   return response;
 };
 
+const cancelPendingRequest = async (id) => {
+  const response = await API.patch(`/equipmentRequest/cancelRequest/${id}`);
+  return response;
+};
+
 export default {
   addRequest,
-  getRequest,
+  getMyRequest,
   updateReturn,
   getRequestById,
   getAllRequests,
   updatePendingRequest,
+  cancelPendingRequest
 };

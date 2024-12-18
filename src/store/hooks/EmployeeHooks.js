@@ -7,11 +7,11 @@ export const useAddRequest = () => {
   });
 };
 
-export const useGetRequest = () => {
+export const useGetMyRequest = () => {
   return useQuery({
     queryKey: ["equipmentRequest"],
     queryFn: async () => {
-      const response = await employeeService.getRequest();
+      const response = await employeeService.getMyRequest();
       return response?.data?.data || [];
     },
   });
@@ -28,7 +28,7 @@ export const useGetAllRequests = (status) => {
   })
 }
 
-export const useGetPendingRequestById = (id) => {
+export const useGetRequestById = (id) => {
   return useQuery({
    queryKey: ["pendingRequestById", id],
    queryFn: async () => {
@@ -48,5 +48,11 @@ export const useGetPendingRequestById = (id) => {
 export const useUpdatePendingRequest = () => {
   return useMutation({
     mutationFn:employeeService.updatePendingRequest,
+  });
+};
+
+export const useCancelPendingRequest = () => {
+  return useMutation({
+    mutationFn:(id) => employeeService.cancelPendingRequest(id),
   });
 };

@@ -55,7 +55,7 @@ const LoginForm = () => {
 
   return (
     <form
-      className="flex flex-col gap-2 sm:gap-4 md:gap-6"
+      className="flex flex-col gap-4 md:gap-6"
       onSubmit={handleSubmit(onSubmitForm)}
     >
       <InputWithLabel
@@ -65,7 +65,7 @@ const LoginForm = () => {
         control={control}
         name="userName"
         placeholder="Enter your username"
-        inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
+        inputClassName="w-56 h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
       />
       <InputWithLabel
         label="Password"
@@ -74,7 +74,7 @@ const LoginForm = () => {
         control={control}
         name="password"
         placeholder="Enter your password"
-        inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
+        inputClassName="w-56 h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
       />
       {/* <span className="text-xs text-right cursor-pointer sm:text-sm md:text-base">
         Forgot Password?
@@ -84,7 +84,7 @@ const LoginForm = () => {
           variant="secondary"
           type="submit"
           buttonName="Login"
-          className="w-24 h-8 sm:w-28 sm:h-8 md:w-32 md:h-10 lg:w-36 lg:h-12"
+          className="w-24 h-8 text-white sm:w-28 sm:h-8 md:w-32 md:h-10 lg:w-36 lg:h-12"
         />
       </div>
     </form>

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const AddRequest = () => {
   const navigate = useNavigate();
   const handlePreviousPage = () => {
-    navigate("/viewRequest")
+    navigate("/viewMyRequest")
   };
   return (
     <div className="flex flex-col w-full h-full lg:items-start lg:justify-start">

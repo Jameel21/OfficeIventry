@@ -36,13 +36,11 @@ const OfficeEquipment = () => {
   const handleMenuChange = (value, equipmentId) => {
     switch (value) {
       case "view":
-        navigate(`/admin/viewOfficeEquip/${equipmentId}`);
+        navigate(`/admin/viewEquipment/${equipmentId}`,{ state: { pathname: "Office Equipment" } });
         break;
       case "edit":
-        navigate(`/admin/editOfficeEquip/${equipmentId}`);
+        navigate(`/admin/editEquipment/${equipmentId}`,{ state: { pathname: "Office Equipment" } });
         break;
-      case "delete":
-        console.log("deleted")
     }
   };
   return (

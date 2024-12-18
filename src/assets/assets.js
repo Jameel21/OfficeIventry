@@ -1,4 +1,4 @@
-import { Lock, Bell ,FileText, Building2, User, GitPullRequestArrow,Monitor,Paintbrush,SquareCheckBig,UserRoundPen,CirclePlus, Plus} from 'lucide-react'
+import { Lock, Bell ,FileText, Building2, User, GitPullRequestArrow,Monitor,Paintbrush,SquareCheckBig,UserRoundPen,CirclePlus, Plus, Logs} from 'lucide-react'
 
 
 export  const currentStatus = [
@@ -56,12 +56,12 @@ export const sidebarMenu ={
       submenu: [
         {
           icon:Monitor,
-          url:'/admin/officeEquipment',
+          url:'/admin/officeequipment',
           menu:'Office Equipment'
         },
         {
           icon:GitPullRequestArrow,
-          url:'/admin/employeeEquipment',
+          url:'/admin/employeeequipment',
           menu:'Employee Equipment'
         },
       ]
@@ -77,7 +77,7 @@ export const sidebarMenu ={
       submenu: [
         {
           icon:Plus,
-          url:'/viewRequest',
+          url:'/viewMyRequest',
           menu:'My Request'
         },
         {
@@ -105,6 +105,11 @@ export const sidebarMenu ={
           icon:SquareCheckBig,
           url:'/admin/allocationLog',
           menu: 'Allocation Log'
+        },
+        {
+          icon:Logs,
+          url:'/admin/requestLog',
+          menu: 'Request Log'
         },
         {
           icon:Paintbrush,

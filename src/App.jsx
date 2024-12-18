@@ -1,7 +1,7 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
-import EmployeeLog from "./views/log/EmployeeLog";
+import EmployeeLog from "./views/log/employee/EmployeeLog";
 import Notification from "./views/notification/Notification";
 import Login from "./views/auth/Login";
 import Layout from "./components/layouts/Layout";
@@ -14,12 +14,10 @@ import Requests from "./views/admin/request/list/Requests";
 import ApproveRequests from "./views/admin/request/edit/ApproveRequests";
 import EditUser from "./views/admin/user/edit/EditUser";
 import ViewProfile from "./views/employees/profile/ViewProfile";
-import EquipmentLog from "./views/log/EquipmentLog";
-import AllocationLog from "./views/log/AllocationLog";
-import MaintenanceLog from "./views/log/MaintenanceLog";
+import EquipmentLog from "./views/log/equipment/EquipmentLog";
+import AllocationLog from "./views/log/allocation/AllocationLog";
+import MaintenanceLog from "./views/log/maintenance/MaintenanceLog";
 import AuthUser from "./utils/AuthUser";
-import EditEmployeeEquipment from "./views/equipments/employee/edit/EditEmployeeEquipment";
-import ViewEmployeeEquipment from "./views/equipments/employee/view/ViewEmployeeEquipment";
 import ListAllUser from "./views/admin/user/List/ListAllUser";
 import AddBrand from "./views/masters/brand/create/AddBrand";
 import ListAllBrand from "./views/masters/brand/list/ListAllBrand";
@@ -38,12 +36,15 @@ import ViewBrand from "./views/masters/brand/view/ViewBrand";
 import EditBrand from "./views/masters/brand/edit/EditBrand";
 import ViewCategory from "./views/masters/category/view/ViewCategory";
 import EditCategory from "./views/masters/category/edit/EditCategory";
-import ViewOfficeEquipment from "./views/equipments/office/view/ViewOfficeEquipment";
-import EditOfficeEquipment from "./views/equipments/office/edit/EditOfficeEquipment";
 import AddOfficeEquipment from "./views/equipments/office/create/AddOfficeEquipment";
 import OfficeEquipment from "./views/equipments/office/list/OfficeEquipment";
 import AddEmployeeEquipment from "./views/equipments/employee/create/AddEmployeeEquipment";
 import EmployeeEquipment from "./views/equipments/employee/list/EmployeeEquipment";
+import ViewUserReqeuest from "./views/admin/request/view/ViewUserReqeuest";
+import ViewEquipmentForm from "./views/equipments/view/ViewEquipment";
+import EditEquipmentForm from "./views/equipments/edit/EditEquipment";
+import RequestLog from "./views/log/request/RequestLog";
+import ViewRequestLog from "./views/log/request/view/ViewRequestLog";
 
 
 function App() {
@@ -56,9 +57,10 @@ function App() {
 
           <Route element={<AuthUser />}>
             <Route path="/" element={<Layout />}>
-              <Route path="viewRequest" element={<ViewRequest />} />
+              <Route path="viewMyRequest" element={<ViewRequest />} />
               <Route path="viewProfile/:id" element={<ViewProfile />} />
               <Route path="addRequest" element={<AddRequest />} />
+              <Route path="viewRequest/:id" element={<ViewUserReqeuest />} />
               <Route path="viewUser/:id" element={<ViewUser />} />
               <Route path="notification" element={<Notification />}></Route>
             </Route>
@@ -69,14 +71,14 @@ function App() {
               <Route index element={<AdminDashboard />} />
 
               <Route path="addOfficeEquipment" element={<AddOfficeEquipment />}/>
-              <Route path="officeEquipment" element={<OfficeEquipment />} />
-              <Route path="viewOfficeEquip/:id" element={<ViewOfficeEquipment />}/>
-              <Route path="editOfficeEquip/:id" element={<EditOfficeEquipment />}/>
+              <Route path="officeequipment" element={<OfficeEquipment />} />
+              <Route path="viewEquipment/:id" element={<ViewEquipmentForm />}/>
+              <Route path="editEquipment/:id" element={<EditEquipmentForm />}/>
+             
 
               <Route path="addEmployeeEquipment" element={<AddEmployeeEquipment />}/>
-              <Route path="employeeEquipment" element={<EmployeeEquipment />} />
-              <Route path="viewEmployeeEquip/:id" element={<ViewEmployeeEquipment />}/>
-              <Route path="editEmployeeEquip/:id" element={<EditEmployeeEquipment />}/>
+              <Route path="employeeequipment" element={<EmployeeEquipment />} />
+      
 
               <Route path="requests" element={<Requests />} />
               <Route path="approveRequest/:id" element={<ApproveRequests />} />
@@ -89,6 +91,8 @@ function App() {
               <Route path="equipmentLog" element={<EquipmentLog />}></Route>
               <Route path="allocationLog" element={<AllocationLog />}></Route>
               <Route path="maintenanceLog" element={<MaintenanceLog />}></Route>
+              <Route path="requestLog" element={<RequestLog />}></Route>
+              <Route path="viewRequestLog/:id" element={<ViewRequestLog />}></Route>
 
               <Route path="notification" element={<Notification />}></Route>
 

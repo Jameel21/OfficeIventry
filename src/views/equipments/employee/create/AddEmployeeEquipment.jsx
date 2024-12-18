@@ -80,7 +80,7 @@ const AddEmployeeEquipment = () => {
     });
   };
   const handlePreviousPage = () => {
-    navigate("/admin/employeeEquipment");
+    navigate("/admin/employeeequipment");
   };
 
   return (
