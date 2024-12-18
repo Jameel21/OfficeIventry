@@ -102,7 +102,6 @@ const{mutate:deleteNotification} = useDeleteNotifications()
                     item.read ? "bg-gray-50" : "bg-gray-200"
                   }`}
                 >
-                  <TableCell className="flex gap-3 ">{item.tag}</TableCell>
                   <TableCell>{item.message}</TableCell>
                 </TableRow>
               ))
