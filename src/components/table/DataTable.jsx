@@ -26,7 +26,7 @@ const DataTable = ({
 }) => {
   return (
     <div className="relative ">
-      <Table className={cn("w-full h-[50px]", tableClassName)}>
+      <Table className={cn("w-full md:h-[20px] lg:h-[50px]", tableClassName)}>
         <TableHeader
           className={cn("sticky top-0 bg-secondary", headerClassName)}
         >
@@ -43,7 +43,7 @@ const DataTable = ({
         </TableHeader>
       </Table>
 
-      <div className="h-[450px] overflow-y-auto">
+      <div className="h-[400px] md:h-[390px] lg:h-[470px] overflow-y-auto">
         <Table>
           <TableBody
             className={cn(

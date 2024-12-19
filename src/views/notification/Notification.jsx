@@ -23,7 +23,6 @@ const Notification = () => {
 
   const handleView = async (Id, tagId, isRead) => {
     if (isRead) {
-      // Exit early if the notification is already read
       return;
     }
     try {
@@ -102,7 +101,7 @@ const Notification = () => {
                 <TableRow
                   key={index}
                   onClick={() => handleView(item._id, item.tagId._id, item.read)}
-                  className={`border border-gray-300 h-10 text-lg ${
+                  className={`border border-gray-300 h-10 text-base ${
                     item.read ? "bg-gray-50" : "bg-gray-200"
                   }`}
                 >

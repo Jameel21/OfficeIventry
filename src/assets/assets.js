@@ -111,11 +111,11 @@ export const sidebarMenu ={
           url:'/admin/requestLog',
           menu: 'Request Log'
         },
-        {
-          icon:Paintbrush,
-          url:'/admin/maintenanceLog',
-          menu: 'Maintenance Log'
-        },
+        // {
+        //   icon:Paintbrush,
+        //   url:'/admin/maintenanceLog',
+        //   menu: 'Maintenance Log'
+        // },
       ]
     },
     {

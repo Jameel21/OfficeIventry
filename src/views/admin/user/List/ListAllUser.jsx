@@ -4,11 +4,9 @@ import { useState } from "react";
 import UserTable from "../_utils/UserTable";
 import UiInput from "@/components/form-fields/_utils/UiInput";
 import { useGetAllUsers } from "@/store/hooks/UserHooks";
-import { useQueryClient } from "@tanstack/react-query";
 
 const ListAllUser = () => {
   const navigate = useNavigate();
-const refetch = useQueryClient()
 
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
@@ -18,7 +16,6 @@ const refetch = useQueryClient()
   const userData = data?.users;
 
   const filteredUsers = userData?.filter((user) => {
-    refetch.refetchQueries(["AllUsers",page, limit])
     return user?.userName.toLowerCase().includes(searchTerm.toLocaleLowerCase());
   });
 

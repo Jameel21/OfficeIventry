@@ -67,6 +67,7 @@ const UserTable = ({ page, limit, setPage, setLimit,userData,isLoading,error,dat
     );
   };
 
+
   const handlePageChange = (newPage) => {
     setPage(newPage);
   };
@@ -118,39 +119,40 @@ const UserTable = ({ page, limit, setPage, setLimit,userData,isLoading,error,dat
       </div>
 
       {/* pgination */}
-      <div className="flex items-center justify-between mt-4 w-">
+      <div className="flex items-center justify-between mt-4">
         <div className="items-center hidden gap-2 sm:flex">
-          <label htmlFor="itemsPerPage">Items per page:</label>
+          <label htmlFor="itemsPerPage" className="text-sm text-gray-600">Items per page:</label>
           <input
             id="itemsPerPage"
             type="number"
             value={limit}
             onChange={handleLimitChange}
-            className="w-20 p-2 border"
+            className="p-2 text-sm text-gray-600 border rounded-lg w-14 h-7"
           />
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 ml-10 sm:ml-0">
           <button
             onClick={() => handlePageChange(page - 1)}
             disabled={page === 1}
-            className={`p-1 sm:px-2 sm:py-2 text-base sm:text-md text-white ${
-              page === 1 ? "bg-gray-400" : "bg-gray-500"
+            className={`p-1 sm:px-2 sm:py-2 text-sm rounded-lg text-white ${
+              page === 1 ? "bg-ternary" : "bg-secondary"
             }`}
           >
             Prev
           </button>
-          <span>Page {page}</span>
+          <span className="text-sm text-gray-600">page {page}</span>
           <button
             onClick={() => handlePageChange(page + 1)}
-            disabled={data && page >= data.totalPages}
-            className={`p-1 sm:px-2 sm:py-2 text-base sm:text-md text-white ${
-              data && page >= data.totalPages ? "bg-gray-400" : "bg-gray-500"
+            disabled={page >= Math.ceil(data?.totalUsers / limit)}
+            className={`p-1 sm:px-2 sm:py-2 text-sm text-white rounded-lg ${
+              page >= Math.ceil(data?.totalUsers / limit) ? "bg-ternary" : "bg-secondary"
             }`}
           >
             Next
           </button>
         </div>
       </div>
+      
     </div>
   );
 };

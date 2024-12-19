@@ -10,24 +10,28 @@ const ViewUserReqeuest = () => {
   const { id } = useParams();
 
   const { control, reset } = useForm({});
-  const { data: userData,} = useGetRequestById(id);
+  const { data: userData } = useGetRequestById(id);
 
   useEffect(() => {
     if (userData) {
       reset({
-        employeeId: userData?.employeeId.userName,
-        equipmentId: userData?.equipmentId.equipmentNameId.equipmentName,
+        employeeId: userData?.employeeId?.userName,
+        equipmentId: userData?.equipmentId?.equipmentNameId?.equipmentName,
+        brand: userData?.equipmentId?.brandId?.brand,
+        serialNumber: userData?.equipmentId?.serialNumber,
         requestDate: new Date(userData.requestDate).toLocaleDateString("en-GB"),
         expectedReturn: new Date(userData.expectedReturn).toLocaleDateString(
           "en-GB"
         ),
+        rejectedReason: userData.rejectedReason,
         reason: userData.reason,
+        status: userData?.requestLogId?.status,
       });
     }
   }, [userData, reset]);
 
   const handlePreviousPage = () => {
-   navigate("/viewMyRequest")
+    navigate("/viewMyRequest");
   };
   return (
     <div>
@@ -61,6 +65,42 @@ const ViewUserReqeuest = () => {
               readOnly={true}
               inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
             />
+
+            {userData?.requestLogId?.status === "approved" && (
+              <>
+                <InputWithLabel
+                  type="text"
+                  label="Brand"
+                  name="brand"
+                  placeholder="brand"
+                  control={control}
+                  readOnly={true}
+                  inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
+                />
+                <InputWithLabel
+                  type="text"
+                  label="Serial Number"
+                  name="serialNumber"
+                  placeholder="serial number"
+                  control={control}
+                  readOnly={true}
+                  inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
+                />
+              </>
+            )}
+
+            {userData?.requestLogId?.status === "rejected" && (
+                <InputWithLabel
+                  type="text"
+                  label="Rejected Reason"
+                  name="rejectedReason"
+                  placeholder="rejected reason"
+                  control={control}
+                  readOnly={true}
+                  inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
+                />
+            )}
+
             <InputWithLabel
               type="text"
               label="Request Date"
@@ -84,6 +124,15 @@ const ViewUserReqeuest = () => {
               label="Reason"
               name="reason"
               placeholder="Reason"
+              control={control}
+              readOnly={true}
+              inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
+            />
+            <InputWithLabel
+              type="text"
+              label="Status"
+              name="status"
+              placeholder="status"
               control={control}
               readOnly={true}
               inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
