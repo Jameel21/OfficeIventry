@@ -1,10 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import {
-  useGetAllEquipment,
-} from "@/store/hooks/EquipmentsHooks";
+import { useGetAllEquipment } from "@/store/hooks/EquipmentsHooks";
 import { useState } from "react";
 import EquipmentTable from "../../_utils/EquipmentTable";
 import EquipmentHeader from "../../_utils/EquipmentHeader";
+import Pagination from "@/components/pagination/Pagination";
 
 const OfficeEquipment = () => {
   const navigate = useNavigate();
@@ -14,7 +13,7 @@ const OfficeEquipment = () => {
     navigate("/admin/addOfficeEquipment");
   };
 
-  const menu = ["view", "edit",];
+  const menu = ["view", "edit"];
   const headers = ["Equipment", "brand", "Price", "Date Of Purchase"];
 
   const { data, isLoading, error } = useGetAllEquipment(
@@ -22,79 +21,51 @@ const OfficeEquipment = () => {
     limit,
     "Office Equipment"
   );
-  
-  const handlePageChange = (newPage) => {
-    setPage(newPage);
-  };
 
-  const handleLimitChange = (e) => {
-    const newLimit = parseInt(e.target.value) || 10;
-    setLimit(newLimit);
-    setPage(1);
-  };
+  const tableData = data?.equipment;
 
   const handleMenuChange = (value, equipmentId) => {
     switch (value) {
       case "view":
-        navigate(`/admin/viewEquipment/${equipmentId}`,{ state: { pathname: "Office Equipment" } });
+        navigate(`/admin/viewEquipment/${equipmentId}`, {
+          state: { pathname: "Office Equipment" },
+        });
         break;
       case "edit":
-        navigate(`/admin/editEquipment/${equipmentId}`,{ state: { pathname: "Office Equipment" } });
+        navigate(`/admin/editEquipment/${equipmentId}`, {
+          state: { pathname: "Office Equipment" },
+        });
         break;
     }
   };
   return (
     <div className="w-full overflow-y-auto">
-     <EquipmentHeader 
-     title={"Office Equipment"}
-     buttonName={"Add Equipment"}
-     onClick={handleAddForm}
-     />
+      <EquipmentHeader
+        title={"Office Equipment"}
+        buttonName={"Add Equipment"}
+        onClick={handleAddForm}
+      />
       <div className="mt-8">
-       <EquipmentTable 
-       data={data}
-       menu={menu}
-       headers={headers}
-       isLoading={isLoading}
-       error={error}
-       handleMenuChange={handleMenuChange}
-       />
+        <EquipmentTable
+          data={tableData}
+          menu={menu}
+          headers={headers}
+          isLoading={isLoading}
+          error={error}
+          handleMenuChange={handleMenuChange}
+        />
       </div>
 
-      <div className="flex items-center justify-between mt-4">
-        <div className="items-center hidden gap-2 sm:flex">
-          <label htmlFor="itemsPerPage">Items per page:</label>
-          <input
-            id="itemsPerPage"
-            type="number"
-            value={limit}
-            onChange={handleLimitChange}
-            className="w-20 p-2 border"
-          />
-        </div>
-
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => handlePageChange(page - 1)}
-            disabled={page === 1}
-            className={`p-1 sm:px-2 sm:py-2 text-base sm:text-md text-white ${
-              page === 1 ? "bg-gray-400" : "bg-gray-500"
-            }`}
-          >
-            Prev
-          </button>
-          <span className="text-sm sm:text-md">Page {page}</span>
-          <button
-            onClick={() => handlePageChange(page + 1)}
-            disabled={data && page >= data.totalPages}
-            className={`p-1 sm:px-2 sm:py-2 text-base sm:text-md text-white ${
-              data && page >= data.totalPages ? "bg-gray-400" : "bg-gray-500"
-            }`}
-          >
-            Next
-          </button>
-        </div>
-      </div>
+      <Pagination
+        page={page}
+        limit={limit}
+        totalItems={data?.totalEquipment || 0}
+        onPageChange={(newPage) => setPage(newPage)}
+        onLimitChange={(newLimit) => {
+          setLimit(newLimit);
+          setPage(1);
+        }}
+      />
     </div>
   );
 };
