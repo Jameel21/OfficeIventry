@@ -11,18 +11,6 @@
 .bg-ternary {
   background-color: rgb(114, 128, 146);
 }
-.text-success {
-  color: rgb(115, 179, 228);
-}
-.bg-dashbox1 {
-  background-color: rgb(226, 232, 240);
-  background: linear-gradient(
-    to right,
-    rgb(149, 195, 230),
-    rgb(150, 191, 223),
-    rgb(87, 181, 253)
-  );
-}
 
 @layer base {
   :root {
@@ -51,7 +39,7 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
-    --sidebar-background: 212, 80%, 24%;
+    --sidebar-background: 212, 80%, 24%; 
     --sidebar-foreground: 229, 100%, 98%;
     --sidebar-primary: 229, 100%, 98%;
     --sidebar-primary-foreground: 0 0% 98%;

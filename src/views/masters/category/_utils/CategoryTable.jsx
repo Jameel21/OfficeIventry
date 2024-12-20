@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 const CategoryTable = ({selectedCategory}) => {
 
   const navigate = useNavigate();
-  const refetch = useQueryClient(selectedCategory);
+  const refetch = useQueryClient();
 
 
   const headers = ["Equipment Name", "Created At"];
@@ -36,8 +36,8 @@ const CategoryTable = ({selectedCategory}) => {
       case "delete":
         deleteCategory(categoryId, {
           onSuccess: () => {
-            refetch.refetchQueries(["AllCategory"]);
-            toast.error("Category deleted successfully");
+            refetch.refetchQueries(["AllCategory", selectedCategory]);
+            toast.success("Category deleted successfully");
           },
           onError: (error) => {
             toast.error(
