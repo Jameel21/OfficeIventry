@@ -22,7 +22,10 @@ const DataTable = ({
   columnWidths,
   showBreadCrumbs = false,
   handleMenuChange,
+  containerClassName= "h-[400px] md:h-[390px] lg:h-[470px]",
   menu,
+  onRowClick, // Added for row click handling
+  rowClassName, 
 }) => {
   return (
     <div className="relative ">
@@ -43,7 +46,7 @@ const DataTable = ({
         </TableHeader>
       </Table>
 
-      <div className="h-[400px] md:h-[390px] lg:h-[470px] overflow-y-auto">
+      <div className={cn("overflow-y-auto", containerClassName)}>
         <Table>
           <TableBody
             className={cn(
@@ -72,11 +75,17 @@ const DataTable = ({
               tableData.map((rows, rowIndex) => (
                 <TableRow
                   key={rowIndex}
-                  className={`border border-gray-300 hover:bg-red-50 h-10 ${
-                    rowIndex % 2 === 0 ? "bg-gray-200" : "bg-slate-100"
-                  }`}
+                  className={cn(
+                    "border border-gray-300 hover:bg-red-50 h-10",
+                    rowClassName
+                      ? rowClassName(rows, rowIndex) // Use dynamic row classes
+                      : rowIndex % 2 === 0
+                      ? "bg-gray-200"
+                      : "bg-slate-100"
+                  )}
+                  onClick={() => onRowClick && onRowClick(rows)} // Handle row click
                 >
-                  {rows.map((row, cellIndex) => (
+                  {rows.cells.map((row, cellIndex) => (
                     <TableCell key={cellIndex}  className={`${columnWidths[cellIndex]}`}>
                       {showBreadCrumbs && cellIndex === 0 ? (
                         <div className={cn("flex items-center gap-3", breadCrumbsClass)}>

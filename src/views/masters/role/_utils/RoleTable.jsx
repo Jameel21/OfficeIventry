@@ -5,18 +5,17 @@ import { useDeleteRole, useGetAllRole } from "@/store/hooks/MasterHooks";
 import toast from "react-hot-toast";
 
 const RoleTable = () => {
-
   const navigate = useNavigate();
   const refetch = useQueryClient();
 
-  const headers = ["Role","Created At"];
+  const headers = ["Role", "Created At"];
   const menu = ["view", "edit", "delete"];
   const columnWidths = ["w-[50%]", "w-[50%]"];
 
-  const { data:roleData, isLoading, error } = useGetAllRole();
-  const { mutate:deleteRole} = useDeleteRole()
+  const { data: roleData, isLoading, error } = useGetAllRole();
+  const { mutate: deleteRole } = useDeleteRole();
 
-  const handleMenuChange = (value,roleId) => {
+  const handleMenuChange = (value, roleId) => {
     switch (value) {
       case "view":
         navigate(`/admin/viewRole/${roleId}`);
@@ -41,26 +40,28 @@ const RoleTable = () => {
     }
   };
 
-  const tableData = roleData?.map((item) => [
-    { id: item._id, render: () => item.role },
-    { render: () => new Date(item.createdAt).toLocaleDateString("en-GB") },
-  ]);
+  const tableData = roleData?.map((item) => ({
+    cells: [
+      { id: item._id, render: () => item.role },
+      { render: () => new Date(item.createdAt).toLocaleDateString("en-GB") },
+    ],
+  }));
 
   return (
     <div>
-    <DataTable
-      headers={headers}
-      tableData={tableData}
-      isLoading={isLoading}
-      // breadCrumbsClass={"w-18 sm:w-20"}
-      columnWidths={columnWidths}
-      error={error}
-      showBreadCrumbs={true}
-      menu={menu}
-      handleMenuChange={handleMenuChange}
-    />
-  </div>
-  )
-}
+      <DataTable
+        headers={headers}
+        tableData={tableData}
+        isLoading={isLoading}
+        // breadCrumbsClass={"w-18 sm:w-20"}
+        columnWidths={columnWidths}
+        error={error}
+        showBreadCrumbs={true}
+        menu={menu}
+        handleMenuChange={handleMenuChange}
+      />
+    </div>
+  );
+};
 
-export default RoleTable
+export default RoleTable;

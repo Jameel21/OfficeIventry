@@ -7,15 +7,17 @@ const AllocationTable = () => {
 
   const { data: logData, isLoading, error } = useGetAllocationLog();
 
-  const tableData = logData?.map((item) => [
-    {
-      id: item._id,
-      render: () => item.equipmentId.equipmentNameId.equipmentName,
-    },
-    { render: () => item.requestLogId.createdBy.userName },
-    { render: () => item.requestLogId.updatedBy.userName },
-    { render: () => new Date(item.issueDate).toLocaleDateString("en-GB") },
-  ]);
+  const tableData = logData?.map((item) => ({
+    cells: [
+      {
+        id: item._id,
+        render: () => item.equipmentId.equipmentNameId.equipmentName,
+      },
+      { render: () => item.requestLogId.createdBy.userName },
+      { render: () => item.requestLogId.updatedBy.userName },
+      { render: () => new Date(item.issueDate).toLocaleDateString("en-GB") },
+    ],
+  }));
 
   return (
     <div>

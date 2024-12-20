@@ -11,11 +11,11 @@ export const useGetAllNotifications = () => {
   })
 }
 
-export const useGetNotification = (id) => {
+export const useUpdateNotification = (id) => {
   return useQuery({
     queryKey: ["notification", id],
     queryFn: async () => {
-      const response = await notificationService.getNotification(id);
+      const response = await notificationService.updateNotification(id);
       return response?.data?.data || []
     },
       enabled: !!id, // Prevent the query from running until `notificationId` is set

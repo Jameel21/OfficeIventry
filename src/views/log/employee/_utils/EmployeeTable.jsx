@@ -18,7 +18,8 @@ const EmployeeTable = ({ page, limit, setPage, setLimit }) => {
     setPage(1);
   };
 
-  const tableData = userData?.map((item) => [
+  const tableData = userData?.map((item) => ({
+    cells:[
     {
       id: item._id,
       render: () => item.userName,
@@ -26,7 +27,7 @@ const EmployeeTable = ({ page, limit, setPage, setLimit }) => {
     { render: () => item.email },
     { render: () => item.employeeId },
     { render: () => item.roleId.role },
-  ]);
+  ]}));
 
   return (
     <div>
@@ -41,8 +42,8 @@ const EmployeeTable = ({ page, limit, setPage, setLimit }) => {
         />
       </div>
  
-    {/* pgination */}
-      <div className="flex items-center justify-between mt-4 w-">
+    
+      {<div className="flex items-center justify-between mt-4 w-">
         <div className="items-center hidden gap-2 sm:flex">
           <label htmlFor="itemsPerPage">Items per page:</label>
           <input
@@ -74,7 +75,8 @@ const EmployeeTable = ({ page, limit, setPage, setLimit }) => {
             Next
           </button>
         </div>
-      </div>
+      </div>}
+
     </div>
   );
 };

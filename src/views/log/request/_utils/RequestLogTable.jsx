@@ -11,20 +11,23 @@ const RequestLogTable = () => {
 
   const { data: logData, isLoading, error } = useGetAllRequestLogs();
 
-  const tableData = logData?.map((item) => [
-    {
-      id: item._id,
-      render: () => item.requestId?.employeeId?.userName,
-    },
-    {
-      render: () => item.requestId?.equipmentId?.equipmentNameId?.equipmentName,
-    },
-    {
-      render: () =>
-        new Date(item.requestId?.requestDate).toLocaleDateString("en-GB"),
-    },
-    { render: () => item.status },
-  ]);
+  const tableData = logData?.map((item) => ({
+    cells: [
+      {
+        id: item._id,
+        render: () => item.requestId?.employeeId?.userName,
+      },
+      {
+        render: () =>
+          item.requestId?.equipmentId?.equipmentNameId?.equipmentName,
+      },
+      {
+        render: () =>
+          new Date(item.requestId?.requestDate).toLocaleDateString("en-GB"),
+      },
+      { render: () => item.status },
+    ],
+  }));
 
   const handleMenuChange = (value, id) => {
     switch (value) {

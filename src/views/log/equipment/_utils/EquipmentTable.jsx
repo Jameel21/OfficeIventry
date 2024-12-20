@@ -30,21 +30,23 @@ const EquipmentTable = ({selectedCategory}) => {
     error,
   } = useGetAllCategory(selectedCategory);
 
-  const tableData = categoryData?.map((item) => {
-    const baseData = [
-      {
-        id: item._id,
-        render: () => item.equipmentName,
-      },
-      {
-        render: () => item.totalQuantity,
-      },
-    ];
+ const tableData = categoryData?.map((item) => {
+    const baseData = {
+      cells: [
+        {
+          id: item._id,
+          render: () => item.equipmentName,
+        },
+        {
+          render: () => item.totalQuantity,
+        },
+      ],
+    };
 
     // Add additional columns for "Employee Equipment"
     if (selectedCategory === "Employee Equipment") {
-      baseData.push(
-        { render: () => item.Available },
+      baseData.cells.push(
+        { render: () => item.Available }, // Ensure property names are correctly spelled
         { render: () => item.inUse }
       );
     }

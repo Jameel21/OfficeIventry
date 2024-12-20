@@ -11,20 +11,22 @@ const NotificationTable = ({
 }) => {
   const navigate = useNavigate();
   const headers = ["Message", "Date"];
-  const menu = ["view", "delete"];
   const columnWidths = ["w-[70%]", "w-[30%]"];
 
-  const handleMenuChange = (action, notificationId, tagId, isRead) => {
+  const handleAction = (action, id) => {
+    const notification = notifications?.find((n) => n._id === id);
+    const { tagId, read } = notification || {};
+
     switch (action) {
       case "view":
-        if (!isRead) {
-          navigate(`/viewRequest/${tagId}`);
+        if (!read) {
+          navigate(`/viewRequest/${tagId?._id}`);
           refetch.refetchQueries(["allNotifications"]);
         }
         break;
 
       case "delete":
-        deleteNotification(notificationId, {
+        deleteNotification(id, {
           onSuccess: () => {
             refetch.refetchQueries(["allNotifications"]);
             toast.success("Notification deleted successfully");
@@ -44,32 +46,28 @@ const NotificationTable = ({
     }
   };
 
-  const tableData = notifications?.map((notification) => [
-    {
-      id: notification._id,
-      render: () => notification.message,
-    },
-    {
-      render: () => new Date(notification.createdAt).toLocaleString("en-GB"),
-    },
-  ]);
+  const tableData = notifications?.map((notification) => ({
+    id: notification._id,
+    cells: [
+      { content: notification.message },
+      {
+        content: new Date(notification.createdAt).toLocaleString("en-GB"),
+      },
+    ],
+  }));
 
   return (
     <DataTable
       headers={headers}
-      tableData={tableData}
+      data={tableData}
       isLoading={isLoading}
       error={error}
       columnWidths={columnWidths}
-      menu={menu}
-      handleMenuChange={(action, id) =>
-        handleMenuChange(
-          action,
-          id,
-          notifications?.find((n) => n._id === id)?.tagId?._id,
-          notifications?.find((n) => n._id === id)?.read
-        )
-      }
+      actions={[
+        { name: "View", key: "view" },
+        { name: "Delete", key: "delete" },
+      ]}
+      onAction={handleAction}
     />
   );
 };

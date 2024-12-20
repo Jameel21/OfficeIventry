@@ -50,10 +50,11 @@ const CategoryTable = ({selectedCategory}) => {
     }
   };
 
-  const tableData = categoryData?.map((item) => [
+  const tableData = categoryData?.map((item) => ({
+    cells:[
     { id: item._id, render: () => item.equipmentName },
     { render: () => new Date(item.createdAt).toLocaleDateString("en-GB") },
-  ]);
+  ]}));
 
   return (
     <div>

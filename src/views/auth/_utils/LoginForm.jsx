@@ -33,10 +33,10 @@ const LoginForm = () => {
             navigate("/admin");
             break;
           case "Admin":
-            navigate("/");
+            navigate("/admin");
             break;
           case "HR":
-            navigate("/");
+            navigate("/admin");
             break;
           case "Employee":
             navigate("/viewMyRequest");

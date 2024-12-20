@@ -43,10 +43,11 @@ const DepartmentTable = () => {
     }
   };
 
-  const tableData = departmentData?.map((item) => [
+  const tableData = departmentData?.map((item) => ({
+    cells:[
     { id: item._id, render: () => item.department },
     { render: () => new Date(item.createdAt).toLocaleDateString("en-GB") },
-  ]);
+  ]}));
   return (
     <div>
       <DataTable

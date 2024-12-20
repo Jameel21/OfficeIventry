@@ -40,10 +40,12 @@ const BrandTable = () => {
     }
   };
 
-  const tableData = brandData?.map((item) => [
-    { id: item._id, render: () => item.brand },
-    { render: () => new Date(item.createdAt).toLocaleDateString("en-GB") },
-  ]);
+  const tableData = brandData?.map((item) => ({
+    cells: [
+      { id: item._id, render: () => item.brand },
+      { render: () => new Date(item.createdAt).toLocaleDateString("en-GB") },
+    ],
+  }));
 
   return (
     <div>
@@ -51,11 +53,11 @@ const BrandTable = () => {
         headers={headers}
         tableData={tableData}
         isLoading={isLoading}
-        columnWidths={columnWidths} 
+        columnWidths={columnWidths}
         error={error}
         showBreadCrumbs={true}
-        menu={menu} 
-        handleMenuChange={handleMenuChange} 
+        menu={menu}
+        handleMenuChange={handleMenuChange}
       />
     </div>
   );

@@ -5,8 +5,8 @@ const getAllNotification = async () => {
   return response
 }
 
-const getNotification = async (id) => {
-  const response = await API.get(`/notification/getById/${id}`);
+const updateNotification = async (id) => {
+  const response = await API.put(`/notification/getById/${id}`);
   return response
 }
 
@@ -14,4 +14,4 @@ const deleteNotifications = async () => {
   const response = await API.delete('/notification/delete');
   return response
 }
-export default {getAllNotification, getNotification, deleteNotifications}
+export default {getAllNotification, updateNotification, deleteNotifications}

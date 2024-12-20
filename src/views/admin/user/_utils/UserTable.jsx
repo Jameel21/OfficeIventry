@@ -3,19 +3,24 @@ import { Check, X } from "lucide-react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
-import {
-  useDeleteUser,
-  useUpdateUser,
-} from "@/store/hooks/UserHooks";
+import { useDeleteUser, useUpdateUser } from "@/store/hooks/UserHooks";
 
-const UserTable = ({ page, limit, setPage, setLimit,userData,isLoading,error,data  }) => {
+const UserTable = ({
+  page,
+  limit,
+  setPage,
+  setLimit,
+  userData,
+  isLoading,
+  error,
+  data,
+}) => {
   const navigate = useNavigate();
   const refetch = useQueryClient();
 
   const headers = ["Username", "Email", "Id", "Role", "Status"];
   const columnWidths = ["w-[25%]", "w-[30%]", "w-[10%]", "w-[20%]", "w-[15%]"];
 
-  
   const { mutate: deleteUser } = useDeleteUser();
   const menu = ["view", "edit", "delete"];
 
@@ -67,7 +72,6 @@ const UserTable = ({ page, limit, setPage, setLimit,userData,isLoading,error,dat
     );
   };
 
-
   const handlePageChange = (newPage) => {
     setPage(newPage);
   };
@@ -77,31 +81,33 @@ const UserTable = ({ page, limit, setPage, setLimit,userData,isLoading,error,dat
     setPage(1);
   };
 
-  const tableData = userData?.map((item) => [
-    { id: item._id, render: () => item.userName },
-    { render: () => item.email },
-    { render: () => item.employeeId },
-    { render: () => item.roleId.role },
-    {
-      render: () => (
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => handleStatusToggle(item._id, item.status)}
-            className={`flex items-center justify-between w-24 px-2 py-1 rounded-full ${
-              item.status === "Active" ? "bg-green-500" : "bg-red-500"
-            } text-white`}
-          >
-            {item.status === "Active" ? (
-              <Check className="order-2 w-4 h-4" />
-            ) : (
-              <X className="order-1 w-4 h-4" />
-            )}
-            <span>{item.status}</span>
-          </button>
-        </div>
-      ),
-    },
-  ]);
+  const tableData = userData?.map((item) => ({
+    cells: [
+      { id: item._id, render: () => item.userName },
+      { render: () => item.email },
+      { render: () => item.employeeId },
+      { render: () => item.roleId.role },
+      {
+        render: () => (
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => handleStatusToggle(item._id, item.status)}
+              className={`flex items-center justify-between w-24 px-2 py-1 rounded-full ${
+                item.status === "Active" ? "bg-green-500" : "bg-red-500"
+              } text-white`}
+            >
+              {item.status === "Active" ? (
+                <Check className="order-2 w-4 h-4" />
+              ) : (
+                <X className="order-1 w-4 h-4" />
+              )}
+              <span>{item.status}</span>
+            </button>
+          </div>
+        ),
+      },
+    ],
+  }));
 
   return (
     <div>
@@ -121,7 +127,9 @@ const UserTable = ({ page, limit, setPage, setLimit,userData,isLoading,error,dat
       {/* pgination */}
       <div className="flex items-center justify-between mt-4">
         <div className="items-center hidden gap-2 sm:flex">
-          <label htmlFor="itemsPerPage" className="text-sm text-gray-600">Items per page:</label>
+          <label htmlFor="itemsPerPage" className="text-sm text-gray-600">
+            Items per page:
+          </label>
           <input
             id="itemsPerPage"
             type="number"
@@ -145,14 +153,15 @@ const UserTable = ({ page, limit, setPage, setLimit,userData,isLoading,error,dat
             onClick={() => handlePageChange(page + 1)}
             disabled={page >= Math.ceil(data?.totalUsers / limit)}
             className={`p-1 sm:px-2 sm:py-2 text-sm text-white rounded-lg ${
-              page >= Math.ceil(data?.totalUsers / limit) ? "bg-ternary" : "bg-secondary"
+              page >= Math.ceil(data?.totalUsers / limit)
+                ? "bg-ternary"
+                : "bg-secondary"
             }`}
           >
             Next
           </button>
         </div>
       </div>
-      
     </div>
   );
 };

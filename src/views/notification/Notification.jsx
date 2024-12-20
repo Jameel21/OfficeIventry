@@ -1,32 +1,30 @@
 import UiButton from "@/components/form-fields/_utils/Button";
-import UiTable from "@/components/form-fields/_utils/UiTable";
-import { TableCell, TableRow } from "@/components/ui/table";
-import toast from "react-hot-toast";
-import LoadSpinner from "@/components/spinner/LoadSpinner";
 import { useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
-import {
-  useDeleteNotifications,
-  useGetAllNotifications,
-  useGetNotification,
-} from "@/store/hooks/NotificationHooks";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import { useDeleteNotifications, useGetAllNotifications, useUpdateNotification } from "@/store/hooks/NotificationHooks";
+import DataTable from "@/components/table/DataTable";
 
 const Notification = () => {
   const navigate = useNavigate();
   const refetch = useQueryClient();
   const [notificationId, setNotificationId] = useState();
-  const headers = ["Message"];
+  const headers = ["Message", "Date & Time"];
+  const menu = ["view"];
+  const columnWidths = ["w-[70%]", "w-[30%]"];
 
   const { data: notificationData, isLoading, error } = useGetAllNotifications();
 
-  const handleView = async (Id, tagId, isRead) => {
-    if (isRead) {
-      return;
+  const handleView = async (rowData) => {
+    console.log("rowData", rowData)
+    const { id: _id, tagId, read } = rowData;
+    
+    if (read) {
+      return; 
     }
     try {
-      setNotificationId(Id);
+      setNotificationId(_id);
       await refetch.refetchQueries({ queryKey: ["allNotifications"] });
       navigate(`/viewRequest/${tagId}`);
     } catch (error) {
@@ -34,13 +32,13 @@ const Notification = () => {
     }
   };
 
-  const { data } = useGetNotification(notificationId);
+  const { data } = useUpdateNotification(notificationId);
+  
   useEffect(() => {
     if (data) {
       refetch.refetchQueries(["allNotifications"]);
-      navigate(`/viewRequest/${data.tagId._id}`);
     }
-  }, [data, navigate, refetch]);
+  }, [data,refetch]);
 
   const { mutate: deleteNotification } = useDeleteNotifications();
 
@@ -52,19 +50,31 @@ const Notification = () => {
       },
       onError: (error) => {
         toast.error(
-          `Failed to clear notification: ${
-            error.response?.data?.message || error.message
-          }`
+          `Failed to clear notification: ${error.response?.data?.message || error.message}`
         );
       },
     });
+  };
+
+  const tableData = notificationData?.map((item) => ({
+    id: item._id,
+    tagId: item.tagId?._id, 
+    read: item.read,
+    cells: [
+      { render: () => item.message },
+      { render: () => new Date(item.createdAt).toLocaleString() },
+    ],
+  }));
+
+  const rowClassName = (rows) => {
+    return rows.read ? "bg-gray-50" : "bg-gray-200";
   };
 
   return (
     <div className="w-full overflow-y-auto">
       <div className="flex items-center justify-between">
         <div className="text-lg font-medium text-slate-700">Notifications</div>
-        <div className="flex items-center gap-2 w-">
+        <div className="flex items-center gap-2">
           <UiButton
             onClick={handleClearNotifications}
             className={"md:w-24 md:h-9 lg:w-40 lg:h-11 text-white"}
@@ -74,52 +84,17 @@ const Notification = () => {
         </div>
       </div>
       <div className="mt-8">
-        <div className="overflow-y-auto h-[440px] sm:h-[500px]">
-          <UiTable
+          <DataTable
             headers={headers}
-            headerClass={"h-12 text-sm md:text-base lg:text-lg"}
-          >
-            {isLoading ? (
-              <TableRow className="h-12">
-                <TableCell colSpan={headers.length}>
-                  <div className="flex justify-center h-full">
-                    <LoadSpinner />
-                  </div>
-                </TableCell>
-              </TableRow>
-            ) : error ? (
-              <TableRow className="h-12">
-                <TableCell
-                  colSpan={headers.length}
-                  className="font-medium text-center text-md text-muted-foreground"
-                >
-                  {error.message}
-                </TableCell>
-              </TableRow>
-            ) : notificationData && notificationData?.length > 0 ? (
-              notificationData.map((item, index) => (
-                <TableRow
-                  key={index}
-                  onClick={() => handleView(item._id, item.tagId._id, item.read)}
-                  className={`border border-gray-300 h-10 text-base ${
-                    item.read ? "bg-gray-50" : "bg-gray-200"
-                  }`}
-                >
-                  <TableCell>
-                    <div>{item.message}</div>
-                    <div className="text-sm text-gray-500">{new Date(item.createdAt).toLocaleTimeString()}{new Date(item.createdAt).toLocaleDateString()}</div>
-                  </TableCell>
-                </TableRow>
-              ))
-            ) : (
-              <TableRow>
-                <TableCell colSpan={headers.length} className="text-center">
-                  No data available
-                </TableCell>
-              </TableRow>
-            )}
-          </UiTable>
-        </div>
+            tableData={tableData}
+            isLoading={isLoading}
+            columnWidths={columnWidths}
+            error={error}
+            showBreadCrumbs={false}
+            menu={menu}
+            onRowClick={handleView}
+            rowClassName={rowClassName} // Pass handleView to onRowClick
+          />
       </div>
     </div>
   );
