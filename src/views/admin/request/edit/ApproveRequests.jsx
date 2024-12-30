@@ -26,6 +26,7 @@ const ApproveRequests = () => {
   const location = useLocation();
   const { id } = useParams();
   const { equipmentId } = location.state || {};
+  console.log("equipmentId", equipmentId);
   const refetch = useQueryClient();
 
   const { control, handleSubmit, reset, watch } = useForm({
@@ -94,7 +95,10 @@ const ApproveRequests = () => {
           navigate("/admin/requests");
         },
         onError: (error) => {
-          console.error("Mutation failed:", error.message);
+          const errorMessage =
+            error.response?.data?.message ||
+            `Request rejection was failed. Please try again.`;
+          toast.error(errorMessage);
         },
       }
     );

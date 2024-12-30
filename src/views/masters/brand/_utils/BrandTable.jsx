@@ -3,16 +3,18 @@ import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { useDeleteBrand, useGetAllBrand } from "@/store/hooks/MasterHooks";
 import toast from "react-hot-toast";
+import Pagination from "@/components/pagination/Pagination";
 
-const BrandTable = () => {
+const BrandTable = ({ page, limit, setPage, setLimit }) => {
   const navigate = useNavigate();
   const refetch = useQueryClient();
 
   const headers = ["Brand", "Created At"];
-  const menu = ["view", "edit", "delete"];
   const columnWidths = ["w-[50%]", "w-[50%]"];
 
-  const { data: brandData, isLoading, error } = useGetAllBrand();
+  const { data, isLoading, error } = useGetAllBrand({ page, limit });
+  const brandData = data?.brands;
+
   const { mutate: deleteBrand } = useDeleteBrand();
 
   const handleMenuChange = (value, brandId) => {
@@ -45,19 +47,31 @@ const BrandTable = () => {
       { id: item._id, render: () => item.brand },
       { render: () => new Date(item.createdAt).toLocaleDateString("en-GB") },
     ],
+    menu: ["view", "edit", "delete"],
   }));
 
   return (
     <div>
-      <DataTable
-        headers={headers}
-        tableData={tableData}
-        isLoading={isLoading}
-        columnWidths={columnWidths}
-        error={error}
-        showBreadCrumbs={true}
-        menu={menu}
-        handleMenuChange={handleMenuChange}
+      <div>
+        <DataTable
+          headers={headers}
+          tableData={tableData}
+          isLoading={isLoading}
+          columnWidths={columnWidths}
+          error={error}
+          showBreadCrumbs={true}
+          handleMenuChange={handleMenuChange}
+        />
+      </div>
+      <Pagination
+        page={page}
+        limit={limit}
+        totalItems={data?.totalBrands || 0}
+        onPageChange={(newPage) => setPage(newPage)}
+        onLimitChange={(newLimit) => {
+          setLimit(newLimit);
+          setPage(1);
+        }}
       />
     </div>
   );

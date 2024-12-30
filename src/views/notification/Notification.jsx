@@ -1,44 +1,11 @@
 import UiButton from "@/components/form-fields/_utils/Button";
 import { useQueryClient } from "@tanstack/react-query";
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { useDeleteNotifications, useGetAllNotifications, useUpdateNotification } from "@/store/hooks/NotificationHooks";
-import DataTable from "@/components/table/DataTable";
+import { useDeleteNotifications } from "@/store/hooks/NotificationHooks";
+import NotificationTable from "./_utils/NotificationTable";
 
 const Notification = () => {
-  const navigate = useNavigate();
   const refetch = useQueryClient();
-  const [notificationId, setNotificationId] = useState();
-  const headers = ["Message", "Date & Time"];
-  const menu = ["view"];
-  const columnWidths = ["w-[70%]", "w-[30%]"];
-
-  const { data: notificationData, isLoading, error } = useGetAllNotifications();
-
-  const handleView = async (rowData) => {
-    console.log("rowData", rowData)
-    const { id: _id, tagId, read } = rowData;
-    
-    if (read) {
-      return; 
-    }
-    try {
-      setNotificationId(_id);
-      await refetch.refetchQueries({ queryKey: ["allNotifications"] });
-      navigate(`/viewRequest/${tagId}`);
-    } catch (error) {
-      console.error("Failed to fetch notification:", error);
-    }
-  };
-
-  const { data } = useUpdateNotification(notificationId);
-  
-  useEffect(() => {
-    if (data) {
-      refetch.refetchQueries(["allNotifications"]);
-    }
-  }, [data,refetch]);
 
   const { mutate: deleteNotification } = useDeleteNotifications();
 
@@ -50,24 +17,12 @@ const Notification = () => {
       },
       onError: (error) => {
         toast.error(
-          `Failed to clear notification: ${error.response?.data?.message || error.message}`
+          `Failed to clear notification: ${
+            error.response?.data?.message || error.message
+          }`
         );
       },
     });
-  };
-
-  const tableData = notificationData?.map((item) => ({
-    id: item._id,
-    tagId: item.tagId?._id, 
-    read: item.read,
-    cells: [
-      { render: () => item.message },
-      { render: () => new Date(item.createdAt).toLocaleString() },
-    ],
-  }));
-
-  const rowClassName = (rows) => {
-    return rows.read ? "bg-gray-50" : "bg-gray-200";
   };
 
   return (
@@ -84,17 +39,7 @@ const Notification = () => {
         </div>
       </div>
       <div className="mt-8">
-          <DataTable
-            headers={headers}
-            tableData={tableData}
-            isLoading={isLoading}
-            columnWidths={columnWidths}
-            error={error}
-            showBreadCrumbs={false}
-            menu={menu}
-            onRowClick={handleView}
-            rowClassName={rowClassName} // Pass handleView to onRowClick
-          />
+        <NotificationTable />
       </div>
     </div>
   );

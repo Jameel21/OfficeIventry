@@ -1,12 +1,12 @@
 import API from "@/helper/AxiosConfig";
 
-const getAllocationlogs = async () => {
-  const response = await API.get("/log/allocationHistory")
+const getAllocationlogs = async ({ page = 1, limit = 10 }) => {
+  const response = await API.get(`/log/allocationHistory?page=${page}&limit=${limit}`)
   return response
 }
 
-const getRequestLogs = async () => {
-  const response = await API.get("/requestLog/getAllLogs")
+const getRequestLogs = async ({ page = 1, limit = 10 }) => {
+  const response = await API.get(`/requestLog/getAllLogs?page=${page}&limit=${limit}`)
   return response
 }
 

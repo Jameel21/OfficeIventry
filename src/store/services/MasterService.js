@@ -5,8 +5,8 @@ const addBrand = async (data) => {
   const response = await API.post("/master/brand/create", data);
   return response;
 };
-const getAllBrand = async () => {
-  const response = await API.get("/master/brand/getAll");
+const getAllBrand = async ({ page = 1, limit = 10 }) => {
+  const response = await API.get(`/master/brand/getAll?page=${page}&limit=${limit}`);
   return response;
 };
 const getBrandById = async (id) => {
@@ -27,8 +27,8 @@ const addDepartment = async (data) => {
   const response = await API.post("master/department/addDepartment", data);
   return response;
 };
-const getAllDepartment = async () => {
-  const response = await API.get("master/department/getAllDepartment");
+const getAllDepartment = async ({ page = 1, limit = 10 }) => {
+  const response = await API.get(`master/department/getAllDepartment?page=${page}&limit=${limit}`);
   return response;
 };
 const getDepartmentById = async (id) => {
@@ -51,9 +51,9 @@ const addCategory = async (data, equipmentType) => {
   });
   return response;
 };
-const getAllCategory = async (equipmentType) => {
+const getAllCategory = async (page, limit, equipmentType) => {
   const response = await API.get("/master/category/getAll", {
-    params: {equipmentType}
+    params: { page,limit,equipmentType}
   });
   return response;
 };
@@ -75,8 +75,8 @@ const addRole = async (data) => {
   const response = await API.post("/role/add", data);
   return response;
 };
-const getAllRole = async () => {
-  const response = await API.get("/role/getAll");
+const getAllRole = async ({ page = 1, limit = 10 }) => {
+  const response = await API.get(`/role/getAll?page=${page}&limit=${limit}`);
   return response;
 };
 const getRoleById = async (id) => {

@@ -3,16 +3,18 @@ import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { useDeleteRole, useGetAllRole } from "@/store/hooks/MasterHooks";
 import toast from "react-hot-toast";
+import Pagination from "@/components/pagination/Pagination";
 
-const RoleTable = () => {
+const RoleTable = ({ page, limit, setPage, setLimit }) => {
   const navigate = useNavigate();
   const refetch = useQueryClient();
 
   const headers = ["Role", "Created At"];
-  const menu = ["view", "edit", "delete"];
   const columnWidths = ["w-[50%]", "w-[50%]"];
 
-  const { data: roleData, isLoading, error } = useGetAllRole();
+  const { data, isLoading, error } = useGetAllRole({ page, limit });
+  const roleData = data?.roles;
+
   const { mutate: deleteRole } = useDeleteRole();
 
   const handleMenuChange = (value, roleId) => {
@@ -45,20 +47,31 @@ const RoleTable = () => {
       { id: item._id, render: () => item.role },
       { render: () => new Date(item.createdAt).toLocaleDateString("en-GB") },
     ],
+    menu: ["view", "edit", "delete"],
   }));
 
   return (
     <div>
-      <DataTable
-        headers={headers}
-        tableData={tableData}
-        isLoading={isLoading}
-        // breadCrumbsClass={"w-18 sm:w-20"}
-        columnWidths={columnWidths}
-        error={error}
-        showBreadCrumbs={true}
-        menu={menu}
-        handleMenuChange={handleMenuChange}
+      <div>
+        <DataTable
+          headers={headers}
+          tableData={tableData}
+          isLoading={isLoading}
+          columnWidths={columnWidths}
+          error={error}
+          showBreadCrumbs={true}
+          handleMenuChange={handleMenuChange}
+        />
+      </div>
+      <Pagination
+        page={page}
+        limit={limit}
+        totalItems={data?.totalRoles || 0}
+        onPageChange={(newPage) => setPage(newPage)}
+        onLimitChange={(newLimit) => {
+          setLimit(newLimit);
+          setPage(1);
+        }}
       />
     </div>
   );

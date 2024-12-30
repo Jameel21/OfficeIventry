@@ -1,11 +1,11 @@
 import { useMutation,useQuery} from "@tanstack/react-query";
 import notificationService from "../services/NotificationService"
 
-export const useGetAllNotifications = () => {
+export const useGetAllNotifications = ({ page, limit }) => {
   return useQuery({
-    queryKey: ["allNotifications"],
+    queryKey: ["allNotifications",page, limit],
     queryFn: async () => {
-      const response = await notificationService.getAllNotification();
+      const response = await notificationService.getAllNotification({ page, limit });
       return response?.data?.data || []
     }
   })

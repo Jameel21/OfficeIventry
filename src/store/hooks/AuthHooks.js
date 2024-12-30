@@ -8,3 +8,16 @@ export const useLoginUser = () => {
   });
 };
 
+export const useResetPassword = () => {
+  return useMutation({
+    mutationFn: authService.resetPassword
+  })
+}
+
+export const useForgotPassword = () => {
+  return useMutation({
+    mutationFn:authService.forgotPassword
+  })
+}
+
+

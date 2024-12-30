@@ -1,9 +1,12 @@
 import UiButton from "@/components/form-fields/_utils/Button";
 import { useNavigate } from "react-router-dom";
 import DepartmentTable from "../_utils/DepartmentTable";
+import { useState } from "react";
 
 const ListAllDepartment = () => {
   const navigate = useNavigate();
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
 
   const handleAddUser = () => {
     navigate("/admin/addDepartment");
@@ -25,7 +28,12 @@ const ListAllDepartment = () => {
         </div>
       </div>
       <div className="mt-8">
-        <DepartmentTable />
+        <DepartmentTable
+          page={page}
+          limit={limit}
+          setPage={setPage}
+          setLimit={setLimit}
+        />
       </div>
     </div>
   );

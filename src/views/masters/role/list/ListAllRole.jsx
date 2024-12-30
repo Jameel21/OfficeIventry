@@ -1,20 +1,23 @@
 import UiButton from "@/components/form-fields/_utils/Button";
 import { useNavigate } from "react-router-dom";
 import RoleTable from "../_utils/RoleTable";
+import { useState } from "react";
 
 const ListAllRole = () => {
-
   const navigate = useNavigate();
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
 
   const handleAddRole = () => {
     navigate("/admin/addRole");
   };
 
-
   return (
     <div className="w-full">
       <div className="flex items-center justify-between">
-        <div className="text-base font-normal md:text-lg md:font-medium text-slate-700">Role</div>
+        <div className="text-base font-normal md:text-lg md:font-medium text-slate-700">
+          Role
+        </div>
         <div className="flex items-center gap-2">
           <UiButton
             onClick={handleAddRole}
@@ -25,10 +28,15 @@ const ListAllRole = () => {
         </div>
       </div>
       <div className="mt-8">
-      <RoleTable/>
+        <RoleTable
+          page={page}
+          limit={limit}
+          setPage={setPage}
+          setLimit={setLimit}
+        />
       </div>
-</div>
-  )
-}
+    </div>
+  );
+};
 
-export default ListAllRole
+export default ListAllRole;

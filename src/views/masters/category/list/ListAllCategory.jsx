@@ -49,7 +49,7 @@ const ListAllCategory = () => {
           />
         </div>
       </div>
-      <div className="mt-6">
+      <div className="mt-5">
        <CategoryTable selectedCategory={selectedCategory}/>
       </div>
     </div>

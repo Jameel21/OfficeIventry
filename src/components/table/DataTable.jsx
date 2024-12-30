@@ -23,7 +23,7 @@ const DataTable = ({
   showBreadCrumbs = false,
   handleMenuChange,
   containerClassName= "h-[400px] md:h-[390px] lg:h-[470px]",
-  menu,
+  // menu,
   onRowClick, // Added for row click handling
   rowClassName, 
 }) => {
@@ -91,9 +91,9 @@ const DataTable = ({
                         <div className={cn("flex items-center gap-3", breadCrumbsClass)}>
                           <div className="flex-shrink-0">
                             <BreadCrumbs
-                              data={menu}
+                             data={rows.menu}
                               onChange={(value) =>
-                                handleMenuChange(value, row.id)
+                                handleMenuChange(value, row.id, row.equipmentId || undefined )
                               }
                             />
                           </div>

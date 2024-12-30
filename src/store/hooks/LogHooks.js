@@ -1,22 +1,22 @@
 import {useQuery } from "@tanstack/react-query";
 import logService from "../services/LogService";
 
-export const useGetAllocationLog = () => {
+export const useGetAllocationLog = ({ page = 1, limit = 10 }) => {
   return useQuery({
-    queryKey: ["allocationLog"],
+    queryKey: ["allocationLog",page, limit],
     queryFn: async () => {
-      const response = await logService.getAllocationlogs();
-      return response?.data?.data?.logs || []
+      const response = await logService.getAllocationlogs({ page, limit });
+      return response?.data?.data || []
     }
   })
 }
 
-export const useGetAllRequestLogs = () => {
+export const useGetAllRequestLogs = ({ page = 1, limit = 10 }) => {
   return useQuery({
-    queryKey: ["requestLogs"],
+    queryKey: ["requestLogs",page, limit],
     queryFn: async () => {
-      const response = await logService.getRequestLogs();
-      return response?.data?.data?.logs || []
+      const response = await logService.getRequestLogs({ page, limit });
+      return response?.data?.data || []
     }
   })
 }

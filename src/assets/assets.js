@@ -1,4 +1,4 @@
-import { Lock, Bell ,FileText, Building2, User, GitPullRequestArrow,Monitor,Paintbrush,SquareCheckBig,UserRoundPen,CirclePlus, Plus, Logs} from 'lucide-react'
+import { Lock, Bell ,FileText, Building2, User, GitPullRequestArrow,Monitor,Paintbrush,SquareCheckBig,UserRoundPen,CirclePlus, Plus, Logs, LayoutDashboard} from 'lucide-react'
 
 
 export  const currentStatus = [
@@ -25,7 +25,7 @@ export const sidebarMenu ={
       menu:'Dashboard'
     },
     {
-      icon:Building2,
+      icon:LayoutDashboard,
       menu:'Masters',
       submenu: [
         {

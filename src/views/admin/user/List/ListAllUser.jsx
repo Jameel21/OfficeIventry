@@ -35,19 +35,19 @@ const ListAllUser = () => {
         <div className="flex items-center gap-2 mt-1">
           <UiInput
             placeholder={"Search by keyword"}
-            inputClassName="md:h-9 md:w-40 lg:h-11 lg:w-96 hidden sm:flex"
+            inputClassName="h-7 md:h-9 md:w-40 lg:h-11 lg:w-96 hidden sm:flex"
             value={searchTerm}
             onChange={handleSearchChange}
           />
           <UiButton
             onClick={handleAddUser}
-            className={"md:w-24 md:h-9 lg:w-40 lg:h-11 text-white"}
+            className={"w-28 h-7 md:w-40 md:h-11 text-white"}
             variant={"secondary"}
             buttonName={"Create User"}
           />
         </div>
       </div>
-      <div className="mt-8">
+      <div className="mt-7">
         <UserTable
           page={page}
           limit={limit}

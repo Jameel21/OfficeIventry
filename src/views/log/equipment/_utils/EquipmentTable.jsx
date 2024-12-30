@@ -1,8 +1,11 @@
+import Pagination from "@/components/pagination/Pagination";
 import DataTable from "@/components/table/DataTable";
 import { useGetAllCategory } from "@/store/hooks/MasterHooks";
+import { useState } from "react";
 
-const EquipmentTable = ({selectedCategory}) => {
-
+const EquipmentTable = ({ selectedCategory }) => {
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
   const headersMapping = {
     "Employee Equipment": [
       "Equipment",
@@ -24,13 +27,15 @@ const EquipmentTable = ({selectedCategory}) => {
     columnWidthsMapping[selectedCategory] ||
     columnWidthsMapping["Employee Equipment"];
 
-  const {
-    data: categoryData,
-    isLoading,
-    error,
-  } = useGetAllCategory(selectedCategory);
+  const { data, isLoading, error } = useGetAllCategory(
+    page,
+    limit,
+    selectedCategory
+  );
 
- const tableData = categoryData?.map((item) => {
+  const categoryData = data?.category;
+
+  const tableData = categoryData?.map((item) => {
     const baseData = {
       cells: [
         {
@@ -55,16 +60,28 @@ const EquipmentTable = ({selectedCategory}) => {
   });
   return (
     <div>
-      <DataTable
-        headers={headers}
-        tableData={tableData}
-        isLoading={isLoading}
-        columnWidths={columnWidths}
-        error={error}
-        showBreadCrumbs={false}
+      <div>
+        <DataTable
+          headers={headers}
+          tableData={tableData}
+          isLoading={isLoading}
+          columnWidths={columnWidths}
+          error={error}
+          showBreadCrumbs={false}
+        />
+      </div>
+      <Pagination
+        page={page}
+        limit={limit}
+        totalItems={data?.totalCategry || 0}
+        onPageChange={(newPage) => setPage(newPage)}
+        onLimitChange={(newLimit) => {
+          setLimit(newLimit);
+          setPage(1);
+        }}
       />
     </div>
-  )
-}
+  );
+};
 
-export default EquipmentTable
+export default EquipmentTable;

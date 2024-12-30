@@ -9,33 +9,36 @@ import DropDown from "@/components/form-fields/_utils/DropDown";
 
 const AddCategoryForm = ({ equipmentType }) => {
   const refetch = useQueryClient();
-  const { control, handleSubmit, reset} = useForm({
+  const { control, handleSubmit, reset } = useForm({
     defaultValues: {
       equipmentName: "",
       isSerialNumber: "",
       brandIds: [],
     },
   });
+  const page = 1;
+  const limit = 100;
 
   const addCategoryMutation = useAddCategory(equipmentType);
-  const { data: brandData } = useGetAllBrand();
-
+  const { data } = useGetAllBrand({ page, limit });
+  const brandData = data?.brands;
+  
   const brandOptions =
     brandData?.map((brand) => ({
       label: brand.brand,
       value: brand._id,
     })) || [];
 
-    const serialNumberOptions = [
-      {
-        label:"true",
-        value: true
-      },
-      {
-        label:"false",
-        value: false
-      }
-    ]
+  const serialNumberOptions = [
+    {
+      label: "true",
+      value: true,
+    },
+    {
+      label: "false",
+      value: false,
+    },
+  ];
 
   const onSubmitForm = (data) => {
     const formData = {
@@ -76,7 +79,7 @@ const AddCategoryForm = ({ equipmentType }) => {
           labelName="Serial Number"
           options={serialNumberOptions}
           placeholder="select serial number availability"
-          dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 w-52  sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
+          dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
         />
         <DropDown
           control={control}
@@ -85,7 +88,7 @@ const AddCategoryForm = ({ equipmentType }) => {
           options={brandOptions}
           isMultiSelect={true}
           placeholder="select brand"
-          dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 w-52  sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
+          dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
         />
         <UiButton
           variant="secondary"

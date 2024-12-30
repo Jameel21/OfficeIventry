@@ -23,7 +23,6 @@ const UserTable = ({
   const columnWidths = ["w-[25%]", "w-[30%]", "w-[10%]", "w-[20%]", "w-[15%]"];
 
   const { mutate: deleteUser } = useDeleteUser();
-  const menu = ["view", "edit", "delete"];
 
   const updateUser = useUpdateUser();
 
@@ -99,6 +98,7 @@ const UserTable = ({
         ),
       },
     ],
+    menu : ["view", "edit", "delete"]
   }));
 
   return (
@@ -111,7 +111,6 @@ const UserTable = ({
           columnWidths={columnWidths}
           error={error}
           showBreadCrumbs={true}
-          menu={menu}
           handleMenuChange={handleMenuChange}
         />
       </div>

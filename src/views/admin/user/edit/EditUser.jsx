@@ -8,16 +8,19 @@ import { useGetSingleUser, useUpdateUser } from "@/store/hooks/UserHooks";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
-import { useGetDepartment, useGetRoles } from "@/store/hooks/NameHooks";
+import { useGetAllDepartment, useGetAllRole } from "@/store/hooks/MasterHooks";
 
 const EditUser = () => {
   const { id } = useParams();
   const refetch = useQueryClient();
   const navigate = useNavigate();
+
+  const page = 1;
+  const limit = 50;
   
   const { data: userData, isLoading } = useGetSingleUser(id);
-  const { data: roles } = useGetRoles();
-  const { data: departmentNames } = useGetDepartment();
+  const { data: roleData } = useGetAllRole({ page, limit });
+  const { data: departmentData } = useGetAllDepartment({ page, limit });
 
   const { control, handleSubmit, reset } = useForm({});
   const { mutate: updateUser } = useUpdateUser();
@@ -79,13 +82,13 @@ const EditUser = () => {
   };
 
   const roleOptions =
-    roles?.map((item) => ({
+  roleData?.roles?.map((item) => ({
       label: item.role,
       value: item._id,
     })) || [];
 
   const departmentOptions =
-    departmentNames?.map((item) => ({
+  departmentData?.departments?.map((item) => ({
       label: item.department,
       value: item._id,
     })) || [];

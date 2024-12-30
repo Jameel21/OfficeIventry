@@ -45,6 +45,8 @@ import ViewEquipmentForm from "./views/equipments/view/ViewEquipment";
 import EditEquipmentForm from "./views/equipments/edit/EditEquipment";
 import RequestLog from "./views/log/request/RequestLog";
 import ViewRequestLog from "./views/log/request/view/ViewRequestLog";
+import ForgotPassword from "./views/auth/ForgotPassword";
+import ResetPassword from "./views/auth/ResetPassword";
 
 
 function App() {
@@ -53,7 +55,8 @@ function App() {
       <BrowserRouter>
         <Toaster position="top-right" />
         <Routes>
-          <Route path="/auth/login" element={<Login />}></Route>
+          <Route path="/auth/login" element={<Login />}></Route><Route path="/auth/forgotPassword" element={<ForgotPassword />}></Route>
+          <Route path="/auth/resetPassword" element={<ResetPassword />}></Route>
 
           <Route element={<AuthUser />}>
             <Route path="/" element={<Layout />}>

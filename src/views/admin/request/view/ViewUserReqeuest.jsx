@@ -2,12 +2,14 @@ import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import InputWithLabel from "@/components/form-fields/_utils/InputWithLabel";
 import { CircleArrowLeft } from "lucide-react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useGetRequestById } from "@/store/hooks/EmployeeHooks";
 
 const ViewUserReqeuest = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+  const location = useLocation();
+  const { prevPage } = location.state || [];
 
   const { control, reset } = useForm({});
   const { data: userData } = useGetRequestById(id);
@@ -23,6 +25,10 @@ const ViewUserReqeuest = () => {
         expectedReturn: new Date(userData.expectedReturn).toLocaleDateString(
           "en-GB"
         ),
+        actualReturn: new Date(userData.actualReturn).toLocaleDateString(
+          "en-GB"
+        ),
+        rejectedDate: new Date(userData.updatedAt).toLocaleDateString("en-GB"),
         rejectedReason: userData.rejectedReason,
         reason: userData.reason,
         status: userData?.requestLogId?.status,
@@ -31,7 +37,14 @@ const ViewUserReqeuest = () => {
   }, [userData, reset]);
 
   const handlePreviousPage = () => {
-    navigate("/viewMyRequest");
+    if (prevPage === "notification") {
+      navigate("/notification");
+    }else if(prevPage === "allRequest") {
+      navigate("/admin/requests")
+    }
+     else {
+      navigate("/viewMyRequest");
+    }
   };
   return (
     <div>
@@ -90,6 +103,7 @@ const ViewUserReqeuest = () => {
             )}
 
             {userData?.requestLogId?.status === "rejected" && (
+              <>
                 <InputWithLabel
                   type="text"
                   label="Rejected Reason"
@@ -99,6 +113,16 @@ const ViewUserReqeuest = () => {
                   readOnly={true}
                   inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
                 />
+                <InputWithLabel
+                  type="text"
+                  label="Rejected Date"
+                  name="rejectedDate"
+                  placeholder="rejected date"
+                  control={control}
+                  readOnly={true}
+                  inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
+                />
+              </>
             )}
 
             <InputWithLabel
@@ -119,6 +143,31 @@ const ViewUserReqeuest = () => {
               readOnly={true}
               inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
             />
+
+            {userData?.requestLogId?.status === "canceled" && (
+              <InputWithLabel
+                type="text"
+                label="Cancel Date"
+                name="rejectedDate"
+                placeholder="cancel return"
+                control={control}
+                readOnly={true}
+                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
+              />
+            )}
+
+            {userData?.requestLogId?.status === "completed" && (
+              <InputWithLabel
+                type="text"
+                label="Actual Return"
+                name="actualReturn"
+                placeholder="actual return"
+                control={control}
+                readOnly={true}
+                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
+              />
+            )}
+
             <InputWithLabel
               type="text"
               label="Reason"

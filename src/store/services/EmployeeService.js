@@ -4,14 +4,14 @@ const addRequest = async (data) => {
   const response = await API.post("/equipmentRequest/addRequest", data);
   return response;
 };
-const getMyRequest = async () => {
-  const response = await API.get("/equipmentRequest/getEmployeeRequest");
+const getMyRequest = async ({page = 1, limit = 10}) => {
+  const response = await API.get(`/equipmentRequest/getEmployeeRequest?page=${page}&limit=${limit}`);
   return response;
 };
 
-const getAllRequests = async (status) => {
+const getAllRequests = async (page,limit,status) => {
   const response = await API.get("/equipmentRequest/getAllRequests", {
-    params: { status },
+    params: {page,limit, status },
   });
   return response;
 };

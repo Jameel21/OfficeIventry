@@ -1,7 +1,7 @@
 import API from "@/helper/AxiosConfig";
 
-const getAllNotification = async () => {
-  const response = await API.get(`/notification/getNotify`)
+const getAllNotification = async ({page, limit}) => {
+  const response = await API.get(`/notification/getNotify?page=${page}&limit=${limit}`)
   return response
 }
 

@@ -27,7 +27,7 @@ const EquipmentLog = () => {
           />
         </div>
       </div>
-      <div className="mt-8">
+      <div className="mt-10">
        <EquipmentTable selectedCategory={selectedCategory}/>
       </div>
     </div>

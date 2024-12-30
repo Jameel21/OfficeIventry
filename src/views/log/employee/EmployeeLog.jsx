@@ -10,7 +10,7 @@ const EmployeeLog = () => {
       <div className="mt-2 text-lg font-medium text-slate-700">
         Employee Log
       </div>
-      <div className="mt-8">
+      <div className="mt-10">
         <EmployeeTable
           page={page}
           limit={limit}

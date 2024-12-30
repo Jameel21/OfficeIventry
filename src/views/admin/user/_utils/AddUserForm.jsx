@@ -7,7 +7,7 @@ import DropDown from "@/components/form-fields/_utils/DropDown";
 import { registerSchema } from "@/utils/validationSchema";
 import { toast } from "react-hot-toast";
 import { useAddUser } from "@/store/hooks/UserHooks";
-import { useGetDepartment, useGetRoles } from "@/store/hooks/NameHooks";
+import { useGetAllDepartment, useGetAllRole } from "@/store/hooks/MasterHooks";
 
 const AddUserForm = () => {
   const refetch = useQueryClient();
@@ -15,16 +15,19 @@ const AddUserForm = () => {
     resolver: yupResolver(registerSchema),
   });
 
-  const { data: roles } = useGetRoles();
-  const { data: departmentNames } = useGetDepartment();
+  const page = 1;
+  const limit = 50;
+
+  const { data: roleData } = useGetAllRole({ page, limit });
+  const { data: departmentData } = useGetAllDepartment({ page, limit });
 
   const registerMutation = useAddUser();
 
   const onSubmitForm = (data) => {
     registerMutation.mutate(data, {
       onSuccess: (response) => {
-        const {roleId} = response.data.data
-        const userRole  = roleId?.role;
+        const { roleId } = response.data.data;
+        const userRole = roleId?.role;
         toast.success(`User created as role: ${userRole} successfully`);
         reset();
         refetch.refetchQueries({ queryKey: ["AllUsers"] });
@@ -46,13 +49,13 @@ const AddUserForm = () => {
   };
 
   const roleOptions =
-    roles?.map((item) => ({
+    roleData?.roles?.map((item) => ({
       label: item.role,
       value: item._id,
     })) || [];
 
   const departmentOptions =
-    departmentNames?.map((item) => ({
+    departmentData?.departments?.map((item) => ({
       label: item.department,
       value: item._id,
     })) || [];

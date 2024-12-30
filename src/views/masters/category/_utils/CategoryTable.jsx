@@ -6,22 +6,26 @@ import {
   useGetAllCategory,
 } from "@/store/hooks/MasterHooks";
 import toast from "react-hot-toast";
+import { useState } from "react";
+import Pagination from "@/components/pagination/Pagination";
 
-const CategoryTable = ({selectedCategory}) => {
-
+const CategoryTable = ({ selectedCategory }) => {
   const navigate = useNavigate();
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+
   const refetch = useQueryClient();
 
-
   const headers = ["Equipment Name", "Created At"];
-  const menu = ["view", "edit", "delete"];
   const columnWidths = ["w-[50%]", "w-[50%]"];
 
-  const {
-    data: categoryData,
-    isLoading,
-    error,
-  } = useGetAllCategory(selectedCategory);
+  const { data, isLoading, error } = useGetAllCategory(
+    page,
+    limit,
+    selectedCategory
+  );
+
+  const categoryData = data?.category;
 
   const { mutate: deleteCategory } = useDeleteCategory();
 
@@ -51,26 +55,38 @@ const CategoryTable = ({selectedCategory}) => {
   };
 
   const tableData = categoryData?.map((item) => ({
-    cells:[
-    { id: item._id, render: () => item.equipmentName },
-    { render: () => new Date(item.createdAt).toLocaleDateString("en-GB") },
-  ]}));
+    cells: [
+      { id: item._id, render: () => item.equipmentName },
+      { render: () => new Date(item.createdAt).toLocaleDateString("en-GB") },
+    ],
+    menu : ["view", "edit", "delete"]
+  }));
 
   return (
     <div>
-    <DataTable
-      headers={headers}
-      tableData={tableData}
-      isLoading={isLoading}
-      // breadCrumbsClass={"w-18 sm:w-20"}
-      columnWidths={columnWidths}
-      error={error}
-      showBreadCrumbs={true}
-      menu={menu}
-      handleMenuChange={handleMenuChange}
-    />
-  </div>
-  )
-}
+      <div>
+        <DataTable
+          headers={headers}
+          tableData={tableData}
+          isLoading={isLoading}
+          columnWidths={columnWidths}
+          error={error}
+          showBreadCrumbs={true}
+          handleMenuChange={handleMenuChange}
+        />
+      </div>
+      <Pagination
+        page={page}
+        limit={limit}
+        totalItems={data?.totalCategry || 0}
+        onPageChange={(newPage) => setPage(newPage)}
+        onLimitChange={(newLimit) => {
+          setLimit(newLimit);
+          setPage(1);
+        }}
+      />
+    </div>
+  );
+};
 
-export default CategoryTable
+export default CategoryTable;

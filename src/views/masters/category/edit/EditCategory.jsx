@@ -20,10 +20,14 @@ const EditCategory = () => {
     },
   });
 
+  const page = 1;
+  const limit = 100;
+
   const { data: categoryData } = useGetCategory(id);
   
   const { mutate: updateCategory } = useUpdateCategory();
-  const { data: brandData } = useGetAllBrand();
+  const { data } = useGetAllBrand({ page, limit });
+  const brandData = data?.brands;
 
   useEffect(() => {
     if (categoryData) {

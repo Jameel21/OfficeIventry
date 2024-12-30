@@ -7,11 +7,11 @@ export const useAddBrand = () => {
     mutationFn:masterService.addBrand
   })
 }
-export const useGetAllBrand = () => {
+export const useGetAllBrand = ({ page = 1, limit = 10 }) => {
   return useQuery({
-    queryKey: ["AllBrand"],
+    queryKey: ["AllBrand",page, limit],
     queryFn: async () => {
-      const response = await masterService.getAllBrand()
+      const response = await masterService.getAllBrand({page, limit})
       return response?.data?.data || []
     }
   })
@@ -42,11 +42,11 @@ export const useAddDepartment = () => {
     mutationFn:masterService.addDepartment
   })
 }
-export const useGetAllDepartment = () => {
+export const useGetAllDepartment = ({ page = 1, limit = 10 }) => {
   return useQuery({
-    queryKey: ["AllDepartment"],
+    queryKey: ["AllDepartment",page, limit],
     queryFn: async () => {
-      const response = await masterService.getAllDepartment()
+      const response = await masterService.getAllDepartment({page, limit})
       return response?.data?.data || []
     }
   })
@@ -77,13 +77,14 @@ export const useAddCategory = (equipmentType) => {
     mutationFn:((data) => masterService.addCategory(data, equipmentType))
   })
 }
-export const useGetAllCategory = (equipmentType) => {
+export const useGetAllCategory = (page, limit,equipmentType) => {
   return useQuery({
-    queryKey: ["AllCategory", equipmentType],
+    queryKey: ["AllCategory", page, limit, equipmentType],
     queryFn: async () => {
-      const response = await masterService.getAllCategory(equipmentType)
+      const response = await masterService.getAllCategory(page, limit,equipmentType)
       return response?.data?.data || []
-    }
+    },
+    enabled: !!page && !!limit && !!equipmentType,
   })
 }
 export const useGetCategory = (id) => {
@@ -113,11 +114,11 @@ export const useAddRole = () => {
     mutationFn:masterService.addRole
   })
 }
-export const useGetAllRole = () => {
+export const useGetAllRole = ({ page = 1, limit = 10 }) => {
   return useQuery({
-    queryKey: ["AllRole"],
+    queryKey: ["AllRole",page, limit],
     queryFn: async () => {
-      const response = await masterService.getAllRole()
+      const response = await masterService.getAllRole({page, limit})
       return response?.data?.data || []
     }
   })

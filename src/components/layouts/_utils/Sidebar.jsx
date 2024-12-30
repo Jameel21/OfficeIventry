@@ -1,5 +1,4 @@
 import { sidebarMenu } from "@/assets/assets";
-import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Sidebar,
@@ -12,15 +11,25 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSubButton,
+  SidebarHeader,
   // useSidebar,
 } from "@/components/ui/sidebar";
 import User from "./User";
 import { getDecodedData } from "@/utils/encryptDecrypt";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { ChevronDown } from "lucide-react";
+import { useState } from "react";
 
 const DemoSidebar = () => {
   // const { toggleSidebar, isMobile, setOpenMobile, isOpen } = useSidebar();
-  const [expanded, setExpanded] = useState({});
   const role = getDecodedData("userRole");
+  const [activeMenu, setActiveMenu] = useState(null);
+  const [activeSubMenu, setActiveSubMenu] = useState(null);
+
   let option;
   switch (role) {
     case "SuperAdmin":
@@ -36,65 +45,107 @@ const DemoSidebar = () => {
       option = sidebarMenu.SuperAdmin;
       break;
     default:
-      option = sidebarMenu.Employee;
+      option = sidebarMenu.SuperAdmin;
       break;
   }
 
-  const handleToggle = (index) => {
-    setExpanded((prevState) => ({
-      ...prevState,
-      [index]: !prevState[index],
-    }));
+  const handleMenuClick = (menu) => {
+    setActiveMenu(menu === activeMenu ? null : menu); // Toggle active menu
+    setActiveSubMenu(null); // Reset active submenu when switching menus
   };
+
+  const handleSubMenuClick = (submenu) => {
+    setActiveSubMenu(submenu);
+  };
+
   return (
-    <div>
-      <Sidebar collapsible="icon">
-        <SidebarContent>
-          <SidebarGroup>
-            <User />
-            <SidebarGroupContent className="mt-6">
-              <SidebarMenu className="gap-2 sm:gap-4">
-                {option.map((option, index) => (
-                  <div key={index}>
-                    {option.submenu ? (
-                      <SidebarMenuItem>
-                        <SidebarMenuButton
-                          onClick={() => handleToggle(index)}
-                          className="gap-3 sm:text-lg"
+    <Sidebar collapsible="icon">
+      <SidebarHeader>
+        <User />
+      </SidebarHeader>
+      <SidebarContent className="overflow-auto no-scrollbar">
+        <SidebarGroup>
+          <SidebarGroupContent className="mt-4">
+            <SidebarMenu className="gap-2 sm:gap-4">
+              {option.map((option, index) => (
+                <div key={index}>
+                  {option.submenu ? (
+                    <SidebarMenuItem>
+                      <Collapsible className="group/collapsible">
+                        <CollapsibleTrigger
+                          key={option.menu}
+                          className="w-full"
+                          asChild
                         >
-                          <option.icon /> <span>{option.menu}</span>
-                        </SidebarMenuButton>
-                        {expanded[index] && (
+                          <SidebarMenuButton
+                            className={`w-full gap-3 sm:text-lg hover:text-black hover:bg-white ${
+                              activeMenu === option.menu
+                                ? "bg-white text-black"
+                                : "bg-transparent"
+                            }`}
+                            onClick={() => handleMenuClick(option.menu)}
+                          >
+                            <option.icon />
+                            <span>{option.menu}</span>
+                            <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
+                          </SidebarMenuButton>
+                        </CollapsibleTrigger>
+
+                        <CollapsibleContent>
                           <SidebarMenuSub className="gap-2 mt-2">
                             {option.submenu.map((subItem, subIndex) => (
-                              <Link key={subIndex} to={subItem.url}>
-                                <SidebarMenuSubItem>
-                                  <SidebarMenuSubButton className="gap-3 sm:text-base">
-                                    <subItem.icon /> <span>{subItem.menu}</span>
+                              <SidebarMenuSubItem key={subIndex}>
+                                <Link
+                                  key={subIndex}
+                                  to={subItem.url}
+                                  onClick={() =>
+                                    handleSubMenuClick(subItem.menu)
+                                  }
+                                >
+                                  <SidebarMenuSubButton
+                                    className={`w-full gap-3 sm:text-base hover:text-black hover:bg-white ${
+                                      activeSubMenu === subItem.menu
+                                        ? "bg-white text-black"
+                                        : "bg-transparent"
+                                    }`}
+                                  >
+                                    <subItem.icon />
+                                    <span>{subItem.menu}</span>
                                   </SidebarMenuSubButton>
-                                </SidebarMenuSubItem>
-                              </Link>
+                                </Link>
+                              </SidebarMenuSubItem>
                             ))}
                           </SidebarMenuSub>
-                        )}
+                        </CollapsibleContent>
+                      </Collapsible>
+                    </SidebarMenuItem>
+                  ) : (
+                    <Link
+                      key={index}
+                      to={option.url}
+                      onClick={() => handleMenuClick(option.menu)}
+                    >
+                      <SidebarMenuItem>
+                        <SidebarMenuButton
+                          className={`w-full gap-3 sm:text-lg hover:text-black hover:bg-white ${
+                            activeMenu === option.menu
+                              ? "bg-white text-black"
+                              : "bg-transparent"
+                          }`}
+                        >
+                          <option.icon /> <span>{option.menu}</span>
+                          <ChevronDown className="ml-auto" />
+                        </SidebarMenuButton>
                       </SidebarMenuItem>
-                    ) : (
-                      <Link key={index} to={option.url}>
-                        <SidebarMenuItem>
-                          <SidebarMenuButton className="gap-3 sm:text-lg">
-                            <option.icon /> <span>{option.menu}</span>
-                          </SidebarMenuButton>
-                        </SidebarMenuItem>
-                      </Link>
-                    )}
-                  </div>
-                ))}
-              </SidebarMenu>
-            </SidebarGroupContent>
-          </SidebarGroup>
-        </SidebarContent>
-      </Sidebar>
-    </div>
+                    </Link>
+                  )}
+                </div>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+    </Sidebar>
   );
 };
 

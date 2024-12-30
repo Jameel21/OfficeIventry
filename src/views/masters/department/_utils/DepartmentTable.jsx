@@ -6,16 +6,18 @@ import {
   useGetAllDepartment,
 } from "@/store/hooks/MasterHooks";
 import toast from "react-hot-toast";
+import Pagination from "@/components/pagination/Pagination";
 
-const DepartmentTable = () => {
+const DepartmentTable = ({ page, limit, setPage, setLimit }) => {
   const navigate = useNavigate();
   const refetch = useQueryClient();
 
   const headers = ["Department", "Created At"];
-  const menu = ["view", "edit", "delete"];
   const columnWidths = ["w-[50%]", "w-[50%]"];
 
-  const { data: departmentData, isLoading, error } = useGetAllDepartment();
+  const { data, isLoading, error } = useGetAllDepartment({ page, limit });
+  const departmentData = data?.departments;
+
   const { mutate: deleteDepartment } = useDeleteDepartment();
 
   const handleMenuChange = (value, departmentId) => {
@@ -44,22 +46,34 @@ const DepartmentTable = () => {
   };
 
   const tableData = departmentData?.map((item) => ({
-    cells:[
-    { id: item._id, render: () => item.department },
-    { render: () => new Date(item.createdAt).toLocaleDateString("en-GB") },
-  ]}));
+    cells: [
+      { id: item._id, render: () => item.department },
+      { render: () => new Date(item.createdAt).toLocaleDateString("en-GB") },
+    ],
+    menu: ["view", "edit", "delete"],
+  }));
   return (
     <div>
-      <DataTable
-        headers={headers}
-        tableData={tableData}
-        isLoading={isLoading}
-        // breadCrumbsClass={"w-18 sm:w-20"}
-        columnWidths={columnWidths}
-        error={error}
-        showBreadCrumbs={true}
-        menu={menu}
-        handleMenuChange={handleMenuChange}
+      <div>
+        <DataTable
+          headers={headers}
+          tableData={tableData}
+          isLoading={isLoading}
+          columnWidths={columnWidths}
+          error={error}
+          showBreadCrumbs={true}
+          handleMenuChange={handleMenuChange}
+        />
+      </div>
+      <Pagination
+        page={page}
+        limit={limit}
+        totalItems={data?.totalDepartments || 0}
+        onPageChange={(newPage) => setPage(newPage)}
+        onLimitChange={(newLimit) => {
+          setLimit(newLimit);
+          setPage(1);
+        }}
       />
     </div>
   );

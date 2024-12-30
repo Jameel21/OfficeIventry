@@ -3,18 +3,20 @@ import { useGetAllCategory } from "@/store/hooks/MasterHooks";
 
 const EquipmentTable = () => {
 
+  const page = 1;
+  const limit = 7;
   const {
-    data: categoryData,
+    data,
     isLoading,
     error,
-  } = useGetAllCategory("Employee Equipment");
+  } = useGetAllCategory(page, limit,"Employee Equipment");
 
   const headers = [
       "Equipment",
       "Total Quantity",
       "In Use",
     ]
-
+    const categoryData = data?.category;
     const columnWidths = ["w-[30%]","w-[30%]","w-[30%]",]
 
     const tableData = categoryData?.map((item) => ({

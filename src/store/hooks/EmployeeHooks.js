@@ -1,4 +1,4 @@
-import { useMutation, useQuery} from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import employeeService from "../services/EmployeeService";
 
 export const useAddRequest = () => {
@@ -7,52 +7,56 @@ export const useAddRequest = () => {
   });
 };
 
-export const useGetMyRequest = () => {
+export const useGetMyRequest = ({ page = 1, limit = 10 }) => {
   return useQuery({
-    queryKey: ["equipmentRequest"],
+    queryKey: ["equipmentRequest", page, limit],
     queryFn: async () => {
-      const response = await employeeService.getMyRequest();
+      const response = await employeeService.getMyRequest({ page, limit });
       return response?.data?.data || [];
     },
   });
 };
 
-export const useGetAllRequests = (status) => {
+export const useGetAllRequests = (page, limit, status) => {
   return useQuery({
-    queryKey: ["pendingRequests", status],
+    queryKey: ["pendingRequests", page, limit, status],
     queryFn: async () => {
-      const response = await employeeService.getAllRequests(status);
-      return response?.data?.data?.equipmentRequests || []
+      const response = await employeeService.getAllRequests(
+        page,
+        limit,
+        status
+      );
+      return response?.data?.data || [];
     },
-    enabled: !!status,
-  })
-}
+    enabled: !!page && !!limit && !!status,
+  });
+};
 
 export const useGetRequestById = (id) => {
   return useQuery({
-   queryKey: ["pendingRequestById", id],
-   queryFn: async () => {
-     const response = await employeeService.getRequestById(id);
-     return response?.data?.data || []
-   },
-   enabled: !!id,
-  })
- };
+    queryKey: ["pendingRequestById", id],
+    queryFn: async () => {
+      const response = await employeeService.getRequestById(id);
+      return response?.data?.data || [];
+    },
+    enabled: !!id,
+  });
+};
 
- export const useUpdateRequestFields = () => {
+export const useUpdateRequestFields = () => {
   return useMutation({
-    mutationFn: employeeService.updateReturn, 
+    mutationFn: employeeService.updateReturn,
   });
 };
 
 export const useUpdatePendingRequest = () => {
   return useMutation({
-    mutationFn:employeeService.updatePendingRequest,
+    mutationFn: employeeService.updatePendingRequest,
   });
 };
 
 export const useCancelPendingRequest = () => {
   return useMutation({
-    mutationFn:(id) => employeeService.cancelPendingRequest(id),
+    mutationFn: (id) => employeeService.cancelPendingRequest(id),
   });
 };
