@@ -50,7 +50,7 @@ const LoginForm = () => {
           navigate("/viewMyRequest");
           break;
         default:
-          navigate("/auth/login");
+          navigate("/viewMyRequest");
       }
     } catch (error) {
       const errorMessage =
