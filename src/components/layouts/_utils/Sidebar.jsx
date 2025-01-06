@@ -1,4 +1,4 @@
-import { GetSidebarmenu,} from "@/assets/assets";
+import { GetSidebarmenu,} from "@/assets/Assets";
 import { Link } from "react-router-dom";
 import {
   Sidebar,
