@@ -35,7 +35,6 @@ export const registerSchema = yup.object().shape({
 export const employeeSchema = yup.object().shape({
   equipmentId: yup.string().required("equipment name is required"),
   requestDate: yup.string().required("request date is required"),
-  expectedReturn: yup.string().required("expected return is required "),
   reason: yup.string().required("reason is required"),
 });
 
