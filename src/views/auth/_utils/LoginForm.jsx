@@ -26,12 +26,14 @@ const LoginForm = () => {
       const { userName, token, _id } = response.data.data;
       const { roleId } = response.data.data;
       const userRole = roleId?.role;
+      const menuPermission = roleId?.permissions
 
       const userData = {
         userName,
         userRole,
         authToken: token,
         userId: _id,
+        menuPermission
       };
       setEncodedData("userData", userData);
       toast.success(response?.data?.message || "Login Success");

@@ -1,4 +1,4 @@
-import { sidebarMenu } from "@/assets/assets";
+import { GetSidebarmenu,} from "@/assets/assets";
 import { Link } from "react-router-dom";
 import {
   Sidebar,
@@ -15,7 +15,6 @@ import {
   // useSidebar,
 } from "@/components/ui/sidebar";
 import User from "./User";
-import { getDecodedData } from "@/utils/encryptDecrypt";
 import {
   Collapsible,
   CollapsibleContent,
@@ -25,30 +24,12 @@ import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 
 const DemoSidebar = () => {
-  // const { toggleSidebar, isMobile, setOpenMobile, isOpen } = useSidebar();
-  const userData = getDecodedData("userData");
-  const role = userData?.userRole
+
   const [activeMenu, setActiveMenu] = useState(null);
   const [activeSubMenu, setActiveSubMenu] = useState(null);
 
-  let option;
-  switch (role) {
-    case "SuperAdmin":
-      option = sidebarMenu.SuperAdmin;
-      break;
-    case "Employee":
-      option = sidebarMenu.SuperAdmin;
-      break;
-    case "HR":
-      option = sidebarMenu.SuperAdmin;
-      break;
-    case "Admin":
-      option = sidebarMenu.SuperAdmin;
-      break;
-    default:
-      option = sidebarMenu.SuperAdmin;
-      break;
-  }
+  const {menus} = GetSidebarmenu(); 
+
 
   const handleMenuClick = (menu) => {
     setActiveMenu(menu === activeMenu ? null : menu); // Toggle active menu
@@ -68,33 +49,33 @@ const DemoSidebar = () => {
         <SidebarGroup>
           <SidebarGroupContent className="mt-4">
             <SidebarMenu className="gap-2 sm:gap-4">
-              {option.map((option, index) => (
+              {menus.map((menu, index) => (
                 <div key={index}>
-                  {option.submenu ? (
+                  {menu.submenu ? (
                     <SidebarMenuItem>
                       <Collapsible className="group/collapsible">
                         <CollapsibleTrigger
-                          key={option.menu}
+                          key={menu.menu}
                           className="w-full"
                           asChild
                         >
                           <SidebarMenuButton
                             className={`w-full gap-3 sm:text-lg hover:text-black hover:bg-white ${
-                              activeMenu === option.menu
+                              activeMenu === menu.menu
                                 ? "bg-white text-black"
                                 : "bg-transparent"
                             }`}
-                            onClick={() => handleMenuClick(option.menu)}
+                            onClick={() => handleMenuClick(menu.menu)}
                           >
-                            <option.icon />
-                            <span>{option.menu}</span>
+                            <menu.icon />
+                            <span>{menu.menu}</span>
                             <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
                           </SidebarMenuButton>
                         </CollapsibleTrigger>
 
                         <CollapsibleContent>
                           <SidebarMenuSub className="gap-2 mt-2">
-                            {option.submenu.map((subItem, subIndex) => (
+                            {menu.submenu.map((subItem, subIndex) => (
                               <SidebarMenuSubItem key={subIndex}>
                                 <Link
                                   key={subIndex}
@@ -123,18 +104,18 @@ const DemoSidebar = () => {
                   ) : (
                     <Link
                       key={index}
-                      to={option.url}
-                      onClick={() => handleMenuClick(option.menu)}
+                      to={menu.url}
+                      onClick={() => handleMenuClick(menu.menu)}
                     >
                       <SidebarMenuItem>
                         <SidebarMenuButton
                           className={`w-full gap-3 sm:text-lg hover:text-black hover:bg-white ${
-                            activeMenu === option.menu
+                            activeMenu === menu.menu
                               ? "bg-white text-black"
                               : "bg-transparent"
                           }`}
                         >
-                          <option.icon /> <span>{option.menu}</span>
+                          <menu.icon /> <span>{menu.menu}</span>
                           <ChevronDown className="ml-auto" />
                         </SidebarMenuButton>
                       </SidebarMenuItem>

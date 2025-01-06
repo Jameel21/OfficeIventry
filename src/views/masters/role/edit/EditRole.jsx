@@ -18,7 +18,6 @@ import { useQueryClient } from "@tanstack/react-query";
 
 const EditRole = () => {
   const { id } = useParams();
-  console.log("roleId", id);
   const navigate = useNavigate();
   const refetch = useQueryClient();
 

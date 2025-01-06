@@ -12,8 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { TableCell, TableRow } from "@/components/ui/table";
 
 const ViewRole = () => {
-  const { id } = useParams(); // Get roleId from the URL
-  console.log("roleId", id);
+  const { id } = useParams();
   const navigate = useNavigate();
   const methods = useForm();
   const [permissions, setPermissions] = useState({});
