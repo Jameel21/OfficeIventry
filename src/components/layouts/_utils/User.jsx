@@ -7,19 +7,17 @@ import { getDecodedData } from "@/utils/encryptDecrypt";
 
 const User = () => {
   const navigate = useNavigate()
-  const user = getDecodedData("userName")
-  const role = getDecodedData("userRole")
-  const userId = getDecodedData("userId");
+  const userData = getDecodedData("userData");
+  const user = userData?.userName;
+  const role = userData?.userRole;
+  const userId = userData?.userId;
 
   const handleProfile = () => {
     navigate(`/viewProfile/${userId}`)
   }
 
   const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    localStorage.removeItem("userName");
-    localStorage.removeItem("userRole");
-    localStorage.removeItem("userId");
+    localStorage.removeItem("userData");
     toast.success("You have been logged out");
     navigate("/auth/login");
   }

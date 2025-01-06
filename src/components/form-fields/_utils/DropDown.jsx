@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { useController } from "react-hook-form";
+import { useController, useFormContext } from "react-hook-form";
 import { Label } from "@/components/ui/label";
 import { ChevronUp } from "lucide-react";
 import {
@@ -13,7 +13,6 @@ import {
 
 const DropDown = ({
   labelName,
-  control,
   name,
   options = [],
   placeholder,
@@ -22,6 +21,7 @@ const DropDown = ({
   isReadOnly,
   isMultiSelect = false,
 }) => {
+    const {control} = useFormContext();
   const {
     field,
     fieldState: { error },

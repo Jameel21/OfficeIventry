@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import UiButton from "@/components/form-fields/_utils/Button";
@@ -15,15 +15,16 @@ const ResetPassword = () => {
   const queryParams = new URLSearchParams(location.search);
   const token = queryParams.get("token");
 
-  const { control, handleSubmit, reset } = useForm({
+  const methods = useForm({
     resolver: yupResolver(resetPasswordSchema),
     defaultValues: {
       newPassword: "",
       confirmPassword: "",
     },
   });
+  const { handleSubmit, reset } = methods;
 
-  const resetPasswordMutation = useResetPassword();
+  const { mutateAsync } = useResetPassword();
 
   const onSubmitForm = async (data) => {
     try {
@@ -32,7 +33,7 @@ const ResetPassword = () => {
         newPassword: data.newPassword,
       };
 
-      const response = await resetPasswordMutation.mutateAsync(formattedData);
+      const response = await mutateAsync(formattedData);
       toast.success(response?.data?.message || "Password reset successfully");
       reset();
       navigate("/auth/login");
@@ -57,42 +58,42 @@ const ResetPassword = () => {
             />
           </div>
           <div>
-            <form
-              className="flex flex-col gap-4 md:gap-6"
-              onSubmit={handleSubmit(onSubmitForm)}
-            >
-              <InputWithLabel
-                label="New Password"
-                type="password"
-                id="newPassword"
-                control={control}
-                name="newPassword"
-                placeholder="Enter your new password"
-                inputClassName="w-56 h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
-              />
-              <InputWithLabel
-                label="Confirm New Password"
-                type="password"
-                id="confirmPassword"
-                control={control}
-                name="confirmPassword"
-                placeholder="Enter your new password"
-                inputClassName="w-56 h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
-              />
-              <span className="text-xs text-right cursor-pointer sm:text-sm md:text-base">
-                <Link to={"/auth/forgotPassword"}>
-                  Back to forgot password?
-                </Link>
-              </span>
-              <div className="flex justify-center mt-2">
-                <UiButton
-                  variant="secondary"
-                  type="submit"
-                  buttonName="Reset"
-                  className="w-24 h-8 text-white sm:w-28 sm:h-8 md:w-32 md:h-10 lg:w-36 lg:h-12"
+            <FormProvider {...methods}>
+              <form
+                className="flex flex-col gap-4 md:gap-6"
+                onSubmit={handleSubmit(onSubmitForm)}
+              >
+                <InputWithLabel
+                  label="New Password"
+                  type="password"
+                  id="newPassword"
+                  name="newPassword"
+                  placeholder="Enter your new password"
+                  inputClassName="w-56 h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
                 />
-              </div>
-            </form>
+                <InputWithLabel
+                  label="Confirm New Password"
+                  type="password"
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  placeholder="Enter your new password"
+                  inputClassName="w-56 h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
+                />
+                <span className="text-xs text-right cursor-pointer sm:text-sm md:text-base">
+                  <Link to={"/auth/forgotPassword"}>
+                    Back to forgot password?
+                  </Link>
+                </span>
+                <div className="flex justify-center mt-2">
+                  <UiButton
+                    variant="secondary"
+                    type="submit"
+                    buttonName="Reset"
+                    className="w-24 h-8 text-white sm:w-28 sm:h-8 md:w-32 md:h-10 lg:w-36 lg:h-12"
+                  />
+                </div>
+              </form>
+            </FormProvider>
           </div>
         </div>
         <div className="hidden w-1/12 sm:block bg-secondary"></div>

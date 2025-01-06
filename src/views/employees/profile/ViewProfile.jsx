@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import InputWithLabel from "@/components/form-fields/_utils/InputWithLabel";
 import { useNavigate, useParams } from "react-router-dom";
 import { CircleArrowLeft } from "lucide-react";
@@ -13,10 +13,11 @@ const ViewProfile = () => {
   const navigate = useNavigate();
   const refetch = useQueryClient();
 
-  const { control, reset } = useForm({});
+  const methods = useForm();
+  const { reset } = methods;
 
   const { data, isLoading } = useGetSingleUser(id);
-  const { mutate: updateUser } = useUpdateUser();
+  const { mutateAsync } = useUpdateUser();
 
   useEffect(() => {
     if (data) {
@@ -32,26 +33,21 @@ const ViewProfile = () => {
     return <div>Loading...</div>;
   }
 
-  const handleChangePassword = ({ currentPassword, newPassword }) => {
+  const handleChangePassword = async ({ currentPassword, newPassword }) => {
     const payload = {
       currentPassword,
       newPassword,
     };
-    updateUser(
-      { id, data: payload },
-      {
-        onSuccess: () => {
-          toast.success("Password updated successfully");
-          refetch.refetchQueries(["SingleUser", id]);
-          navigate("/viewMyRequest");
-        },
-        onError: (error) => {
-          const errorMessage =
-            error.response?.data?.message || "Failed to update the user";
-          toast.error(errorMessage);
-        },
-      }
-    );
+    try {
+      await mutateAsync({ id, data: payload });
+      toast.success("Password updated successfully");
+      refetch.refetchQueries(["SingleUser", id]);
+      navigate("/viewMyRequest");
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.message || "Failed to update the user";
+      toast.error(errorMessage);
+    }
   };
 
   const handlePreviousPage = () => {
@@ -67,64 +63,63 @@ const ViewProfile = () => {
             onClick={handlePreviousPage}
           />
         </div>
-        <div className="text-lg font-medium lg:text-xl text-slate-700">User Details</div>
+        <div className="text-lg font-medium lg:text-xl text-slate-700">
+          User Details
+        </div>
       </div>
 
-      <form className="flex flex-col gap-1 mt-4 lg:gap-2">
-        <InputWithLabel
-          type="text"
-          label="Username"
-          id="userName"
-          control={control}
-          readOnly={true}
-          name="userName"
-          placeholder="username"
-          inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
-        />
-        <InputWithLabel
-          type="text"
-          label="Email"
-          id="email"
-          control={control}
-          readOnly={true}
-          name="email"
-          placeholder="email"
-          inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
-        />
-        <InputWithLabel
-          type="text"
-          label="Employee Id"
-          id="employeeId"
-          control={control}
-          readOnly={true}
-          name="employeeId"
-          placeholder="employee id"
-          inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
-        />
-        <InputWithLabel
-          type="text"
-          label="Role"
-          id="roleId"
-          control={control}
-          name="roleId"
-          readOnly={true}
-          placeholder="role"
-          inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
-        />
-        <InputWithLabel
-          type="text"
-          label="Department"
-          id="departmentId"
-          control={control}
-          name="departmentId"
-          readOnly={true}
-          placeholder="department"
-          inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
-        />
-        <div className="flex items-center gap-4 text-white">
-          <PasswordDialogBox onClick={handleChangePassword} />
-        </div>
-      </form>
+      <FormProvider {...methods}>
+        <form className="flex flex-col gap-1 mt-4 lg:gap-2">
+          <InputWithLabel
+            type="text"
+            label="Username"
+            id="userName"
+            readOnly={true}
+            name="userName"
+            placeholder="username"
+            inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
+          />
+          <InputWithLabel
+            type="text"
+            label="Email"
+            id="email"
+            readOnly={true}
+            name="email"
+            placeholder="email"
+            inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
+          />
+          <InputWithLabel
+            type="text"
+            label="Employee Id"
+            id="employeeId"
+            readOnly={true}
+            name="employeeId"
+            placeholder="employee id"
+            inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
+          />
+          <InputWithLabel
+            type="text"
+            label="Role"
+            id="roleId"
+            name="roleId"
+            readOnly={true}
+            placeholder="role"
+            inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
+          />
+          <InputWithLabel
+            type="text"
+            label="Department"
+            id="departmentId"
+            name="departmentId"
+            readOnly={true}
+            placeholder="department"
+            inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
+          />
+          <div className="flex items-center gap-4 text-white">
+            <PasswordDialogBox onClick={handleChangePassword} />
+          </div>
+        </form>
+      </FormProvider>
     </div>
   );
 };

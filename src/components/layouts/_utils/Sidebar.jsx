@@ -26,7 +26,8 @@ import { useState } from "react";
 
 const DemoSidebar = () => {
   // const { toggleSidebar, isMobile, setOpenMobile, isOpen } = useSidebar();
-  const role = getDecodedData("userRole");
+  const userData = getDecodedData("userData");
+  const role = userData?.userRole
   const [activeMenu, setActiveMenu] = useState(null);
   const [activeSubMenu, setActiveSubMenu] = useState(null);
 
@@ -36,7 +37,7 @@ const DemoSidebar = () => {
       option = sidebarMenu.SuperAdmin;
       break;
     case "Employee":
-      option = sidebarMenu.Employee;
+      option = sidebarMenu.SuperAdmin;
       break;
     case "HR":
       option = sidebarMenu.SuperAdmin;

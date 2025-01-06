@@ -4,6 +4,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useDeleteRole, useGetAllRole } from "@/store/hooks/MasterHooks";
 import toast from "react-hot-toast";
 import Pagination from "@/components/pagination/Pagination";
+import { getDecodedData } from "@/utils/encryptDecrypt";
 
 const RoleTable = ({ page, limit, setPage, setLimit }) => {
   const navigate = useNavigate();
@@ -11,13 +12,15 @@ const RoleTable = ({ page, limit, setPage, setLimit }) => {
 
   const headers = ["Role", "Created At"];
   const columnWidths = ["w-[50%]", "w-[50%]"];
+  const userData = getDecodedData("userData");
+  const role = userData?.userRole
 
   const { data, isLoading, error } = useGetAllRole({ page, limit });
   const roleData = data?.roles;
 
-  const { mutate: deleteRole } = useDeleteRole();
+  const { mutateAsync } = useDeleteRole();
 
-  const handleMenuChange = (value, roleId) => {
+  const handleMenuChange = async (value, roleId) => {
     switch (value) {
       case "view":
         navigate(`/admin/viewRole/${roleId}`);
@@ -26,19 +29,16 @@ const RoleTable = ({ page, limit, setPage, setLimit }) => {
         navigate(`/admin/editRole/${roleId}`);
         break;
       case "delete":
-        deleteRole(roleId, {
-          onSuccess: () => {
-            refetch.refetchQueries(["AllRole"]);
-            toast.error("Role deleted successfully");
-          },
-          onError: (error) => {
-            toast.error(
-              `Failed to delete role: ${
-                error.response?.data?.message || error.message
-              }`
-            );
-          },
-        });
+        try {
+          const response = await mutateAsync(roleId);
+          refetch.refetchQueries(["AllRole"]);
+          toast.success(response?.data?.message || "Role deleted successfully");
+        } catch (error) {
+          const errorMessage =
+            error.response?.data?.message ||
+            "Failed deleting role. Please try again";
+          toast.error(errorMessage);
+        }
     }
   };
 
@@ -47,7 +47,7 @@ const RoleTable = ({ page, limit, setPage, setLimit }) => {
       { id: item._id, render: () => item.role },
       { render: () => new Date(item.createdAt).toLocaleDateString("en-GB") },
     ],
-    menu: ["view", "edit", "delete"],
+    menu: role === "Employee" ? ["view"] : ["view", "edit", "delete"],
   }));
 
   return (

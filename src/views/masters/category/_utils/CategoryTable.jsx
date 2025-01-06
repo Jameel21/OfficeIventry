@@ -8,11 +8,14 @@ import {
 import toast from "react-hot-toast";
 import { useState } from "react";
 import Pagination from "@/components/pagination/Pagination";
+import { getDecodedData } from "@/utils/encryptDecrypt";
 
 const CategoryTable = ({ selectedCategory }) => {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
+  const userData = getDecodedData("userData");
+  const role = userData?.userRole
 
   const refetch = useQueryClient();
 
@@ -27,9 +30,9 @@ const CategoryTable = ({ selectedCategory }) => {
 
   const categoryData = data?.category;
 
-  const { mutate: deleteCategory } = useDeleteCategory();
+  const { mutateAsync } = useDeleteCategory();
 
-  const handleMenuChange = (value, categoryId) => {
+  const handleMenuChange = async (value, categoryId) => {
     switch (value) {
       case "view":
         navigate(`/admin/viewCategory/${categoryId}`);
@@ -38,19 +41,18 @@ const CategoryTable = ({ selectedCategory }) => {
         navigate(`/admin/editCategory/${categoryId}`);
         break;
       case "delete":
-        deleteCategory(categoryId, {
-          onSuccess: () => {
-            refetch.refetchQueries(["AllCategory", selectedCategory]);
-            toast.success("Category deleted successfully");
-          },
-          onError: (error) => {
-            toast.error(
-              `Failed to delete category: ${
-                error.response?.data?.message || error.message
-              }`
-            );
-          },
-        });
+        try {
+          const response = await mutateAsync(categoryId);
+          refetch.refetchQueries(["AllCategory", selectedCategory]);
+          toast.success(
+            response?.data?.message || "Category deleted successfully"
+          );
+        } catch (error) {
+          const errorMessage =
+            error.response?.data?.message ||
+            "Failed to delete category. Please try again";
+          toast.error(errorMessage);
+        }
     }
   };
 
@@ -59,7 +61,7 @@ const CategoryTable = ({ selectedCategory }) => {
       { id: item._id, render: () => item.equipmentName },
       { render: () => new Date(item.createdAt).toLocaleDateString("en-GB") },
     ],
-    menu : ["view", "edit", "delete"]
+    menu: role === "Employee" ? ["view"] : ["view", "edit", "delete"],
   }));
 
   return (

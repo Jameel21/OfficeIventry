@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { CircleArrowLeft } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import { useGetCategory, useUpdateCategory } from "@/store/hooks/MasterHooks";
 import InputWithLabel from "@/components/form-fields/_utils/InputWithLabel";
@@ -14,18 +14,20 @@ const EditCategory = () => {
   const navigate = useNavigate();
   const refetch = useQueryClient();
   const { id } = useParams();
-  const { control, handleSubmit, reset } = useForm({
+
+  const methods = useForm({
     defaultValues: {
       brandIds: [],
     },
   });
+  const { handleSubmit, reset } = methods;
 
   const page = 1;
   const limit = 100;
 
   const { data: categoryData } = useGetCategory(id);
-  
-  const { mutate: updateCategory } = useUpdateCategory();
+
+  const { mutateAsync } = useUpdateCategory();
   const { data } = useGetAllBrand({ page, limit });
   const brandData = data?.brands;
 
@@ -40,45 +42,40 @@ const EditCategory = () => {
     }
   }, [categoryData, reset]);
 
-  const onSubmit = (formData) => {
+  const onSubmit = async (formData) => {
     const payload = {
       equipmentName: formData.equipmentName,
       brandIds: formData.brandIds,
-      isSerialNumber: formData.isSerialNumber
+      isSerialNumber: formData.isSerialNumber,
     };
 
-    updateCategory(
-      { id, data: payload },
-      {
-        onSuccess: () => {
-          toast.success("Category updated successfully");
-          refetch.refetchQueries({ queryKey: ["Category"] });
-          navigate("/admin/category");
-        },
-        onError: (error) => {
-          const errorMessage =
-            error.response?.data?.message ||
-            "Failed to update the category. Please try again.";
-          toast.error(errorMessage);
-        },
-      }
-    );
+    try {
+      const response = await mutateAsync({ id, data: payload });
+      toast.success(response?.data?.message || "Category updated successfully");
+      refetch.refetchQueries({ queryKey: ["Category"] });
+      navigate("/admin/category");
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.message ||
+        "Failed to update the category. Please try again.";
+      toast.error(errorMessage);
+    }
   };
 
   const handlePreviousPage = () => {
     navigate("/admin/Category");
   };
-  
+
   const serialNumberOptions = [
     {
-      label:"true",
-      value: true
+      label: "true",
+      value: true,
     },
     {
-      label:"false",
-      value: false
-    }
-  ]
+      label: "false",
+      value: false,
+    },
+  ];
 
   const newBrandOptions =
     brandData?.map((brand) => ({
@@ -97,42 +94,42 @@ const EditCategory = () => {
           Edit Category
         </h1>
       </div>
-      <form
-        className="flex flex-col gap-4 mt-4"
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <InputWithLabel
-          label="Equipment Name"
-          type="text"
-          id="equipmentName"
-          control={control}
-          name="equipmentName"
-          placeholder="equipment name"
-          inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
-        />
-        <DropDown
-          control={control}
-          name="isSerialNumber"
-          labelName="Serial Number"
-          options={serialNumberOptions}
-          placeholder="select serial num"
-          dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14  sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
-        />
-        <DropDown
-          control={control}
-          name="brandIds"
-          labelName="Add New Brand"
-          options={newBrandOptions}
-          isMultiSelect={true}
-          placeholder="select  a brand"
-          dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
-        />
-        <UiButton
-          variant="secondary"
-          buttonName="save"
-          className="w-20 h-8 mt-4 cursor-default sm:w-24 sm:h-7 md:w-28 md:h-8 lg:w-32 lg:h-10"
-        ></UiButton>
-      </form>
+
+      <FormProvider {...methods}>
+        <form
+          className="flex flex-col gap-4 mt-4"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <InputWithLabel
+            label="Equipment Name"
+            type="text"
+            id="equipmentName"
+            name="equipmentName"
+            placeholder="equipment name"
+            inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
+          />
+          <DropDown
+            name="isSerialNumber"
+            labelName="Serial Number"
+            options={serialNumberOptions}
+            placeholder="select serial num"
+            dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14  sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
+          />
+          <DropDown
+            name="brandIds"
+            labelName="Add New Brand"
+            options={newBrandOptions}
+            isMultiSelect={true}
+            placeholder="select  a brand"
+            dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
+          />
+          <UiButton
+            variant="secondary"
+            buttonName="save"
+            className="w-20 h-8 mt-4 cursor-default sm:w-24 sm:h-7 md:w-28 md:h-8 lg:w-32 lg:h-10"
+          ></UiButton>
+        </form>
+      </FormProvider>
     </div>
   );
 };

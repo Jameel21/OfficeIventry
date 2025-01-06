@@ -25,26 +25,26 @@ const EmployeeTable = ({ page, limit, setPage, setLimit }) => {
   const { data, isLoading, error } = useGetMyRequest({ page, limit });
   const userData = data?.requests;
 
-  const cancelRequest = useCancelPendingRequest();
+  const {mutateAsync} = useCancelPendingRequest();
 
-  const handleMenuChange = (value, id) => {
+  const handleMenuChange = async(value, id) => {
     switch (value) {
       case "view":
         navigate(`/viewRequest/${id}`);
         break;
       case "cancel":
-        cancelRequest.mutate(id, {
-          onSuccess: () => {
-            refetch.refetchQueries(["equipmentRequest"]);
-            toast.error("Request canceled successfully");
-          },
-          onError: (error) => {
-            const errorMessage =
-              error.response?.data?.message ||
-              `Failed to cancel request. Please try again.`;
-            toast.error(errorMessage);
-          },
-        });
+        try {
+          const response = await mutateAsync(id);
+          refetch.refetchQueries(["equipmentRequest"]);
+          toast.success(
+            response?.data?.message || "Request canceled successfully"
+          );
+        } catch (error) {
+          const errorMessage =
+            error.response?.data?.message ||
+            `Failed to cancel request. Please try again.`;
+          toast.error(errorMessage);
+        }
     }
   };
 

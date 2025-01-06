@@ -68,7 +68,7 @@ const DataTable = ({
                   colSpan={headers.length}
                   className="font-medium text-center text-md text-muted-foreground"
                 >
-                  {error.message}
+                  {error.response?.data?.message}
                 </TableCell>
               </TableRow>
             ) : tableData && tableData.length > 0 ? (

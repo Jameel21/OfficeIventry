@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { CircleArrowLeft } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { useEffect } from "react";
 import InputWithLabel from "@/components/form-fields/_utils/InputWithLabel";
 import { useGetCategory } from "@/store/hooks/MasterHooks";
@@ -8,7 +8,9 @@ import DropDown from "@/components/form-fields/_utils/DropDown";
 
 const ViewCategory = () => {
   const { id } = useParams();
-  const { control, reset } = useForm({});
+
+  const methods = useForm();
+  const { reset } = methods;
   const navigate = useNavigate();
 
   const { data: categoryData } = useGetCategory(id);
@@ -44,57 +46,55 @@ const ViewCategory = () => {
           View Category
         </h1>
       </div>
-      <form className="mt-4">
-        <InputWithLabel
-          label="Equipment Name"
-          type="text"
-          id="equipmentName"
-          control={control}
-          name="equipmentName"
-          placeholder="equipment name"
-          readOnly={true}
-          inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
-        />
-        <InputWithLabel
-          label="Total Quantity"
-          type="text"
-          id="totalQuantity"
-          control={control}
-          name="totalQuantity"
-          placeholder="total quantity"
-          readOnly={true}
-          inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
-        />
-        <InputWithLabel
-          label="Serial Number Availability"
-          type="text"
-          id="isSerialNumber"
-          control={control}
-          name="isSerialNumber"
-          placeholder="serial number availability"
-          readOnly={true}
-          inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
-        />
-        <InputWithLabel
-          label="Created At"
-          type="text"
-          id="createdAt"
-          control={control}
-          name="createdAt"
-          placeholder="created at"
-          readOnly={true}
-          inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
-        />
-        <DropDown
-          control={control}
-          name="brands"
-          labelName="Brand"
-          options={brandOptions}
-          isReadOnly={true}
-          placeholder="Available Brand"
-          dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
-        />
-      </form>
+
+      <FormProvider {...methods}>
+        <form className="mt-4">
+          <InputWithLabel
+            label="Equipment Name"
+            type="text"
+            id="equipmentName"
+            name="equipmentName"
+            placeholder="equipment name"
+            readOnly={true}
+            inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
+          />
+          <InputWithLabel
+            label="Total Quantity"
+            type="text"
+            id="totalQuantity"
+            name="totalQuantity"
+            placeholder="total quantity"
+            readOnly={true}
+            inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
+          />
+          <InputWithLabel
+            label="Serial Number Availability"
+            type="text"
+            id="isSerialNumber"
+            name="isSerialNumber"
+            placeholder="serial number availability"
+            readOnly={true}
+            inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
+          />
+          <InputWithLabel
+            label="Created At"
+            type="text"
+            id="createdAt"
+            name="createdAt"
+            placeholder="created at"
+            readOnly={true}
+            inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
+          />
+          <DropDown
+            name="brands"
+            labelName="Brand"
+            options={brandOptions}
+            isReadOnly={true}
+            placeholder="Available Brand"
+            dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
+          />
+        </form>
+      </FormProvider>
     </div>
   );
 };

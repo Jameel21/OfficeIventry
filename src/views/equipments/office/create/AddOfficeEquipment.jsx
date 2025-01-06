@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useGetEquipmentName } from "@/store/hooks/NameHooks";
 import { CircleArrowLeft } from "lucide-react";
@@ -10,9 +10,10 @@ import toast from "react-hot-toast";
 import EquipmentForm from "../../_utils/EquipmentForm";
 
 const AddOfficeEquipment = () => {
-  const { control, handleSubmit, reset, watch, setFocus } = useForm({
+  const methods = useForm({
     resolver: yupResolver(equipmentSchema),
   });
+  const { handleSubmit, reset, watch, setFocus } = methods;
 
   const navigate = useNavigate();
   const { data: equipmentNames } = useGetEquipmentName("Office Equipment");
@@ -37,48 +38,43 @@ const AddOfficeEquipment = () => {
     value: brand._id,
   })) || [{ label: "none", value: "none" }];
 
-  const addEquipmentMutation = useAddEquipment("Office Equipment");
+  const { mutateAsync } = useAddEquipment("Office Equipment");
 
-  const onSubmitForm = (data) => {
+  const onSubmitForm = async (data) => {
     const formattedData = {
       ...data,
       dateOfPurchase: data.dateOfPurchase
         ? format(new Date(data.dateOfPurchase), "yyyy-MM-dd")
         : "",
     };
-
     if (!isSerialNumber) {
       delete formattedData.serialNumber;
     }
-
     if (!data.quantity) {
       delete formattedData.quantity;
     }
-
     if (!data.warrantyPeriod) {
       delete formattedData.warrantyPeriod;
     }
 
-    addEquipmentMutation.mutate(formattedData, {
-      onSuccess: () => {
-        toast.success("Equipment added successfully");
-        reset();
-        navigate("/admin/officeEquipment");
-      },
-      onError: (error) => {
-        const errorMessage =
-          error.response?.data?.message ||
-          "Equipment added failed. please try again";
-        toast.error(errorMessage);
-        if (
-          error.response?.data?.message
-            ?.toLowerCase()
-            .includes("serialNumber exists")
-        ) {
-          setFocus("serialNumber");
-        }
-      },
-    });
+    try {
+      const response = await mutateAsync(formattedData);
+      toast.success(response?.data?.message || "Equipment added successfully");
+      navigate("/admin/officeEquipment");
+      reset();
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.message ||
+        "Equipment added failed. please try again";
+      toast.error(errorMessage);
+      if (
+        error.response?.data?.message
+          ?.toLowerCase()
+          .includes("serialNumber exists")
+      ) {
+        setFocus("serialNumber");
+      }
+    }
   };
   const handlePreviousPage = () => {
     navigate("/admin/officeEquipment");
@@ -99,14 +95,15 @@ const AddOfficeEquipment = () => {
       </div>
 
       <div>
-        <form onSubmit={handleSubmit(onSubmitForm)}>
-          <EquipmentForm
-            equipmentOptions={equipmentOptions}
-            filteredBrands={filteredBrands}
-            isSerialNumber={isSerialNumber}
-            control={control}
-          />
-        </form>
+        <FormProvider {...methods}>
+          <form onSubmit={handleSubmit(onSubmitForm)}>
+            <EquipmentForm
+              equipmentOptions={equipmentOptions}
+              filteredBrands={filteredBrands}
+              isSerialNumber={isSerialNumber}
+            />
+          </form>
+        </FormProvider>
       </div>
     </div>
   );

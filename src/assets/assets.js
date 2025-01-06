@@ -1,21 +1,5 @@
-import { Lock, Bell ,FileText, Building2, User, GitPullRequestArrow,Monitor,Paintbrush,SquareCheckBig,UserRoundPen,CirclePlus, Plus, Logs, LayoutDashboard} from 'lucide-react'
+import { Lock, Bell ,FileText, Building2, User, GitPullRequestArrow,SquareCheckBig,UserRoundPen,CirclePlus, Plus, Logs, LayoutDashboard, ChartColumnStacked, Bitcoin, FileUser, BellElectric, Laptop, Cable} from 'lucide-react'
 
-
-export  const currentStatus = [
-     {
-       value:'available',
-       label:'Available'
-         },
-         {
-          value:'in-use',
-          label:'In Use'
-         },
-         {
-          value:'in-maitanance',
-          label:'In Maintanance'
-         }
-
-]
 
 export const sidebarMenu ={
   SuperAdmin:[
@@ -29,22 +13,22 @@ export const sidebarMenu ={
       menu:'Masters',
       submenu: [
         {
-          icon:Monitor,
+          icon:BellElectric,
           url:'/admin/department',
           menu:'Department'
         },
         {
-          icon:GitPullRequestArrow,
+          icon:FileUser,
           url:'/admin/role',
           menu:'Role'
         },
         {
-          icon:Monitor,
+          icon:Bitcoin,
           url:'/admin/brand',
           menu:'Brand'
         },
         {
-          icon:GitPullRequestArrow,
+          icon:ChartColumnStacked,
           url:'/admin/category',
           menu:'Category'
         },
@@ -55,12 +39,12 @@ export const sidebarMenu ={
       menu:'Inventry',
       submenu: [
         {
-          icon:Monitor,
+          icon:Cable,
           url:'/admin/officeequipment',
           menu:'Office Equipment'
         },
         {
-          icon:GitPullRequestArrow,
+          icon:Laptop,
           url:'/admin/employeeequipment',
           menu:'Employee Equipment'
         },
@@ -148,24 +132,24 @@ export const sidebarMenu ={
 //   }
 
 //   ],
-Employee:[
-  {
-    icon:User,
-    menu:'Request',
-    submenu: [
-      {
-        icon:Monitor,
-        url:'/viewMyRequest',
-        menu:'Add Request'
-      },
-    ]
-  },
-  {
-    icon:Bell,
-    url:'/notification',
-    menu:'Notification'
-  },
+// Employee:[
+//   {
+//     icon:User,
+//     menu:'Request',
+//     submenu: [
+//       {
+//         icon:Monitor,
+//         url:'/viewMyRequest',
+//         menu:'Add Request'
+//       },
+//     ]
+//   },
+//   {
+//     icon:Bell,
+//     url:'/notification',
+//     menu:'Notification'
+//   },
  
-],
+// ],
 }
  

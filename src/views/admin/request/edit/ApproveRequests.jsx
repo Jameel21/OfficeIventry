@@ -1,4 +1,4 @@
-import { useForm } from "react-hook-form";
+import { FormProvider,useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -26,14 +26,14 @@ const ApproveRequests = () => {
   const location = useLocation();
   const { id } = useParams();
   const { equipmentId } = location.state || {};
-  console.log("equipmentId", equipmentId);
   const refetch = useQueryClient();
 
-  const { control, handleSubmit, reset, watch } = useForm({
+  const methods = useForm({
     resolver: yupResolver(requestSchema),
-  });
+  })
+  const { handleSubmit, reset, watch } = methods
   const { data: equipmentNames } = useGetEquipmentName("Employee Equipment");
-  const { data: userData, isLoading, error } = useGetRequestById(id);
+  const { data: userData, } = useGetRequestById(id);
 
   const [brandId, setBrandId] = useState(null);
   const selectedBrandId = watch("brandId");
@@ -75,9 +75,9 @@ const ApproveRequests = () => {
     }
   }, [userData, reset]);
 
-  const updateMutation = useUpdatePendingRequest();
+  const {mutateAsync} = useUpdatePendingRequest();
 
-  const handleReject = (reason) => {
+  const handleReject = async (reason) => {
     if (!reason) {
       toast.error("Rejection reason is required");
       return;
@@ -86,25 +86,21 @@ const ApproveRequests = () => {
       status: "rejected",
       rejectedReason: reason,
     };
-    updateMutation.mutate(
-      { id, data: payload },
-      {
-        onSuccess: () => {
-          toast.error("Request rejected successfully");
-          refetch.refetchQueries({ queryKey: ["pendingRequests"] });
-          navigate("/admin/requests");
-        },
-        onError: (error) => {
-          const errorMessage =
-            error.response?.data?.message ||
-            `Request rejection was failed. Please try again.`;
-          toast.error(errorMessage);
-        },
-      }
-    );
+
+    try {
+      const response = await mutateAsync({ id, data: payload });
+      toast.success(response?.data?.message || "Request rejected successfully");
+      refetch.refetchQueries({ queryKey: ["pendingRequests"] });
+      navigate("/admin/requests");
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.message ||
+        `Request rejection was failed. Please try again.`;
+      toast.error(errorMessage);
+    }
   };
 
-  const onSubmitForm = (formData, status) => {
+  const onSubmitForm = async (formData, status) => {
     if (!["approved"].includes(status)) {
       console.error("Invalid status provided");
       return;
@@ -114,28 +110,21 @@ const ApproveRequests = () => {
       brandId: formData.brandId,
       serialNumber: formData.serialNumber,
     };
-    console.log("payload", payload);
-    updateMutation.mutate(
-      { id, data: payload },
-      {
-        onSuccess: () => {
-          console.log("updated successfully");
-          if (status === "approved") {
-            toast.success("Request approved successfully");
-          }
-          refetch.refetchQueries({ queryKey: ["pendingRequests"] });
-          reset();
-          navigate("/admin/requests"); // Redirect on success
-        },
-        onError: (error) => {
-          console.error("Mutation failed:", error.message);
-        },
-      }
-    );
+
+    try {
+      const response = await mutateAsync({ id, data: payload });
+      toast.success(response?.data?.message || "Request approved successfully");
+      refetch.refetchQueries({ queryKey: ["pendingRequests"] });
+      reset();
+      navigate("/admin/requests");
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.message ||
+        "Failed to approve request. Please try again";
+      toast.error(errorMessage);
+    }
   };
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error fetching request: {error.message}</p>;
 
   if (!equipmentId) {
     console.error("Equipment ID is missing.");
@@ -157,6 +146,7 @@ const ApproveRequests = () => {
         Assign Equipment
       </div>
       <div>
+        <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmitForm)}>
           <div className="grid grid-cols-1 gap-1 mt-4 lg:gap-8 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
             <InputWithLabel
@@ -164,7 +154,6 @@ const ApproveRequests = () => {
               label="Username"
               name="employeeId"
               placeholder="Username"
-              control={control}
               readOnly={true}
               inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64  md:w-72 lg:w-80 cursor-pointer"
             />
@@ -173,7 +162,6 @@ const ApproveRequests = () => {
               label="Equipment"
               name="equipmentId"
               placeholder="Equipment"
-              control={control}
               readOnly={true}
               inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
             />
@@ -182,7 +170,6 @@ const ApproveRequests = () => {
               label="Request Date"
               name="requestDate"
               placeholder="Issue date"
-              control={control}
               readOnly={true}
               inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
             />
@@ -191,7 +178,6 @@ const ApproveRequests = () => {
               label="Expected Return"
               name="expectedReturn"
               placeholder="Expected Return"
-              control={control}
               readOnly={true}
               inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
             />
@@ -200,12 +186,10 @@ const ApproveRequests = () => {
               label="Reason"
               name="reason"
               placeholder="Reason"
-              control={control}
               readOnly={true}
               inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
             />
             <DropDown
-              control={control}
               name="brandId"
               labelName="Brand"
               options={brandOptions}
@@ -213,7 +197,6 @@ const ApproveRequests = () => {
               dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 w-52  sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
             />
             <DropDown
-              control={control}
               name="serialNumber"
               labelName="Serial Number"
               options={serialNumOptions}
@@ -234,6 +217,7 @@ const ApproveRequests = () => {
             </div>
           </div>
         </form>
+        </FormProvider>
       </div>
     </div>
   );

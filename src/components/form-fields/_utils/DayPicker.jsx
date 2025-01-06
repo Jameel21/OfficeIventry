@@ -1,5 +1,5 @@
 import { Label } from "@/components/ui/label";
-import { useController } from "react-hook-form";
+import { useController, useFormContext } from "react-hook-form";
 import { CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -12,13 +12,13 @@ import {
 import { format } from "date-fns";
 
 const DatePickerDemo = ({
-  control,
   name,
   placeholder,
   className,
   label,
   labelClassName,
 }) => {
+  const { control } = useFormContext();
   const {
     field,
     fieldState: { error },

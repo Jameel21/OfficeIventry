@@ -63,32 +63,28 @@ const RequestTable = ({ selectedRequests }) => {
   );
   const requestData = data?.requests;
 
-  const updateRequestMutation = useUpdateRequestFields();
+  const {mutateAsync} = useUpdateRequestFields();
 
-  const handleCheckboxChange = (id, currentValue) => {
+  const handleCheckboxChange = async (id, currentValue) => {
     const payload = {
       id,
       markAsReturn: !currentValue,
     };
-
-    updateRequestMutation.mutate(payload, {
-      onSuccess: () => {
-        toast.success("updated successFully");
-        refetch.refetchQueries({ queryKey: ["pendingRequests"] });
-      },
-      onError: (error) => {
-        const errorMessage =
-        error.response?.data?.message ||
-        `Failed to update request.`;
-        toast.error(errorMessage);
-      },
-    });
+    try {
+      const response = await mutateAsync(payload);
+      toast.success(response?.data?.message || "updated successFully");
+      refetch.refetchQueries({ queryKey: ["pendingRequests"] });
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.message || `Failed to update request.`;
+      toast.error(errorMessage);
+    }
   };
 
   const handleMenuChange = (value, id, equipmentId = null) => {
     switch (value) {
       case "view":
-        navigate(`/viewRequest/${id}`, { state: { prevPage : "allRequest" }});
+        navigate(`/viewRequest/${id}`, { state: { prevPage: "allRequest" } });
         break;
       case "update":
         navigate(`/admin/approveRequest/${id}`, { state: { equipmentId } });

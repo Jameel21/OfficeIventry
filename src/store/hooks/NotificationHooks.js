@@ -11,14 +11,9 @@ export const useGetAllNotifications = ({ page, limit }) => {
   })
 }
 
-export const useUpdateNotification = (id) => {
-  return useQuery({
-    queryKey: ["notification", id],
-    queryFn: async () => {
-      const response = await notificationService.updateNotification(id);
-      return response?.data?.data || []
-    },
-      enabled: !!id, // Prevent the query from running until `notificationId` is set
+export const useUpdateNotification = () => {
+  return useMutation({
+    mutationFn: (id) => notificationService.updateNotification(id)
   })
 }
 

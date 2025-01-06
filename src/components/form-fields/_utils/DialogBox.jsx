@@ -15,7 +15,6 @@ const DialogBox = ({
   className,
   triggerName,
   dialogTitle = "Title",
-  control,
   onSubmit,
   firstName,
   firstPlaceholder,
@@ -51,7 +50,6 @@ const DialogBox = ({
                     type={type}
                     name={firstName}
                     placeholder={firstPlaceholder}
-                    control={control}
                     inputClassName="h-7 sm:h-8 md:h-10 lg:h-12 w-52 sm:w-64  md:w-72 lg:w-96"
                   />
                 </div>
@@ -65,7 +63,6 @@ const DialogBox = ({
                     type={type}
                     name={secondName}
                     placeholder={secondPlaceholder}
-                    control={control}
                     inputClassName="h-7 sm:h-8 md:h-10 lg:h-12 w-52 sm:w-64  md:w-72 lg:w-96"
                   />
                 </div>

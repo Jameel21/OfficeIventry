@@ -51,7 +51,7 @@ const EquipmentTable = ({ selectedCategory }) => {
     // Add additional columns for "Employee Equipment"
     if (selectedCategory === "Employee Equipment") {
       baseData.cells.push(
-        { render: () => item.Available }, // Ensure property names are correctly spelled
+        { render: () => item.Available },
         { render: () => item.inUse }
       );
     }

@@ -7,26 +7,25 @@ import NotificationTable from "./_utils/NotificationTable";
 const Notification = () => {
   const refetch = useQueryClient();
 
-  const { mutate: deleteNotification } = useDeleteNotifications();
+  const { mutateAsync } = useDeleteNotifications();
 
-  const handleClearNotifications = () => {
-    deleteNotification(undefined, {
-      onSuccess: () => {
-        refetch.refetchQueries(["allNotifications"]);
-        toast.success("Notifications cleared successfully");
-      },
-      onError: (error) => {
-        toast.error(
-          `Failed to clear notification: ${
-            error.response?.data?.message || error.message
-          }`
-        );
-      },
-    });
+  const handleClearNotifications = async () => {
+    try {
+      const response = await mutateAsync();
+      refetch.refetchQueries(["allNotifications"]);
+      toast.success(
+        response?.data?.message || "Notifications cleared successfully"
+      );
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.message ||
+        "Failed to clear notification. Please try again";
+      toast.error(errorMessage);
+    }
   };
 
   return (
-    <div className="w-full overflow-y-auto">
+    <div className="w-full">
       <div className="flex items-center justify-between">
         <div className="text-lg font-medium text-slate-700">Notifications</div>
         <div className="flex items-center gap-2">

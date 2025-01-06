@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { useDeleteUser, useUpdateUser } from "@/store/hooks/UserHooks";
 import Pagination from "@/components/pagination/Pagination";
+import { getDecodedData } from "@/utils/encryptDecrypt";
 
 const UserTable = ({
   page,
@@ -18,15 +19,15 @@ const UserTable = ({
 }) => {
   const navigate = useNavigate();
   const refetch = useQueryClient();
-
+  const usersData = getDecodedData("userData");
+  const role = usersData?.userRole
   const headers = ["Username", "Email", "Id", "Role", "Status"];
   const columnWidths = ["w-[25%]", "w-[30%]", "w-[10%]", "w-[20%]", "w-[15%]"];
 
-  const { mutate: deleteUser } = useDeleteUser();
-
+  const { mutateAsync } = useDeleteUser();
   const updateUser = useUpdateUser();
 
-  const handleMenuChange = (value, userId) => {
+  const handleMenuChange = async (value, userId) => {
     switch (value) {
       case "view":
         navigate(`/viewUser/${userId}`);
@@ -35,41 +36,32 @@ const UserTable = ({
         navigate(`/admin/editUser/${userId}`);
         break;
       case "delete":
-        deleteUser(userId, {
-          onSuccess: () => {
-            refetch.refetchQueries(["AllUsers"]);
-            toast.error("User deleted successfully");
-          },
-          onError: (error) => {
-            toast.error(
-              `Failed to delete user: ${
-                error.response?.data?.message || error.message
-              }`
-            );
-          },
-        });
+        try {
+          const response = await mutateAsync(userId);
+          refetch.refetchQueries(["AllUsers"]);
+          toast.success(response?.data?.message || "User deleted successfully");
+        } catch (error) {
+          const errorMessage =
+            error.response?.data?.message ||
+            "Failed to delete user. Please try again";
+          toast.error(errorMessage);
+        }
     }
   };
 
-  const handleStatusToggle = (userId, currentStatus) => {
+  const handleStatusToggle = async (userId, currentStatus) => {
     const newStatus = currentStatus === "Active" ? "Inactive" : "Active";
 
-    updateUser.mutate(
-      { id: userId, data: { status: newStatus } },
-      {
-        onSuccess: () => {
-          toast.success("Status updated successfully");
-          refetch.refetchQueries(["AllUsers"]);
-        },
-        onError: (error) => {
-          toast.error(
-            `Failed to update status: ${
-              error.response?.data?.message || error.message
-            }`
-          );
-        },
-      }
-    );
+    try {
+      await updateUser.mutateAsync({ id: userId, data: { status: newStatus } });
+      toast.success("Status updated successfully");
+      refetch.refetchQueries(["AllUsers"]);
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.message ||
+        "Failed to update status. Please try again";
+      toast.error(errorMessage);
+    }
   };
 
   const tableData = userData?.map((item) => ({
@@ -98,7 +90,7 @@ const UserTable = ({
         ),
       },
     ],
-    menu : ["view", "edit", "delete"]
+    menu: role === "Employee" ? ["view"] : ["view", "edit", "delete"],
   }));
 
   return (

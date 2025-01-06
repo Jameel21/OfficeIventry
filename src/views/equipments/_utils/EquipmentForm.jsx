@@ -7,12 +7,10 @@ const EquipmentForm = ({
   equipmentOptions,
   filteredBrands,
   isSerialNumber,
-  control,
 }) => {
   return (
     <div className="grid grid-cols-1 gap-1 mt-4 lg:gap-8 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
       <DropDown
-        control={control}
         name="equipmentNameId"
         options={equipmentOptions}
         placeholder="Select a equipment"
@@ -20,7 +18,6 @@ const EquipmentForm = ({
       />
 
       <DropDown
-        control={control}
         name="brandId"
         options={filteredBrands}
         placeholder={"Select a brand"}
@@ -32,7 +29,6 @@ const EquipmentForm = ({
           type="text"
           name="serialNumber"
           placeholder="Serial number"
-          control={control}
           inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80"
         />
       )}
@@ -41,7 +37,6 @@ const EquipmentForm = ({
           type="number"
           name="quantity"
           placeholder="quantity"
-          control={control}
           inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80"
         />
       )}
@@ -49,11 +44,9 @@ const EquipmentForm = ({
         type="text"
         name="price"
         placeholder="price"
-        control={control}
         inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80"
       />
       <DatePickerDemo
-        control={control}
         name="dateOfPurchase"
         placeholder="date of purchase"
         className="h-8 p-2 mt-2 w-52 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 "
@@ -62,7 +55,6 @@ const EquipmentForm = ({
         type="text"
         name="warrantyPeriod"
         placeholder="warranty period"
-        control={control}
         inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80"
       />
       <UiButton

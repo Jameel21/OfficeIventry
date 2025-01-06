@@ -1,16 +1,25 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useGetAllEquipment } from "@/store/hooks/EquipmentsHooks";
+import {
+  useDeleteEquipment,
+  useGetAllEquipment,
+} from "@/store/hooks/EquipmentsHooks";
 import DataTable from "@/components/table/DataTable";
 import Pagination from "@/components/pagination/Pagination";
+import { useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { getDecodedData } from "@/utils/encryptDecrypt";
 
-const EquipmentTable = ({equipmentType}) => {
+const EquipmentTable = ({ equipmentType }) => {
   const navigate = useNavigate();
+  const refetch = useQueryClient();
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
 
   const headers = ["Equipment", "brand", "Price", "Date Of Purchase"];
   const columnWidths = ["w-[25%]", "w-[25%]", "w-[25%]", "w-[25%]"];
+  const userData = getDecodedData("userData");
+  const role = userData?.userRole
 
   const { data, isLoading, error } = useGetAllEquipment(
     page,
@@ -19,12 +28,13 @@ const EquipmentTable = ({equipmentType}) => {
   );
 
   const equipmentData = data?.equipment;
+  const { mutateAsync } = useDeleteEquipment();
 
-  const handleMenuChange = (value, equipmentId) => {
+  const handleMenuChange = async (value, equipmentId) => {
     switch (value) {
       case "view":
         navigate(`/admin/viewEquipment/${equipmentId}`, {
-          state: { pathname: equipmentType},
+          state: { pathname: equipmentType },
         });
         break;
       case "edit":
@@ -32,6 +42,19 @@ const EquipmentTable = ({equipmentType}) => {
           state: { pathname: equipmentType },
         });
         break;
+      case "delete":
+        try {
+          const response = await mutateAsync(equipmentId);
+          refetch.refetchQueries(["AllEquipment"]);
+          toast.success(
+            response?.data?.message || "Equipment deleted successfully"
+          );
+        } catch (error) {
+          const errorMessage =
+            error.response?.data?.message ||
+            "Failed to delete the equipment. Please try again";
+          toast.error(errorMessage);
+        }
     }
   };
 
@@ -44,7 +67,7 @@ const EquipmentTable = ({equipmentType}) => {
         render: () => new Date(item.dateOfPurchase).toLocaleDateString("en-GB"),
       },
     ],
-    menu : ["view", "edit"]
+    menu: role === "Employee" ? ["view"] : ["view", "edit", "delete"],
   }));
   return (
     <div>
@@ -70,7 +93,7 @@ const EquipmentTable = ({equipmentType}) => {
         }}
       />
     </div>
-  )
-}
+  );
+};
 
-export default EquipmentTable
+export default EquipmentTable;
