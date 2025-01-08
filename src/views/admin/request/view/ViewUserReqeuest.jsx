@@ -128,14 +128,16 @@ const ViewUserReqeuest = () => {
                 readOnly={true}
                 inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
               />
-              <InputWithLabel
-                type="text"
-                label="Expected Return"
-                name="expectedReturn"
-                placeholder="Expected Return"
-                readOnly={true}
-                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
-              />
+              {userData?.expectedReturn && (
+                <InputWithLabel
+                  type="text"
+                  label="Expected Return"
+                  name="expectedReturn"
+                  placeholder="Expected Return"
+                  readOnly={true}
+                  inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
+                />
+              )}
 
               {userData?.requestLogId?.status === "canceled" && (
                 <InputWithLabel

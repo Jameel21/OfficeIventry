@@ -25,10 +25,7 @@ const NotificationTable = () => {
   const { mutateAsync } = useUpdateNotification();
 
   const handleView = async (rowData) => {
-    const { id: _id, tagId, read } = rowData;
-    if (read) {
-      return;
-    }
+    const { id: _id, tagId} = rowData;
 
     try {
       await mutateAsync(_id);

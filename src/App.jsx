@@ -47,6 +47,7 @@ import RequestLog from "./views/log/request/RequestLog";
 import ViewRequestLog from "./views/log/request/view/ViewRequestLog";
 import ForgotPassword from "./views/auth/ForgotPassword";
 import ResetPassword from "./views/auth/ResetPassword";
+import ViewUsersRequest from "./views/admin/request/viewAll/ViewUsersRequest";
 
 
 function App() {
@@ -85,6 +86,7 @@ function App() {
 
               <Route path="requests" element={<Requests />} />
               <Route path="approveRequest/:id" element={<ApproveRequests />} />
+              <Route path="userRequest/:id" element={<ViewUsersRequest />} />
               
               <Route path="viewAllUser" element={<ListAllUser />} />
               <Route path="editUser/:id" element={<EditUser />} />

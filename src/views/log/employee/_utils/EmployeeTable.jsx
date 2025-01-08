@@ -1,8 +1,10 @@
 import Pagination from "@/components/pagination/Pagination";
 import DataTable from "@/components/table/DataTable";
 import { useGetAllUsers } from "@/store/hooks/UserHooks";
+import { useNavigate } from "react-router-dom";
 
 const EmployeeTable = ({ page, limit, setPage, setLimit }) => {
+  const navigate = useNavigate()
   const headers = ["Employee name", "Email", "Employee Id", "Role"];
   const columnWidths = ["w-[25%]", "w-[25%]", "w-[25%]", "w-[25%]"];
 
@@ -20,6 +22,10 @@ const EmployeeTable = ({ page, limit, setPage, setLimit }) => {
       { render: () => item.roleId.role },
     ],
   }));
+   const handleView = (row) => {
+    const userId = row.cells[0].id;
+    navigate(`/admin/userRequest/${userId}`)
+  }
 
   return (
     <div>
@@ -31,6 +37,7 @@ const EmployeeTable = ({ page, limit, setPage, setLimit }) => {
           columnWidths={columnWidths}
           error={error}
           showBreadCrumbs={false}
+          onRowClick={(row) => handleView(row)}
         />
       </div>
 

@@ -54,7 +54,7 @@ const ViewUser = () => {
                 readOnly={true}
                 name="userName"
                 placeholder="username"
-                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
+                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
               />
               <InputWithLabel
                 type="text"
@@ -63,7 +63,7 @@ const ViewUser = () => {
                 readOnly={true}
                 name="email"
                 placeholder="email"
-                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
+                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
               />
               <InputWithLabel
                 type="text"
@@ -72,7 +72,7 @@ const ViewUser = () => {
                 readOnly={true}
                 name="employeeId"
                 placeholder="employee id"
-                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
+                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
               />
               <InputWithLabel
                 type="text"
@@ -81,7 +81,7 @@ const ViewUser = () => {
                 name="roleId"
                 readOnly={true}
                 placeholder="role"
-                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
+                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
               />
               <InputWithLabel
                 type="text"
@@ -90,7 +90,7 @@ const ViewUser = () => {
                 name="departmentId"
                 readOnly={true}
                 placeholder="department"
-                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
+                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
               />
               <InputWithLabel
                 type="text"
@@ -99,7 +99,7 @@ const ViewUser = () => {
                 name="status"
                 readOnly={true}
                 placeholder="status"
-                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
+                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
               />
             </div>
           </form>

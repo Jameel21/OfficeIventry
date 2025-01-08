@@ -100,14 +100,14 @@ const EditEquipmentForm = () => {
               readOnly={true}
               name="equipmentName"
               placeholder="equipment name"
-              inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-56 md:w-60 lg:w-96"
+              inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-56 md:w-72 lg:w-80"
             />
             <DropDown
               labelName={"Brand"}
               name="brandId"
               options={filteredBrands}
               placeholder={userData?.brandId?.brand}
-              dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-56 md:w-60 lg:w-96 hover:bg-accent hover:text-accent-foreground"
+              dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-56 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
             />
             {userData?.serialNumber && (
               <InputWithLabel
@@ -116,7 +116,7 @@ const EditEquipmentForm = () => {
                 label="Serial Number"
                 name="serialNumber"
                 placeholder="serial Number"
-                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-56 md:w-60 lg:w-96"
+                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-56 md:w-72 lg:w-80"
               />
             )}
             <InputWithLabel
@@ -125,7 +125,7 @@ const EditEquipmentForm = () => {
               label="Price"
               name="price"
               placeholder="price"
-              inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-56 md:w-60 lg:w-96"
+              inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-56 md:w-72 lg:w-80"
             />
             <InputWithLabel
               type="text"
@@ -134,7 +134,7 @@ const EditEquipmentForm = () => {
               readOnly={true}
               name="quantity"
               placeholder="quantity"
-              inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-56 md:w-60 lg:w-96"
+              inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-56 md:w-72 lg:w-80"
             />
             <InputWithLabel
               type="text"
@@ -143,13 +143,13 @@ const EditEquipmentForm = () => {
               name="currentStatus"
               readOnly={true}
               placeholder="current status"
-              inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-56 md:w-60 lg:w-96"
+              inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-56 md:w-72 lg:w-80"
             />
             <DatePickerDemo
               label={"Date Of Purchase"}
               name="dateOfPurchase"
               placeholder="Date of Purchase"
-              className="h-8 p-2 mt-2 sm:h-10 md:h-12 lg:h-14 sm:w-56 md:w-60 lg:w-96 "
+              className="h-8 p-2 mt-2 sm:h-10 md:h-12 lg:h-14 sm:w-56 md:w-72 lg:w-80 "
             />
             <UiButton
               variant="secondary"

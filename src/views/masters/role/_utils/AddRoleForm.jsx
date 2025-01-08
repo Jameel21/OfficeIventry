@@ -10,6 +10,7 @@ import UiButton from "@/components/form-fields/_utils/Button";
 import { toast } from "react-hot-toast";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useNavigate } from "react-router-dom";
+import DropDown from "@/components/form-fields/_utils/DropDown";
 
 const AddRoleForm = () => {
   const refetch = useQueryClient();
@@ -56,6 +57,7 @@ const AddRoleForm = () => {
         menu: menuId,
         ...permissions[menuId],
       })),
+      notifyForRequest: data.notifyForRequest,
     };
 
     try {
@@ -72,6 +74,16 @@ const AddRoleForm = () => {
       toast.error(errorMessage);
     }
   };
+  const notifyOptions = [
+    {
+      label: "true",
+      value: true,
+    },
+    {
+      label: "false",
+      value: false,
+    },
+  ];
 
   return (
     <FormProvider {...methods}>
@@ -84,6 +96,13 @@ const AddRoleForm = () => {
             name="role"
             placeholder="enter a role"
             inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
+          />
+          <DropDown
+            name="notifyForRequest"
+            labelName="For Notifications"
+            options={notifyOptions}
+            placeholder="For recieving notification"
+            dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
           />
           <div className="mt-2">
             <h1 className="text-xs font-medium sm:text-sm md:text-bold lg:text-lg text-slate-700">

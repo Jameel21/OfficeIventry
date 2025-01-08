@@ -116,7 +116,6 @@ const DemoSidebar = () => {
                           }`}
                         >
                           <menu.icon /> <span>{menu.menu}</span>
-                          <ChevronDown className="ml-auto" />
                         </SidebarMenuButton>
                       </SidebarMenuItem>
                     </Link>

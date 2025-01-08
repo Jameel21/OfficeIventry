@@ -15,6 +15,7 @@ import { CircleArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { useQueryClient } from "@tanstack/react-query";
+import DropDown from "@/components/form-fields/_utils/DropDown";
 
 const EditRole = () => {
   const { id } = useParams();
@@ -45,6 +46,7 @@ const EditRole = () => {
       setPermissions(initialPermissions);
       reset({
         role: roleData?.role,
+        notifyForRequest: roleData?.notifyForRequest
       });
     }
   }, [menuData, roleData, reset]);
@@ -62,11 +64,13 @@ const EditRole = () => {
   const onSubmitForm = async (data) => {
     const payload = {
       role: data.role || roleData.role,
+      notifyForRequest: data.notifyForRequest,
       permissions: Object.keys(permissions).map((menuId) => ({
         menu: menuId,
         ...permissions[menuId],
       })),
     };
+    console.log("payload",payload)
 
     try {
       const response = await mutateAsync({ id: id, data: payload });
@@ -85,6 +89,18 @@ const EditRole = () => {
   const handlePreviousPage = () => {
     navigate("/admin/role");
   };
+
+  
+  const notifyOptions = [
+    {
+      label: "true",
+      value: true,
+    },
+    {
+      label: "false",
+      value: false,
+    },
+  ];
 
   return (
     <FormProvider {...methods}>
@@ -106,6 +122,13 @@ const EditRole = () => {
             name="role"
             placeholder="role"
             inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
+          />
+            <DropDown
+            name="notifyForRequest"
+            labelName="For Notifications"
+            options={notifyOptions}
+            placeholder="For recieving notification"
+            dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14  sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
           />
           <div>
             <h1 className="text-xs font-medium sm:text-sm md:text-bold lg:text-lg text-slate-700">

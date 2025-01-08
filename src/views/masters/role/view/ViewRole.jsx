@@ -15,6 +15,7 @@ const ViewRole = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const methods = useForm();
+  const { reset } = methods;
   const [permissions, setPermissions] = useState({});
 
   const headers = ["Menu", "Create", "Update", "Delete", "View"];
@@ -35,7 +36,10 @@ const ViewRole = () => {
       });
       setPermissions(initialPermissions);
     }
-  }, [roleData]);
+    reset({
+      notifyForRequest: roleData?.notifyForRequest ? "true" : "false",
+    });
+  }, [roleData, reset]);
 
   if (roleLoading || menuLoading) {
     return <LoadSpinner />;
@@ -71,7 +75,15 @@ const ViewRole = () => {
             readOnly={true}
             inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
           />
-
+          <InputWithLabel
+            label="Notification"
+            type="text"
+            id="notifyForRequest"
+            name="notifyForRequest"
+            placeholder="Notifications"
+            readOnly={true}
+            inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
+          />
           <div>
             <h1 className="text-xs font-medium sm:text-sm md:text-bold lg:text-lg text-slate-700">
               Role Permissions

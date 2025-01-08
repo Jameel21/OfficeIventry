@@ -96,7 +96,7 @@ const EditUser = () => {
       </div>
       <div>
         <div className="flex flex-col">
-          <div className="mt-24 ml-12 sm:mt-12 md:ml-12 lg:ml-24">
+          <div className="mt-24 ml-12 sm:mt-12 md:ml-16 lg:ml-18">
             <UiButton
               variant="secondary"
               buttonName="Edit Profile"
@@ -114,35 +114,35 @@ const EditUser = () => {
               id="userName"
               name="userName"
               placeholder="username"
-              inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-96"
+              inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
             />
             <InputWithLabel
               type="text"
               id="email"
               name="email"
               placeholder="email"
-              inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-96"
+              inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
             />
             <InputWithLabel
               type="text"
               id="employeeId"
               name="employeeId"
               placeholder="employee id"
-              inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-96"
+              inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
             />
             <DropDown
               name="roleId"
               options={roleOptions}
               placeholder={userData?.roleId.role}
-              dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-96 hover:bg-accent hover:text-accent-foreground"
+              dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
             />
             <DropDown
               name="departmentId"
               options={departmentOptions}
               placeholder={userData?.departmentId.department}
-              dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-96 hover:bg-accent hover:text-accent-foreground"
+              dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
             />
-            <div className="ml-16 md:ml-16 lg:ml-32">
+            <div className="ml-16 md:ml-16 lg:ml-24">
               <UiButton
                 variant="secondary"
                 buttonName="save"

@@ -1,13 +1,19 @@
 import Pagination from "@/components/pagination/Pagination";
 import DataTable from "@/components/table/DataTable";
-import { useGetAllocationLog } from "@/store/hooks/LogHooks";
 
-const AllocationTable = ({ page, limit, setPage, setLimit }) => {
+const AllocationTable = ({
+  page,
+  limit,
+  setPage,
+  setLimit,
+  isLoading,
+  error,
+  data,
+  logData,
+}) => {
   const headers = ["Equipment", "Allocated To", "Allocated By", "Date"];
   const columnWidths = ["w-[25%]", "w-[25%]", "w-[25%]", "w-[25%]"];
 
-  const { data, isLoading, error } = useGetAllocationLog({ page, limit });
-  const logData = data?.logs;
   const tableData = logData?.map((item) => ({
     cells: [
       {

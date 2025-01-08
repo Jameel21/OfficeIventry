@@ -21,6 +21,13 @@ export const getRequestById = async (id) => {
   return response;
 };
 
+export const getUserRequest = async ({ id, page = 1, limit = 10 }) => {
+  const response = await API.get(`/equipmentRequest/userDetails/${id}`, {
+    params: { page, limit },
+  });
+  return response;
+};
+
 const updateReturn = async ({ id, ...fields }) => {
   const response = await API.put(
     `/equipmentRequest/updatingReturn/${id}`,
@@ -42,6 +49,7 @@ const cancelPendingRequest = async (id) => {
 export default {
   addRequest,
   getMyRequest,
+  getUserRequest,
   updateReturn,
   getRequestById,
   getAllRequests,

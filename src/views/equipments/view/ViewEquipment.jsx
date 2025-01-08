@@ -64,7 +64,7 @@ const ViewEquipmentForm = () => {
                 readOnly={true}
                 name="equipmentName"
                 placeholder="equipment name"
-                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
+                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
               />
               <InputWithLabel
                 type="text"
@@ -73,7 +73,7 @@ const ViewEquipmentForm = () => {
                 readOnly={true}
                 name="brand"
                 placeholder="brand"
-                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
+                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
               />
               {userData?.serialNumber && (
                 <InputWithLabel
@@ -83,7 +83,7 @@ const ViewEquipmentForm = () => {
                   readOnly={true}
                   name="serialNumber"
                   placeholder="serial Number"
-                  inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
+                  inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-72 md:w-60 lg:w-80"
                 />
               )}
               <InputWithLabel
@@ -93,7 +93,7 @@ const ViewEquipmentForm = () => {
                 name="price"
                 readOnly={true}
                 placeholder="price"
-                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
+                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
               />
               <InputWithLabel
                 type="text"
@@ -102,7 +102,7 @@ const ViewEquipmentForm = () => {
                 name="currentStatus"
                 readOnly={true}
                 placeholder="current status"
-                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
+                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
               />
               <InputWithLabel
                 type="text"
@@ -111,7 +111,7 @@ const ViewEquipmentForm = () => {
                 name="dateOfPurchase"
                 readOnly={true}
                 placeholder="current status"
-                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
+                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
               />
               <InputWithLabel
                 type="number"
@@ -120,7 +120,7 @@ const ViewEquipmentForm = () => {
                 name="quantity"
                 readOnly={true}
                 placeholder="current status"
-                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
+                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
               />
               <InputWithLabel
                 type="text"
@@ -129,7 +129,7 @@ const ViewEquipmentForm = () => {
                 name="createdAt"
                 readOnly={true}
                 placeholder="current status"
-                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
+                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
               />
             </div>
           </form>

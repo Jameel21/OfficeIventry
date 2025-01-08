@@ -21,14 +21,12 @@ const RequestTable = ({ selectedRequests }) => {
       "Username",
       "Equipment",
       "Request Date",
-      "Expected Return",
       "Reason",
     ],
     Canceled: [
       "Username",
       "Equipment",
       "Request Date",
-      "Expected Return",
       "Reason",
     ],
     Approved: [
@@ -36,24 +34,21 @@ const RequestTable = ({ selectedRequests }) => {
       "Equipment",
       "Issue Date",
       "Mark as Return",
-      "Brand",
     ],
     Completed: [
       "Username",
       "Equipment",
       "Request Date",
-      "Actual Return",
       "Reason",
     ],
     Rejected: [
       "Username",
       "Equipment",
       "Request Date",
-      "Rejected date",
       "Rejected Reason",
     ],
   };
-  const columnWidths = ["w-[20%]", "w-[20%]", "w-[20%]", "w-[20%]", "w-[20%]"];
+  const columnWidths = ["w-[25%]", "w-[25%]", "w-[25%]", "w-[25%]",];
   const headers = headersMapping[selectedRequests] || headersMapping["Pending"];
 
   const { data, isLoading, error } = useGetAllRequests(
@@ -103,9 +98,6 @@ const RequestTable = ({ selectedRequests }) => {
         selectedRequests !== "Approved" && {
           render: () => new Date(item?.requestDate).toLocaleDateString("en-GB"),
         },
-        selectedRequests === "Rejected" && {
-          render: () => new Date(item?.updatedAt).toLocaleDateString("en-GB"),
-        },
         selectedRequests === "Approved" && {
           render: () => new Date(item?.issueDate).toLocaleDateString("en-GB"),
         },
@@ -118,19 +110,6 @@ const RequestTable = ({ selectedRequests }) => {
               }
             />
           ),
-        },
-        selectedRequests === "Approved" && {
-          render: () => item?.equipmentId?.brandId?.brand || "None",
-        },
-        (selectedRequests === "Pending" ||
-          selectedRequests === "Canceled" ||
-          selectedRequests === "Completed") && {
-          render: () =>
-            new Date(
-              selectedRequests === "Completed"
-                ? item.actualReturn
-                : item.expectedReturn
-            ).toLocaleDateString("en-GB"),
         },
         selectedRequests !== "Approved" && {
           render: () =>

@@ -17,6 +17,16 @@ export const useGetMyRequest = ({ page = 1, limit = 10 }) => {
   });
 };
 
+export const useGetUserRequest = ({ id,page = 1, limit = 10 }) => {
+  return useQuery({
+    queryKey: ["userRequest",id, page, limit],
+    queryFn: async () => {
+      const response = await employeeService.getUserRequest({id, page, limit });
+      return response?.data?.data || [];
+    },
+  });
+};
+
 export const useGetAllRequests = (page, limit, status) => {
   return useQuery({
     queryKey: ["pendingRequests", page, limit, status],

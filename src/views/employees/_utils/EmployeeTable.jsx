@@ -17,10 +17,9 @@ const EmployeeTable = ({ page, limit, setPage, setLimit }) => {
     "Employee Name",
     "Equipment",
     "Request date",
-    "Expected Return",
     "status",
   ];
-  const columnWidths = ["w-[ 20%]", "w-[20%]", "w-[20%]", "w-[20%]", "w-[20%]"];
+  const columnWidths = ["w-[25%]", "w-[25%]", "w-[25%]", "w-[25%]"];
 
   const { data, isLoading, error } = useGetMyRequest({ page, limit });
   const userData = data?.requests;
@@ -53,9 +52,6 @@ const EmployeeTable = ({ page, limit, setPage, setLimit }) => {
       { id: item._id, render: () => item.employeeId.userName },
       { render: () => item.equipmentId.equipmentNameId.equipmentName },
       { render: () => new Date(item.requestDate).toLocaleDateString("en-GB") },
-      {
-        render: () => new Date(item.expectedReturn).toLocaleDateString("en-GB"),
-      },
       { render: () => item.requestLogId.status },
     ],
     menu:
