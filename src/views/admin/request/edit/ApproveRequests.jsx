@@ -148,7 +148,7 @@ const ApproveRequests = () => {
       <div>
         <FormProvider {...methods}>
         <form onSubmit={handleSubmit(onSubmitForm)}>
-          <div className="grid grid-cols-1 gap-1 mt-4 lg:gap-8 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+          <div className="grid grid-cols-1 gap-3 mt-4 lg:gap-8 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
             <InputWithLabel
               type="text"
               label="Username"

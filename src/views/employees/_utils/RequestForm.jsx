@@ -57,7 +57,7 @@ const RequestForm = () => {
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmitForm)}>
-        <div className="grid grid-cols-1 gap-1 mt-4 lg:gap-8 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 mt-4 lg:gap-8 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
           <DropDown
             name="equipmentId"
             labelName="Equipment"
@@ -88,7 +88,7 @@ const RequestForm = () => {
             variant="secondary"
             type="submit"
             buttonName="Save"
-            className="w-24 h-8 mt-9 sm:w-28 sm:h-8 md:w-32 md:h-10 lg:w-80 lg:h-12"
+            className="w-24 h-8 lg:mt-9 sm:w-28 sm:h-8 md:w-32 md:h-10 lg:w-80 lg:h-12"
           />
         </div>
       </form>

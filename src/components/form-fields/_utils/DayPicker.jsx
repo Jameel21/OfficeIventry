@@ -66,7 +66,7 @@ const DatePickerDemo = ({
           />
         </PopoverContent>
       </Popover>
-      <p className="h-1 text-sm text-red-600 sm:w-64 md:w-72 lg:w-80">
+      <p className="h-1 text-xs text-red-600 md:text-sm sm:w-64 md:w-72 lg:w-80">
         {error ? error.message : null}
       </p>
     </div>

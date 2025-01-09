@@ -5,7 +5,9 @@ import { useNavigate } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { useDeleteUser, useUpdateUser } from "@/store/hooks/UserHooks";
 import Pagination from "@/components/pagination/Pagination";
-import { getDecodedData } from "@/utils/encryptDecrypt";
+import ConfirmationModal from "@/components/modal/ConfirmationModal";
+import BreadCrumbs from "@/components/form-fields/_utils/BreadCrumbs";
+import { useState } from "react";
 
 const UserTable = ({
   page,
@@ -19,13 +21,15 @@ const UserTable = ({
 }) => {
   const navigate = useNavigate();
   const refetch = useQueryClient();
-  const usersData = getDecodedData("userData");
-  const role = usersData?.userRole
+ 
   const headers = ["Username", "Email", "Id", "Role", "Status"];
   const columnWidths = ["w-[25%]", "w-[30%]", "w-[10%]", "w-[20%]", "w-[15%]"];
 
   const { mutateAsync } = useDeleteUser();
   const updateUser = useUpdateUser();
+
+  const [showModal, setShowModal] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState(null);
 
   const handleMenuChange = async (value, userId) => {
     switch (value) {
@@ -36,22 +40,14 @@ const UserTable = ({
         navigate(`/admin/editUser/${userId}`);
         break;
       case "delete":
-        try {
-          const response = await mutateAsync(userId);
-          refetch.refetchQueries(["AllUsers"]);
-          toast.success(response?.data?.message || "User deleted successfully");
-        } catch (error) {
-          const errorMessage =
-            error.response?.data?.message ||
-            "Failed to delete user. Please try again";
-          toast.error(errorMessage);
-        }
+        setSelectedUserId(userId);
+        setShowModal(true);
+        break;
     }
   };
 
   const handleStatusToggle = async (userId, currentStatus) => {
     const newStatus = currentStatus === "Active" ? "Inactive" : "Active";
-
     try {
       await updateUser.mutateAsync({ id: userId, data: { status: newStatus } });
       toast.success("Status updated successfully");
@@ -64,9 +60,35 @@ const UserTable = ({
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      const response = await mutateAsync(selectedUserId);
+      refetch.refetchQueries(["AllUsers"]);
+      toast.success(response?.data?.message || "User deleted successfully");
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.message ||
+        "Failed to delete user. Please try again.";
+      toast.error(errorMessage);
+    } finally {
+      setShowModal(false);
+    }
+  };
+
   const tableData = userData?.map((item) => ({
     cells: [
-      { id: item._id, render: () => item.userName },
+      {
+        id: item._id,
+        render: () => (
+          <div className="flex items-center gap-2">
+            <BreadCrumbs
+              data={["view", "edit", "delete"]}
+              onChange={(value) => handleMenuChange(value, item._id)}
+            />
+            <span>{item.userName}</span>
+          </div>
+        ),
+      },
       { render: () => item.email },
       { render: () => item.employeeId },
       { render: () => item.roleId.role },
@@ -90,7 +112,6 @@ const UserTable = ({
         ),
       },
     ],
-    menu: role === "Employee" ? ["view"] : ["view", "edit", "delete"],
   }));
 
   return (
@@ -102,10 +123,14 @@ const UserTable = ({
           isLoading={isLoading}
           columnWidths={columnWidths}
           error={error}
-          showBreadCrumbs={true}
-          handleMenuChange={handleMenuChange}
         />
       </div>
+      <ConfirmationModal
+        showModal={showModal}
+        title={"Are you sure you want to delete ?"}
+        onClose={() => setShowModal(false)}
+        onConfirm={handleDelete}
+      />
       <Pagination
         page={page}
         limit={limit}

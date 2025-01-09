@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { useController, useFormContext } from "react-hook-form";
 import { Label } from "@/components/ui/label";
-import { ChevronUp } from "lucide-react";
+import { ChevronUp, ChevronDown } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -10,6 +10,7 @@ import {
   DropdownMenuRadioGroup,
   DropdownMenuCheckboxItem
 } from "@/components/ui/dropdown-menu";
+import { useState } from "react";
 
 const DropDown = ({
   labelName,
@@ -21,6 +22,7 @@ const DropDown = ({
   isReadOnly,
   isMultiSelect = false,
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
     const {control} = useFormContext();
   const {
     field,
@@ -65,7 +67,7 @@ const DropDown = ({
       >
         {labelName}
       </Label>
-      <DropdownMenu>
+      <DropdownMenu onOpenChange={(open) => setIsOpen(open)}>
         <DropdownMenuTrigger asChild>
           <button
             className={cn(
@@ -76,7 +78,11 @@ const DropDown = ({
             disabled={isReadOnly}
           >
             <span>{selectedLabel || placeholder}</span>
-            <ChevronUp className="w-4 h-4 mr-2 text-muted-foreground hover:bg-accent hover:text-accent-foreground" />
+            {isOpen ? (
+              <ChevronUp className="w-4 h-4 mr-2 text-muted-foreground hover:bg-accent hover:text-accent-foreground" />
+            ) : (
+              <ChevronDown className="w-4 h-4 mr-2 text-muted-foreground hover:bg-accent hover:text-accent-foreground" />
+            )}
           </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="z-50 w-64 overflow-y-auto rounded-md shadow-lg bg-primary max-h-40">
@@ -104,7 +110,7 @@ const DropDown = ({
           )}
         </DropdownMenuContent>
       </DropdownMenu>
-      <p className="h-1 text-sm text-red-600 sm:w-64 md:w-72 lg:w-80">
+      <p className="h-1 text-xs text-red-600 md:text-sm sm:w-64 md:w-72 lg:w-80">
         {error ? error.message : null}
       </p>
     </div>

@@ -55,7 +55,7 @@ const AllocationLog = () => {
         <div className="flex items-center gap-2 mt-1">
           <UiInput
             placeholder={`Search by ${keyword}`}
-            inputClassName="h-7 md:h-9 md:w-40 lg:h-11 lg:w-96 hidden sm:flex"
+            inputClassName="h-7 sm:h-9 md:w-40  lg:w-96 hidden sm:flex"
             value={searchTerm}
             onChange={handleSearchChange}
           />
@@ -66,7 +66,7 @@ const AllocationLog = () => {
           />
         </div>
       </div>
-      <div className="mt-7">
+      <div className="mt-9">
         <AllocationTable
           page={page}
           limit={limit}

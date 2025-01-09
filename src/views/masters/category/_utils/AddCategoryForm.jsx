@@ -1,4 +1,5 @@
 import { FormProvider, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useQueryClient } from "@tanstack/react-query";
 import InputWithLabel from "@/components/form-fields/_utils/InputWithLabel";
 import UiButton from "@/components/form-fields/_utils/Button";
@@ -6,6 +7,7 @@ import { toast } from "react-hot-toast";
 import { useAddCategory } from "@/store/hooks/MasterHooks";
 import { useGetAllBrand } from "@/store/hooks/MasterHooks";
 import DropDown from "@/components/form-fields/_utils/DropDown";
+import { categorySchema } from "@/utils/validationSchema";
 
 const AddCategoryForm = ({ equipmentType }) => {
   const refetch = useQueryClient();
@@ -16,6 +18,7 @@ const AddCategoryForm = ({ equipmentType }) => {
       isSerialNumber: "",
       brandIds: [],
     },
+    resolver: yupResolver(categorySchema),
   });
   const { handleSubmit, reset } = methods;
   const page = 1;
@@ -66,7 +69,7 @@ const AddCategoryForm = ({ equipmentType }) => {
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmitForm)}>
-        <div className="flex flex-col gap-1 mt-4">
+        <div className="flex flex-col gap-4 mt-4">
           <InputWithLabel
             label="Equipment Name"
             type="text"

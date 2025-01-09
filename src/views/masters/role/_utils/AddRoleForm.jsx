@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useQueryClient } from "@tanstack/react-query";
 import { useGetAllMenu } from "@/store/hooks/MasterHooks";
 import { useAddRole } from "@/store/hooks/MasterHooks";
@@ -11,11 +12,14 @@ import { toast } from "react-hot-toast";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useNavigate } from "react-router-dom";
 import DropDown from "@/components/form-fields/_utils/DropDown";
+import { roleSchema } from "@/utils/validationSchema";
 
 const AddRoleForm = () => {
   const refetch = useQueryClient();
   const navigate = useNavigate();
-  const methods = useForm();
+  const methods = useForm({
+    resolver: yupResolver(roleSchema),
+  });
   const { handleSubmit, reset } = methods;
   const [permissions, setPermissions] = useState({});
 
@@ -88,7 +92,7 @@ const AddRoleForm = () => {
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmitForm)}>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-3">
           <InputWithLabel
             label="Role"
             type="text"

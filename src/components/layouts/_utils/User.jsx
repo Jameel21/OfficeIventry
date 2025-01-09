@@ -4,6 +4,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { getDecodedData } from "@/utils/encryptDecrypt";
+import ConfirmationModal from "@/components/modal/ConfirmationModal";
+import { useState } from "react";
 
 const User = () => {
   const navigate = useNavigate()
@@ -11,6 +13,8 @@ const User = () => {
   const user = userData?.userName;
   const role = userData?.userRole;
   const userId = userData?.userId;
+
+  const [showModal, setShowModal] = useState(false);
 
   const handleProfile = () => {
     navigate(`/viewProfile/${userId}`)
@@ -21,6 +25,15 @@ const User = () => {
     toast.success("You have been logged out");
     navigate("/auth/login");
   }
+
+  const handleLogoutClick = () => {
+    setShowModal(true); 
+  };
+
+  const confirmLogout = () => {
+    handleLogout();
+    setShowModal(false); 
+  };
 
   return (
     <div>
@@ -35,13 +48,22 @@ const User = () => {
             <h1 className="text-base sm:text-lg text-slate-200">{user}</h1>
             <p className="text-sm text-slate-400">{role}</p>
         </div>
-         <div onClick={handleLogout}>
+         <div onClick={handleLogoutClick}>
           <Avatar className="cursor-pointer">
             <AvatarImage src={logout} className="text-white"/>
           </Avatar>
         </div>
       </div>
       <div className="mt-3 bg-white h-hl"></div>
+
+        {/* Confirmation Modal */}
+        <ConfirmationModal
+        showModal={showModal}
+        title={"Are you sure you want to log out ?"}
+        onClose={() => setShowModal(false)} 
+        onConfirm={confirmLogout} 
+       
+      />
     </div>
   );
 };

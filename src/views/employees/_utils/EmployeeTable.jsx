@@ -7,55 +7,75 @@ import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import DataTable from "@/components/table/DataTable";
 import Pagination from "@/components/pagination/Pagination";
+import ConfirmationModal from "@/components/modal/ConfirmationModal";
+import BreadCrumbs from "@/components/form-fields/_utils/BreadCrumbs";
+import { useState } from "react";
 
 const EmployeeTable = ({ page, limit, setPage, setLimit }) => {
   const navigate = useNavigate();
 
   const refetch = useQueryClient();
 
-  const headers = [
-    "Employee Name",
-    "Equipment",
-    "Request date",
-    "status",
-  ];
+  const headers = ["Employee Name", "Equipment", "Request date", "status"];
   const columnWidths = ["w-[25%]", "w-[25%]", "w-[25%]", "w-[25%]"];
 
   const { data, isLoading, error } = useGetMyRequest({ page, limit });
   const userData = data?.requests;
 
-  const {mutateAsync} = useCancelPendingRequest();
+  const { mutateAsync } = useCancelPendingRequest();
 
-  const handleMenuChange = async(value, id) => {
+  const [showModal, setShowModal] = useState(false);
+  const [selectedRequestId, setSelectedRequestId] = useState(null);
+
+  const handleMenuChange = async (value, id) => {
     switch (value) {
       case "view":
         navigate(`/viewRequest/${id}`);
         break;
       case "cancel":
-        try {
-          const response = await mutateAsync(id);
-          refetch.refetchQueries(["equipmentRequest"]);
-          toast.success(
-            response?.data?.message || "Request canceled successfully"
-          );
-        } catch (error) {
-          const errorMessage =
-            error.response?.data?.message ||
-            `Failed to cancel request. Please try again.`;
-          toast.error(errorMessage);
-        }
+        setSelectedRequestId(id);
+        setShowModal(true);
+        break;
+    }
+  };
+
+  const handleCancel = async () => {
+    try {
+      const response = await mutateAsync(selectedRequestId);
+      refetch.refetchQueries(["equipmentRequest"]);
+      toast.success(response?.data?.message || "Request canceled successfully");
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.message ||
+        "Failed to cancel request. Please try again.";
+      toast.error(errorMessage);
+    } finally {
+      setShowModal(false);
     }
   };
 
   const tableData = userData?.map((item) => ({
     cells: [
-      { id: item._id, render: () => item.employeeId.userName },
+      {
+        id: item._id,
+        render: () => (
+          <div className="flex items-center gap-4">
+            <BreadCrumbs
+              data={
+                item.requestLogId.status === "pending"
+                  ? ["view", "cancel"]
+                  : ["view"]
+              }
+              onChange={(value) => handleMenuChange(value, item._id)}
+            />
+            <span>{item.employeeId.userName}</span>
+          </div>
+        ),
+      },
       { render: () => item.equipmentId.equipmentNameId.equipmentName },
       { render: () => new Date(item.requestDate).toLocaleDateString("en-GB") },
       { render: () => item.requestLogId.status },
     ],
-    menu:
-      item.requestLogId.status === "pending" ? ["view", "cancel"] : ["view"],
   }));
 
   return (
@@ -67,10 +87,14 @@ const EmployeeTable = ({ page, limit, setPage, setLimit }) => {
           isLoading={isLoading}
           columnWidths={columnWidths}
           error={error}
-          showBreadCrumbs={true}
-          handleMenuChange={handleMenuChange}
         />
       </div>
+      <ConfirmationModal
+        showModal={showModal}
+        title={"Are you sure you want to cancel ?"}
+        onClose={() => setShowModal(false)}
+        onConfirm={handleCancel}
+      />
       <Pagination
         page={page}
         limit={limit}

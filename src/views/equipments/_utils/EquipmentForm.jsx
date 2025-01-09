@@ -9,9 +9,10 @@ const EquipmentForm = ({
   isSerialNumber,
 }) => {
   return (
-    <div className="grid grid-cols-1 gap-1 mt-4 lg:gap-8 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+    <div className="grid grid-cols-1 gap-4 mt-4 lg:gap-8 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
       <DropDown
         name="equipmentNameId"
+        labelName="Equipment"
         options={equipmentOptions}
         placeholder="Select a equipment"
         dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
@@ -19,6 +20,7 @@ const EquipmentForm = ({
 
       <DropDown
         name="brandId"
+        labelName="Brand"
         options={filteredBrands}
         placeholder={"Select a brand"}
         dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
@@ -27,6 +29,7 @@ const EquipmentForm = ({
       {isSerialNumber && (
         <InputWithLabel
           type="text"
+          label="SerialNumber"
           name="serialNumber"
           placeholder="Serial number"
           inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80"
@@ -36,6 +39,7 @@ const EquipmentForm = ({
         <InputWithLabel
           type="number"
           name="quantity"
+          label="Quantity"
           placeholder="quantity"
           inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80"
         />
@@ -43,17 +47,20 @@ const EquipmentForm = ({
       <InputWithLabel
         type="text"
         name="price"
+        label="Price"
         placeholder="price"
         inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80"
       />
       <DatePickerDemo
         name="dateOfPurchase"
+        label="Date Of Purchase"
         placeholder="date of purchase"
         className="h-8 p-2 mt-2 w-52 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 "
       />
       <InputWithLabel
         type="text"
         name="warrantyPeriod"
+        label="Warranty Period"
         placeholder="warranty period"
         inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80"
       />

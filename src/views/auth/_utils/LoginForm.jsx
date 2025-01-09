@@ -23,17 +23,19 @@ const LoginForm = () => {
   const onSubmitForm = async (data) => {
     try {
       const response = await mutateAsync(data);
-      const { userName, token, _id } = response.data.data;
+      const { userName, token, _id, expiresIn } = response.data.data;
       const { roleId } = response.data.data;
       const userRole = roleId?.role;
       const menuPermission = roleId?.permissions
-
+      const loginTime = Date.now();
       const userData = {
         userName,
         userRole,
         authToken: token,
         userId: _id,
-        menuPermission
+        menuPermission,
+        expiresIn,
+        loginTime
       };
       setEncodedData("userData", userData);
       toast.success(response?.data?.message || "Login Success");

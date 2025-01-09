@@ -55,4 +55,30 @@ export const equipmentSchema = yup.object().shape({
   equipmentNameId: yup.string().required("equipment is required"),
   dateOfPurchase: yup.string().required("purchase date is required"),
   price: yup.string().required("price is required"),
+  brandId:yup
+  .string()
+  .required("brand is required")
+});
+
+export const brandSchema = yup.object().shape({
+  brand: yup.string().required("brand is required"),
+});
+
+export const departmentSchema = yup.object().shape({
+  department: yup.string().required("department is required"),
+});
+
+export const roleSchema = yup.object().shape({
+  role: yup.string().required("role is required"),
+  notifyForRequest: yup.string().required("notification availabilty is required"),
+});
+
+export const categorySchema = yup.object().shape({
+  equipmentName: yup.string().required("equipment is required"),
+  isSerialNumber: yup.string().required("serial number availability is required"),
+  brandIds: yup
+    .array()
+    .of(yup.string())
+    .required("brand is required")
+    .min(1, "at least one brand must be selected"),
 });

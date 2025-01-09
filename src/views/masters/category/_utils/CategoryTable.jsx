@@ -8,14 +8,13 @@ import {
 import toast from "react-hot-toast";
 import { useState } from "react";
 import Pagination from "@/components/pagination/Pagination";
-import { getDecodedData } from "@/utils/encryptDecrypt";
+import ConfirmationModal from "@/components/modal/ConfirmationModal";
+import BreadCrumbs from "@/components/form-fields/_utils/BreadCrumbs";
 
 const CategoryTable = ({ selectedCategory }) => {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
-  const userData = getDecodedData("userData");
-  const role = userData?.userRole
 
   const refetch = useQueryClient();
 
@@ -32,6 +31,9 @@ const CategoryTable = ({ selectedCategory }) => {
 
   const { mutateAsync } = useDeleteCategory();
 
+  const [showModal, setShowModal] = useState(false);
+  const [selectedCategoryId, setSelectedCategoryId] = useState(null);
+
   const handleMenuChange = async (value, categoryId) => {
     switch (value) {
       case "view":
@@ -41,27 +43,43 @@ const CategoryTable = ({ selectedCategory }) => {
         navigate(`/admin/editCategory/${categoryId}`);
         break;
       case "delete":
-        try {
-          const response = await mutateAsync(categoryId);
-          refetch.refetchQueries(["AllCategory", selectedCategory]);
-          toast.success(
-            response?.data?.message || "Category deleted successfully"
-          );
-        } catch (error) {
-          const errorMessage =
-            error.response?.data?.message ||
-            "Failed to delete category. Please try again";
-          toast.error(errorMessage);
-        }
+        setSelectedCategoryId(categoryId);
+        setShowModal(true);
+        break;
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      const response = await mutateAsync(selectedCategoryId);
+      refetch.refetchQueries(["AllCategory"]);
+      toast.success(response?.data?.message || "Category deleted successfully");
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.message ||
+        "Failed to delete category. Please try again.";
+      toast.error(errorMessage);
+    } finally {
+      setShowModal(false);
     }
   };
 
   const tableData = categoryData?.map((item) => ({
     cells: [
-      { id: item._id, render: () => item.equipmentName },
+      {
+        id: item._id,
+        render: () => (
+          <div className="flex items-center gap-2">
+            <BreadCrumbs
+              data={["view", "edit", "delete"]}
+              onChange={(value) => handleMenuChange(value, item._id)}
+            />
+            <span>{item.equipmentName}</span>
+          </div>
+        ),
+      },
       { render: () => new Date(item.createdAt).toLocaleDateString("en-GB") },
     ],
-    menu: role === "Employee" ? ["view"] : ["view", "edit", "delete"],
   }));
 
   return (
@@ -73,10 +91,14 @@ const CategoryTable = ({ selectedCategory }) => {
           isLoading={isLoading}
           columnWidths={columnWidths}
           error={error}
-          showBreadCrumbs={true}
-          handleMenuChange={handleMenuChange}
         />
       </div>
+      <ConfirmationModal
+        showModal={showModal}
+        title={"Are you sure you want to delete ?"}
+        onClose={() => setShowModal(false)} 
+        onConfirm={handleDelete} 
+      />
       <Pagination
         page={page}
         limit={limit}

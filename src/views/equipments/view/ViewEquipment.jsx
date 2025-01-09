@@ -29,6 +29,7 @@ const ViewEquipmentForm = () => {
         serialNumber: userData?.serialNumber,
         price: userData?.price,
         currentStatus: userData?.currentStatus,
+        warrantyPeriod: userData?.warrantyPeriod,
         dateOfPurchase: new Date(userData.dateOfPurchase).toLocaleDateString(
           "en-GB"
         ),
@@ -95,6 +96,19 @@ const ViewEquipmentForm = () => {
                 placeholder="price"
                 inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
               />
+
+              {userData?.warrantyPeriod && (
+                <InputWithLabel
+                  type="text"
+                  id="warrantyPeriod"
+                  label="Warranty Period"
+                  name="warrantyPeriod"
+                  readOnly={true}
+                  placeholder="current status"
+                  inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
+                />
+              )}
+
               <InputWithLabel
                 type="text"
                 id="currentStatus"

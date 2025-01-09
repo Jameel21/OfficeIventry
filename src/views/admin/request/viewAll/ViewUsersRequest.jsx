@@ -18,7 +18,7 @@ const ViewUsersRequest = () => {
           User Request
         </h1>
       </div>
-      <div className="mt-6">
+      <div className="mt-12">
         <UsersTable/>
       </div>
     </div>

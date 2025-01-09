@@ -1,14 +1,18 @@
 import { FormProvider, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useQueryClient } from "@tanstack/react-query";
 import InputWithLabel from "@/components/form-fields/_utils/InputWithLabel";
 import UiButton from "@/components/form-fields/_utils/Button";
 import { toast } from "react-hot-toast";
 import { useAddDepartment } from "@/store/hooks/MasterHooks";
+import { departmentSchema } from "@/utils/validationSchema";
 
 const AddDepartmentForm = () => {
   const refetch = useQueryClient();
 
-  const methods = useForm();
+  const methods = useForm({
+    resolver: yupResolver(departmentSchema),
+  });
   const { handleSubmit, reset } = methods;
 
   const { mutateAsync } = useAddDepartment();
@@ -44,7 +48,7 @@ const AddDepartmentForm = () => {
             variant="secondary"
             type="submit"
             buttonName="Save"
-            className="w-24 h-8 mt-3 sm:w-28 sm:h-8 md:w-32 md:h-10 lg:w-80 lg:h-12"
+            className="w-24 h-8 mt-4 sm:w-28 sm:h-8 md:w-32 md:h-10 lg:w-80 lg:h-12"
           />
         </div>
       </form>
