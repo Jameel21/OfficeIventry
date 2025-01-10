@@ -65,7 +65,7 @@ const InputWithLabel = ({
             className={cn("absolute inset-y-0 flex items-center text-gray-500 right-3 hover:text-gray-700 focus:outline-none", iconClassName)}
             onClick={handleTogglePassword}
           >
-            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            {showPassword ? <Eye size={18} /> : <EyeOff size={18} />}
           </button>
         )}
       </div>
