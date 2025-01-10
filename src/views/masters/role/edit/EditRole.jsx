@@ -128,6 +128,7 @@ const EditRole = () => {
             labelName="For Notifications"
             options={notifyOptions}
             placeholder="For recieving notification"
+            dropDownMenuClassName={"sm:w-64 md:w-72 lg:w-80"}
             dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14  sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
           />
           <div>

@@ -37,10 +37,14 @@ const CategoryTable = ({ selectedCategory }) => {
   const handleMenuChange = async (value, categoryId) => {
     switch (value) {
       case "view":
-        navigate(`/admin/viewCategory/${categoryId}`);
+        navigate(`/admin/viewCategory/${categoryId}`,{
+          state: { selectedCategory },
+        });
         break;
       case "edit":
-        navigate(`/admin/editCategory/${categoryId}`);
+        navigate(`/admin/editCategory/${categoryId}`, {
+          state: { selectedCategory },
+        });
         break;
       case "delete":
         setSelectedCategoryId(categoryId);

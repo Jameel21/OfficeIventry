@@ -27,7 +27,7 @@ const Pagination = ({
         <button
           onClick={() => onPageChange(page - 1)}
           disabled={page === 1}
-          className={`p-1 sm:px-2 sm:py-2 text-sm rounded-lg text-white ${
+          className={`p-1 sm:px-2 sm:py-2 text-sm rounded-lg text-white cursor-pointer ${
             page === 1 ? "bg-ternary" : "bg-secondary"
           }`}
         >
@@ -37,7 +37,7 @@ const Pagination = ({
         <button
           onClick={() => onPageChange(page + 1)}
           disabled={page >= totalPages}
-          className={`p-1 sm:px-2 sm:py-2 text-sm text-white rounded-lg ${
+          className={`p-1 sm:px-2 sm:py-2 text-sm text-white rounded-lg cursor-pointer ${
             page >= totalPages ? "bg-ternary" : "bg-secondary"
           }`}
         >

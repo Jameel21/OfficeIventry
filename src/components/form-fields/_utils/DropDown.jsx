@@ -19,6 +19,7 @@ const DropDown = ({
   placeholder,
   labelClassName,
   dropDownClassName,
+  dropDownMenuClassName,
   isReadOnly,
   isMultiSelect = false,
 }) => {
@@ -85,12 +86,12 @@ const DropDown = ({
             )}
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="z-50 w-64 overflow-y-auto rounded-md shadow-lg bg-primary max-h-40">
+        <DropdownMenuContent className={cn("z-50 w-64 overflow-y-auto rounded-md shadow-lg bg-primary max-h-40", dropDownMenuClassName)}>
           {isMultiSelect ? (
             options.map((option, index) => (
               <DropdownMenuCheckboxItem
                 key={index}
-                checked={field.value.includes(option.value)}
+                checked={field.value.includes(option.value) || option.isSelected}
                 onCheckedChange={() => handleSelect(option.value)}
               >
                 {option.label}

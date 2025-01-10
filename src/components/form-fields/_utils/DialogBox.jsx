@@ -50,27 +50,27 @@ const DialogBox = ({
                     type={type}
                     name={firstName}
                     placeholder={firstPlaceholder}
-                    inputClassName="h-8 md:h-10 lg:h-12 w-60 sm:w-64  md:w-96"
+                    inputClassName=" h-8 md:h-10 lg:h-12 w-72 md:w-96"
                   />
                 </div>
               </div>
             )}
 
             {secondName && secondPlaceholder && (
-              <div className="flex items-center space-x-2 w-">
+              <div className="flex items-center mt-4 space-x-2">
                 <div className="grid flex-1 gap-2">
                   <InputWithLabel
                     type={type}
                     name={secondName}
                     placeholder={secondPlaceholder}
-                    inputClassName="h-8 md:h-10 lg:h-12 w-60 sm:w-64 md:w-96"
+                    inputClassName="h-8 md:h-10 lg:h-12 w-72 md:w-96"
                   />
                 </div>
               </div>
             )}
           </div>
 
-          <DialogFooter className="mt-2 md:mt-6 sm:justify-center">
+          <DialogFooter className="mt-2 md:mt-4 sm:justify-center">
             {firstButtonName && (
               <UiButton
                 variant="secondary"

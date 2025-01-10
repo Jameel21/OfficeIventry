@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { CircleArrowLeft } from "lucide-react";
 import { FormProvider, useForm } from "react-hook-form";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useGetCategory, useUpdateCategory } from "@/store/hooks/MasterHooks";
 import InputWithLabel from "@/components/form-fields/_utils/InputWithLabel";
 import DropDown from "@/components/form-fields/_utils/DropDown";
@@ -12,6 +12,7 @@ import { useQueryClient } from "@tanstack/react-query";
 
 const EditCategory = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const refetch = useQueryClient();
   const { id } = useParams();
 
@@ -31,16 +32,53 @@ const EditCategory = () => {
   const { data } = useGetAllBrand({ page, limit });
   const brandData = data?.brands;
 
+  const selectedCategory =
+    location.state?.selectedCategory || "Employee Equipment";
+
   useEffect(() => {
     if (categoryData) {
+      const selectedBrands = categoryData?.brands?.map((brand) => 
+        brand._id,
+      );
       reset({
         equipmentName: categoryData?.equipmentName,
         totalQuantity: categoryData?.totalQuantity,
         isSerialNumber: categoryData?.isSerialNumber,
+        brandIds: selectedBrands,
         createdAt: new Date(categoryData.createdAt).toLocaleDateString("en-GB"),
       });
     }
   }, [categoryData, reset]);
+
+
+  const getDropdownOptions = () => {
+    // Extract selected brands from categoryData
+    const selectedBrandIds =
+      categoryData?.brands?.map((brand) => brand._id) || [];
+
+    // Filter out already selected brands from brandData
+    const unselectedBrands =
+      brandData?.filter((brand) => !selectedBrandIds.includes(brand._id)) || [];
+
+    // Map both selected and unselected brands into the format required for the dropdown
+    const selectedBrands =
+      categoryData?.brands?.map((brand) => ({
+        label: brand.brand,
+        value: brand._id,
+        isSelected: true, // Mark as selected
+      })) || [];
+
+    const availableBrands = unselectedBrands.map((brand) => ({
+      label: brand.brand,
+      value: brand._id,
+      isSelected: false, // Mark as not selected
+    }));
+
+    // Combine selected and available brands, ensuring selected brands appear first
+    return [...selectedBrands, ...availableBrands];
+  };
+
+  const newBrandOptions = getDropdownOptions();
 
   const onSubmit = async (formData) => {
     const payload = {
@@ -53,7 +91,9 @@ const EditCategory = () => {
       const response = await mutateAsync({ id, data: payload });
       toast.success(response?.data?.message || "Category updated successfully");
       refetch.refetchQueries({ queryKey: ["Category"] });
-      navigate("/admin/category");
+      navigate("/admin/Category", {
+        state: { equipmentType: selectedCategory },
+      });
     } catch (error) {
       const errorMessage =
         error.response?.data?.message ||
@@ -63,7 +103,9 @@ const EditCategory = () => {
   };
 
   const handlePreviousPage = () => {
-    navigate("/admin/Category");
+    navigate("/admin/Category", {
+      state: { equipmentType: selectedCategory },
+    });
   };
 
   const serialNumberOptions = [
@@ -76,12 +118,6 @@ const EditCategory = () => {
       value: false,
     },
   ];
-
-  const newBrandOptions =
-    brandData?.map((brand) => ({
-      label: brand.brand,
-      value: brand._id,
-    })) || [];
 
   return (
     <div>
@@ -113,7 +149,8 @@ const EditCategory = () => {
             labelName="Serial Number"
             options={serialNumberOptions}
             placeholder="select serial num"
-            dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14  sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
+            dropDownMenuClassName={"sm:w-64 md:w-72 lg:w-80"}
+            dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
           />
           <DropDown
             name="brandIds"
@@ -121,6 +158,7 @@ const EditCategory = () => {
             options={newBrandOptions}
             isMultiSelect={true}
             placeholder="select  a brand"
+            dropDownMenuClassName={"sm:w-64 md:w-72 lg:w-80"}
             dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
           />
           <UiButton

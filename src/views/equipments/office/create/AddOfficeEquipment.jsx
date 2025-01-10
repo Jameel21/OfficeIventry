@@ -13,11 +13,10 @@ const AddOfficeEquipment = () => {
   const methods = useForm({
     resolver: yupResolver(equipmentSchema),
   });
-  const { handleSubmit, reset, watch, setFocus } = methods;
+  const { handleSubmit, reset, watch, setFocus, formState: { isSubmitting }, } = methods;
 
   const navigate = useNavigate();
   const { data: equipmentNames } = useGetEquipmentName("Office Equipment");
-  console.log("officeEquipmentNames", equipmentNames);
 
   const equipmentOptions =
     equipmentNames?.map((item) => ({
@@ -101,6 +100,7 @@ const AddOfficeEquipment = () => {
               equipmentOptions={equipmentOptions}
               filteredBrands={filteredBrands}
               isSerialNumber={isSerialNumber}
+              isSubmitting={isSubmitting}
             />
           </form>
         </FormProvider>

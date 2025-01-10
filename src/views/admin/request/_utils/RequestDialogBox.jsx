@@ -1,10 +1,12 @@
 import { useForm, FormProvider } from "react-hook-form";
-// import { yupResolver } from "@hookform/resolvers/yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import DialogBox from "@/components/form-fields/_utils/DialogBox";
-// import { rejectedSchema } from "@/utils/validationSchema";
+import { rejectedSchema } from "@/utils/validationSchema";
 
 const RequestDialogBox = ({ onReject }) => {
-  const methods = useForm();
+  const methods = useForm({
+    resolver: yupResolver(rejectedSchema),
+  });
   const { handleSubmit, reset } = methods;
 
   const onSubmit = handleSubmit((data) => {

@@ -17,7 +17,7 @@ const AddUserForm = () => {
   const methods = useForm({
     resolver: yupResolver(registerSchema),
   });
-  const { handleSubmit, reset, setFocus } = methods;
+  const { handleSubmit, reset, setFocus, formState: { isSubmitting }, } = methods;
 
   const page = 1;
   const limit = 50;
@@ -99,6 +99,7 @@ const AddUserForm = () => {
             name="roleId"
             options={roleOptions}
             placeholder="Select a role"
+            dropDownMenuClassName={"sm:w-64 md:w-72 lg:w-80"}
             dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
           />
           <DropDown
@@ -106,6 +107,7 @@ const AddUserForm = () => {
             name="departmentId"
             options={departmentOptions}
             placeholder="Select a department"
+            dropDownMenuClassName={"sm:w-64 md:w-72 lg:w-80"}
             dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
           />
           <InputWithLabel
@@ -114,12 +116,14 @@ const AddUserForm = () => {
             id="password"
             name="password"
             placeholder="password"
+            iconClassName="right-3 md:right-28 lg:right-3"
             inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
           />
           <UiButton
             variant="secondary"
             type="submit"
             buttonName="Save"
+            isSubmitting={isSubmitting}
             className="w-24 h-8 mt-3 sm:w-28 sm:h-8 md:w-32 md:h-10 lg:w-80 lg:h-12"
           />
         </div>

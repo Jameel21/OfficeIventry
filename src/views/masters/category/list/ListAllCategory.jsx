@@ -1,14 +1,16 @@
 import UiButton from "@/components/form-fields/_utils/Button";
 import { useState } from "react";
 import BreadCrumbs from "@/components/form-fields/_utils/BreadCrumbs";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import CategoryTable from "../_utils/CategoryTable";
 
 const ListAllCategory = () => {
   const navigate = useNavigate();
-
+ const location = useLocation();
+ const initialCategory =
+ location.state?.equipmentType || "Employee Equipment";
   const [selectedCategory, setSelectedCategory] =
-    useState("Employee Equipment");
+    useState(initialCategory);
 
   const mainMenu = ["Employee Equipment", "Office Equipment"];
 

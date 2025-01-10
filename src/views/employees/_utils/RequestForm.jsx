@@ -17,7 +17,7 @@ const RequestForm = () => {
   const methods = useForm({
     resolver: yupResolver(employeeSchema),
   });
-  const { handleSubmit, reset } = methods;
+  const { handleSubmit, reset, formState: { isSubmitting }, } = methods;
 
   const { data: equipmentNames } = useGetEquipmentName("Employee Equipment");
 
@@ -63,7 +63,8 @@ const RequestForm = () => {
             labelName="Equipment"
             options={equipmentOptions}
             placeholder="Select a equipment"
-            dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 w-52  sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
+            dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
+            dropDownMenuClassName={"w-52 sm:w-64 md:w-72 lg:w-80"}
           />
           <DatePickerDemo
             name="requestDate"
@@ -88,6 +89,7 @@ const RequestForm = () => {
             variant="secondary"
             type="submit"
             buttonName="Save"
+            isSubmitting={isSubmitting}
             className="w-24 h-8 lg:mt-9 sm:w-28 sm:h-8 md:w-32 md:h-10 lg:w-80 lg:h-12"
           />
         </div>

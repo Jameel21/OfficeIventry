@@ -134,12 +134,14 @@ const EditUser = () => {
               name="roleId"
               options={roleOptions}
               placeholder={userData?.roleId.role}
+              dropDownMenuClassName={"sm:w-64 md:w-72 lg:w-80"}
               dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
             />
             <DropDown
               name="departmentId"
               options={departmentOptions}
               placeholder={userData?.departmentId.department}
+              dropDownMenuClassName={"sm:w-64 md:w-72 lg:w-80"}
               dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
             />
             <div className="ml-16 md:ml-16 lg:ml-24">

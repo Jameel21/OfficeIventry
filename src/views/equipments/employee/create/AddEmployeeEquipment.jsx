@@ -13,7 +13,7 @@ const AddEmployeeEquipment = () => {
   const methods = useForm({
     resolver: yupResolver(equipmentSchema),
   });
-  const { handleSubmit, reset, watch, setFocus } = methods;
+  const { handleSubmit, reset, watch, setFocus,formState: { isSubmitting }, } = methods;
 
   const navigate = useNavigate();
   const { data: equipmentNames } = useGetEquipmentName("Employee Equipment");
@@ -100,6 +100,7 @@ const AddEmployeeEquipment = () => {
               equipmentOptions={equipmentOptions}
               filteredBrands={filteredBrands}
               isSerialNumber={isSerialNumber}
+              isSubmitting={isSubmitting}
             />
           </form>
         </FormProvider>

@@ -31,7 +31,7 @@ const ApproveRequests = () => {
   const methods = useForm({
     resolver: yupResolver(requestSchema),
   })
-  const { handleSubmit, reset, watch } = methods
+  const { handleSubmit, reset, watch, formState: { isSubmitting }, } = methods
   const { data: equipmentNames } = useGetEquipmentName("Employee Equipment");
   const { data: userData, } = useGetRequestById(id);
 
@@ -194,6 +194,7 @@ const ApproveRequests = () => {
               labelName="Brand"
               options={brandOptions}
               placeholder="Select a Brand"
+              dropDownMenuClassName={"w-52 sm:w-64 md:w-72 lg:w-80"}
               dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 w-52  sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
             />
             <DropDown
@@ -201,6 +202,7 @@ const ApproveRequests = () => {
               labelName="Serial Number"
               options={serialNumOptions}
               placeholder="Serial Number"
+              dropDownMenuClassName={"w-52 sm:w-64 md:w-72 lg:w-80"}
               dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 w-52  sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
             />
             <div className="flex gap-4 sm:gap-16 lg:gap-0 lg:flex-none lg:justify-between xl:w-[620px]">
@@ -208,6 +210,7 @@ const ApproveRequests = () => {
                 variant="secondary"
                 type="submit"
                 buttonName="Approve"
+                isSubmitting={isSubmitting}
                 onClick={handleSubmit((formData) =>
                   onSubmitForm(formData, "approved")
                 )}

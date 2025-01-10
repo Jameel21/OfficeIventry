@@ -6,14 +6,18 @@ import UiButton from "@/components/form-fields/_utils/Button";
 import { toast } from "react-hot-toast";
 import { useAddBrand } from "@/store/hooks/MasterHooks";
 import { brandSchema } from "@/utils/validationSchema";
+import { useNavigate } from "react-router-dom";
 
 const AddBrandForm = () => {
   const refetch = useQueryClient();
-
+ const navigate = useNavigate()
   const methods = useForm({
     resolver: yupResolver(brandSchema),
+    defaultValues: {
+      brand: "",
+    },
   });
-  const { handleSubmit, reset } = methods;
+  const { handleSubmit, reset, formState: { isSubmitting }, } = methods;
 
   const { mutateAsync } = useAddBrand();
 
@@ -23,8 +27,10 @@ const AddBrandForm = () => {
       toast.success(
         response?.data?.message || "Brand was created successfully"
       );
-      reset();
       refetch.refetchQueries({ queryKey: ["AllBrand"] });
+      navigate("/admin/brand");
+      reset();
+     
     } catch (error) {
       const errorMessage =
         error.response?.data?.message ||
@@ -49,6 +55,7 @@ const AddBrandForm = () => {
             variant="secondary"
             type="submit"
             buttonName="Save"
+            isSubmitting={isSubmitting}
             className="w-24 h-8 mt-4 sm:w-28 sm:h-8 md:w-32 md:h-10 lg:w-80 lg:h-12"
           />
         </div>

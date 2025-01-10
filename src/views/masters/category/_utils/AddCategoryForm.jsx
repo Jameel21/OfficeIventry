@@ -8,10 +8,11 @@ import { useAddCategory } from "@/store/hooks/MasterHooks";
 import { useGetAllBrand } from "@/store/hooks/MasterHooks";
 import DropDown from "@/components/form-fields/_utils/DropDown";
 import { categorySchema } from "@/utils/validationSchema";
+import { useNavigate } from "react-router-dom";
 
 const AddCategoryForm = ({ equipmentType }) => {
   const refetch = useQueryClient();
-
+  const navigate = useNavigate()
   const methods = useForm({
     defaultValues: {
       equipmentName: "",
@@ -20,7 +21,7 @@ const AddCategoryForm = ({ equipmentType }) => {
     },
     resolver: yupResolver(categorySchema),
   });
-  const { handleSubmit, reset } = methods;
+  const { handleSubmit, reset, formState: { isSubmitting }, } = methods;
   const page = 1;
   const limit = 100;
 
@@ -56,8 +57,9 @@ const AddCategoryForm = ({ equipmentType }) => {
       toast.success(
         response?.data?.message || "Category was created successfully"
       );
-      reset();
       refetch.refetchQueries({ queryKey: ["AllCategory"] });
+      navigate("/admin/category",{ state: { equipmentType } });
+      reset();
     } catch (error) {
       const errorMessage =
         error.response?.data?.message ||
@@ -83,6 +85,7 @@ const AddCategoryForm = ({ equipmentType }) => {
             labelName="Serial Number"
             options={serialNumberOptions}
             placeholder="select serial number availability"
+            dropDownMenuClassName={"sm:w-64 md:w-72 lg:w-80"}
             dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
           />
           <DropDown
@@ -91,12 +94,14 @@ const AddCategoryForm = ({ equipmentType }) => {
             options={brandOptions}
             isMultiSelect={true}
             placeholder="select brand"
+            dropDownMenuClassName={"sm:w-64 md:w-72 lg:w-80"}
             dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
           />
           <UiButton
             variant="secondary"
             type="submit"
             buttonName="Save"
+            isSubmitting={isSubmitting}
             className="w-24 h-8 mt-3 sm:w-28 sm:h-8 md:w-32 md:h-10 lg:w-80 lg:h-12"
           />
         </div>

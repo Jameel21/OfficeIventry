@@ -19,8 +19,12 @@ const AddRoleForm = () => {
   const navigate = useNavigate();
   const methods = useForm({
     resolver: yupResolver(roleSchema),
+    defaultValues: {
+      role: "", 
+      notifyForRequest: ""
+    },
   });
-  const { handleSubmit, reset } = methods;
+  const { handleSubmit, reset, formState: { isSubmitting }, } = methods;
   const [permissions, setPermissions] = useState({});
 
   const headers = ["Menu", "Create", "Update", "Delete", "View"];
@@ -106,6 +110,7 @@ const AddRoleForm = () => {
             labelName="For Notifications"
             options={notifyOptions}
             placeholder="For recieving notification"
+            dropDownMenuClassName={"sm:w-64 md:w-72 lg:w-80"}
             dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
           />
           <div className="mt-2">
@@ -147,6 +152,7 @@ const AddRoleForm = () => {
             variant="secondary"
             type="submit"
             buttonName="Save"
+            isSubmitting={isSubmitting} 
             className="w-24 h-8 mt-3 sm:w-28 sm:h-8 md:w-32 md:h-10 lg:w-40 lg:h-10"
           />
         </div>

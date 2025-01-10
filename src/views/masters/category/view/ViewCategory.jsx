@@ -1,14 +1,13 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { CircleArrowLeft } from "lucide-react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useEffect } from "react";
 import InputWithLabel from "@/components/form-fields/_utils/InputWithLabel";
 import { useGetCategory } from "@/store/hooks/MasterHooks";
-import DropDown from "@/components/form-fields/_utils/DropDown";
 
 const ViewCategory = () => {
   const { id } = useParams();
-
+  const location = useLocation();
   const methods = useForm();
   const { reset } = methods;
   const navigate = useNavigate();
@@ -21,19 +20,21 @@ const ViewCategory = () => {
         equipmentName: categoryData?.equipmentName,
         totalQuantity: categoryData?.totalQuantity,
         isSerialNumber: categoryData?.isSerialNumber,
+        brands:categoryData?.brands?.map((brand) => 
+          brand.brand,
+         ),
         createdAt: new Date(categoryData.createdAt).toLocaleDateString("en-GB"),
       });
     }
   }, [categoryData, reset]);
 
   const handlePreviousPage = () => {
-    navigate("/admin/category");
+    const selectedCategory =
+      location.state?.selectedCategory || "Employee Equipment";
+    navigate("/admin/category", {
+      state: { equipmentType: selectedCategory },
+    });
   };
-
-  const brandOptions = categoryData?.brands?.map((brand) => ({
-    label: brand.brand,
-    value: brand._id,
-  }));
 
   return (
     <div>
@@ -85,13 +86,14 @@ const ViewCategory = () => {
             readOnly={true}
             inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
           />
-          <DropDown
+          <InputWithLabel
+            label="Brand"
+            type="text"
+            id="createdAt"
             name="brands"
-            labelName="Brand"
-            options={brandOptions}
-            isReadOnly={true}
-            placeholder="Available Brand"
-            dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
+            placeholder="created at"
+            readOnly={true}
+            inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
           />
         </form>
       </FormProvider>

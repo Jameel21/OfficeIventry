@@ -43,7 +43,7 @@ export const requestSchema = yup.object().shape({
 });
 
 export const rejectedSchema = yup.object().shape({
-  rejectedReason: yup.string().required("Rejected reason is required"),
+  rejectedReason: yup.string().required("rejected reason is required"),
 });
 
 export const updatePasswordSchema = yup.object().shape({

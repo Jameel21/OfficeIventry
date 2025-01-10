@@ -6,14 +6,18 @@ import UiButton from "@/components/form-fields/_utils/Button";
 import { toast } from "react-hot-toast";
 import { useAddDepartment } from "@/store/hooks/MasterHooks";
 import { departmentSchema } from "@/utils/validationSchema";
+import { useNavigate } from "react-router-dom";
 
 const AddDepartmentForm = () => {
   const refetch = useQueryClient();
-
+  const navigate = useNavigate();
   const methods = useForm({
     resolver: yupResolver(departmentSchema),
+    defaultValues: {
+      department: "",
+    },
   });
-  const { handleSubmit, reset } = methods;
+  const { handleSubmit, reset, formState: { isSubmitting }, } = methods;
 
   const { mutateAsync } = useAddDepartment();
 
@@ -23,8 +27,10 @@ const AddDepartmentForm = () => {
       toast.success(
         response?.data?.message || "Department was created successfully"
       );
-      reset();
       refetch.refetchQueries({ queryKey: ["AllDepartment"] });
+      navigate("/admin/department");
+      reset();
+    
     } catch (error) {
       const errorMessage =
         error.response?.data?.message ||
@@ -48,6 +54,7 @@ const AddDepartmentForm = () => {
             variant="secondary"
             type="submit"
             buttonName="Save"
+            isSubmitting={isSubmitting}
             className="w-24 h-8 mt-4 sm:w-28 sm:h-8 md:w-32 md:h-10 lg:w-80 lg:h-12"
           />
         </div>

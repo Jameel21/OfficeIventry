@@ -7,6 +7,7 @@ const EquipmentForm = ({
   equipmentOptions,
   filteredBrands,
   isSerialNumber,
+  isSubmitting
 }) => {
   return (
     <div className="grid grid-cols-1 gap-4 mt-4 lg:gap-8 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
@@ -15,6 +16,7 @@ const EquipmentForm = ({
         labelName="Equipment"
         options={equipmentOptions}
         placeholder="Select a equipment"
+        dropDownMenuClassName={"w-52 sm:w-64 md:w-72 lg:w-80"}
         dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
       />
 
@@ -23,6 +25,7 @@ const EquipmentForm = ({
         labelName="Brand"
         options={filteredBrands}
         placeholder={"Select a brand"}
+        dropDownMenuClassName={"w-52 sm:w-64 md:w-72 lg:w-80"}
         dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
       />
 
@@ -68,6 +71,7 @@ const EquipmentForm = ({
         variant="secondary"
         type="submit"
         buttonName="Save"
+        isSubmitting={isSubmitting}
         className="w-24 h-8 mt-3 sm:w-28 sm:h-8 md:w-32 md:h-10 lg:w-80 lg:h-12"
       />
     </div>
