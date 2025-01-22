@@ -10,7 +10,9 @@ const AddCategory = () => {
   const equipmentType = location.state?.equipmentType || "Employee Equipment";
 
   const handlePreviousPage = () => {
-    navigate("/admin/category");
+    navigate("/admin/category", {
+      state: { equipmentType: equipmentType },
+    });
   };
 
   return (

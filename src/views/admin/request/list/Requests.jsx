@@ -1,9 +1,12 @@
 import BreadCrumbs from "@/components/form-fields/_utils/BreadCrumbs";
 import { useState } from "react";
 import RequestTable from "../_utils/RequestTable";
+import { useLocation } from "react-router-dom";
 
 const Requests = () => {
-  const [selectedRequests, setSelectedRequests] = useState("Pending");
+  const location = useLocation();
+  const initialRequest = location.state?.selectedRequests || "Pending"
+  const [selectedRequests, setSelectedRequests] = useState(initialRequest);
 
   const mainMenu = ["Pending", "Approved", "Completed", "Rejected", "Canceled"];
 

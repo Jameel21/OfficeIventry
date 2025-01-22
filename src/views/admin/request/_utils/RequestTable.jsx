@@ -79,7 +79,7 @@ const RequestTable = ({ selectedRequests }) => {
   const handleMenuChange = (value, id, equipmentId = null) => {
     switch (value) {
       case "view":
-        navigate(`/viewRequest/${id}`, { state: { prevPage: "allRequest" } });
+        navigate(`/viewRequest/${id}`, { state: { prevPage: selectedRequests } });
         break;
       case "update":
         navigate(`/admin/approveRequest/${id}`, { state: { equipmentId } });

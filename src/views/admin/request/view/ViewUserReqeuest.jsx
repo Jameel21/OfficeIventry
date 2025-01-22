@@ -40,9 +40,31 @@ const ViewUserReqeuest = () => {
   const handlePreviousPage = () => {
     if (prevPage === "notification") {
       navigate("/notification");
-    } else if (prevPage === "allRequest") {
-      navigate("/admin/requests");
-    } else {
+    } else if (prevPage === "Approved") {
+      navigate("/admin/requests", {
+        state: { selectedRequests: "Approved" },
+      });
+    }else if (prevPage === "Canceled") {
+      navigate("/admin/requests",{
+        state: { selectedRequests: "Canceled" },
+      });
+    }
+    else if (prevPage === "Completed") {
+      navigate("/admin/requests",{
+        state: { selectedRequests: "Completed" },
+      });
+    }
+    else if (prevPage === "Rejected") {
+      navigate("/admin/requests",{
+        state: { selectedRequests: "Rejected" },
+      });
+    }
+    else if (prevPage === "Pending") {
+      navigate("/admin/requests",{
+        state: { selectedRequests: "Pending" },
+      });
+    } 
+    else {
       navigate("/viewMyRequest");
     }
   };

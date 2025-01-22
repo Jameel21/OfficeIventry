@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+
 const Pagination = ({
   page,
   limit,
@@ -6,6 +8,26 @@ const Pagination = ({
   onLimitChange,
 }) => {
   const totalPages = Math.ceil(totalItems / limit);
+  const [inputPage, setInputPage] = useState(page);
+
+  useEffect(() => {
+    // Keep inputPage in sync with the page prop
+    setInputPage(page);
+  }, [page]);
+
+  const handlePageInputChange = (e) => {
+    const newPage = e.target.value;
+    // Allow the user to type freely while validating input
+    if (newPage === "" || (Number(newPage) >= 1 && Number(newPage) <= totalPages)) {
+      setInputPage(newPage);
+
+      // Trigger page change if input is valid
+      const validPage = parseInt(newPage, 10);
+      if (validPage >= 1 && validPage <= totalPages) {
+        onPageChange(validPage);
+      }
+    }
+  };
   return (
     <div className="flex items-center justify-between mt-4">
       {/* Items per page */}
@@ -33,7 +55,18 @@ const Pagination = ({
         >
           Prev
         </button>
-        <span className="text-sm text-gray-600">Page {page}</span>
+        <span className="flex items-center gap-1 text-sm text-gray-600">
+          Page
+          <input
+            type="number"
+            value={inputPage} // Use inputPage state
+            onChange={handlePageInputChange}
+            className="w-10 p-1 text-center text-gray-600 border rounded-lg h-7"
+            min="1"
+            max={totalPages}
+          />
+          of {totalPages}
+        </span>
         <button
           onClick={() => onPageChange(page + 1)}
           disabled={page >= totalPages}
