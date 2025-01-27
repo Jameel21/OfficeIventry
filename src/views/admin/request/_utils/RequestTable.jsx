@@ -91,11 +91,11 @@ const RequestTable = ({ selectedRequests }) => {
         selectedRequests !== "Approved" && {
           render: () =>
             selectedRequests === "Rejected" ? (
-              <div className="md:w-[200px] lg:w-[250px] xl:w-[450px] break-words whitespace-normal">
+              <div className="break-words whitespace-normal ">
                 {item.rejectedReason}
               </div>
             ) : (
-              <div className="w-[200px] md:w-[200px] lg:w-[250px] xl:w-[450px] break-words whitespace-normal">
+              <div className="break-words whitespace-normal">
                 {item.reason || "N/A"}
               </div>
             ),
