@@ -3,16 +3,22 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import DialogBox from "@/components/form-fields/_utils/DialogBox";
 import { rejectedSchema } from "@/utils/validationSchema";
 
-const RequestDialogBox = ({ onReject }) => {
+const RequestDialogBox = ({ handleReject}) => {
   const methods = useForm({
     resolver: yupResolver(rejectedSchema),
   });
-  const { handleSubmit, reset } = methods;
+  const {
+    reset,
+    formState: { isSubmitting },
+  } = methods;
 
-  const onSubmit = handleSubmit((data) => {
-    onReject(data.rejectedReason);
-    reset();
-  });
+  const onSubmit = async (data) => {
+    try {
+      await handleReject(data.rejectedReason);
+    } finally {
+      reset();
+    }
+  };
 
   return (
     <FormProvider {...methods}>
@@ -23,8 +29,9 @@ const RequestDialogBox = ({ onReject }) => {
         firstName="rejectedReason"
         firstButtonName="Save"
         type="text"
+        isSubmitting={isSubmitting}
         firstPlaceholder="Rejected reason"
-        onSubmit={onSubmit}
+        onSubmit={methods.handleSubmit(onSubmit)}
       />
     </FormProvider>
   );

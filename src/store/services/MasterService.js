@@ -61,6 +61,12 @@ const getCategoryById = async (id) => {
   const response = await API.get(`/master/category/getById/${id}`);
   return response;
 };
+const getCategoryDetails = async ({ id, page = 1, limit = 10 }) => {
+  const response = await API.get(`/master/category/categoryDetails/${id}`, {
+    params: { page, limit },
+  });
+  return response;
+};
 const updateCategory = async(id, data) => {
   const response = await API.put(`/master/category/update/${id}`, data);
   return response
@@ -100,6 +106,6 @@ const getAllMenu = async () => {
 
 
 export default {addRole,getAllRole,getRoleById,updateRole,deleteRole,getAllMenu,addBrand,getAllBrand,getBrandById,
-updateBrand,deleteBrand,addCategory,getAllCategory,getCategoryById,updateCategory,deleteCategory,addDepartment,
+updateBrand,deleteBrand,addCategory,getAllCategory,getCategoryById,getCategoryDetails,updateCategory,deleteCategory,addDepartment,
 getAllDepartment,getDepartmentById,updateDepartment,deleteDepartment
 };

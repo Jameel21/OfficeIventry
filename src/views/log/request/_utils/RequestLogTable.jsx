@@ -27,12 +27,12 @@ const RequestLogTable = ({ page, limit, setPage, setLimit }) => {
       },
       { render: () => item.status },
     ],
-    menu: ["view"],
+    menu: ["View"],
   }));
 
   const handleMenuChange = (value, id) => {
     switch (value) {
-      case "view":
+      case "View":
         navigate(`/admin/viewRequestLog/${id}`);
     }
   };

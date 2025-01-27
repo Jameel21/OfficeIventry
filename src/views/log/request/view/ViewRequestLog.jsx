@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import InputWithLabel from "@/components/form-fields/_utils/InputWithLabel";
 import { CircleArrowLeft } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
+import DropDown from "@/components/form-fields/_utils/DropDown";
 import { useGetRequestLog } from "@/store/hooks/LogHooks";
 
 const ViewRequestLog = () => {
@@ -25,7 +26,7 @@ const ViewRequestLog = () => {
         expectedReturn: new Date(
           userData.requestId?.expectedReturn
         ).toLocaleDateString("en-GB"),
-        reason: userData.requestId?.reason,
+        // reason: userData.requestId?.reason,
         status: userData.status,
 
         issueDate: new Date(userData.requestId?.requestDate).toLocaleDateString(
@@ -43,6 +44,10 @@ const ViewRequestLog = () => {
   const handlePreviousPage = () => {
     navigate("/admin/requestLog");
   };
+
+  const reasonOptions = userData?.requestId?.reason
+  ? [{ label: userData?.requestId?.reason, value: userData?.requestId?.reason}]
+  : [];
   return (
     <div>
       <div>
@@ -92,14 +97,23 @@ const ViewRequestLog = () => {
                   inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
                 />
               )}
-              <InputWithLabel
+              {/* <InputWithLabel
                 type="text"
                 label="Reason"
                 name="reason"
                 placeholder="Reason"
                 readOnly={true}
                 inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
-              />
+              /> */}
+              <DropDown
+                name="reason"
+                labelName="Reason"
+                options= {reasonOptions}
+                placeholder="Click to see the reason"
+                dropDownMenuClassName={"w-52 sm:w-64 md:w-72 lg:w-80"}
+                isReadOnly={true}
+                dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
+              /> 
               <InputWithLabel
                 type="text"
                 label="Status"

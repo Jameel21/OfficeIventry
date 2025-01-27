@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import InputWithLabel from "@/components/form-fields/_utils/InputWithLabel";
 import { CircleArrowLeft } from "lucide-react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import DropDown from "@/components/form-fields/_utils/DropDown";
 import { useGetRequestById } from "@/store/hooks/EmployeeHooks";
 
 const ViewUserReqeuest = () => {
@@ -30,8 +31,8 @@ const ViewUserReqeuest = () => {
           "en-GB"
         ),
         rejectedDate: new Date(userData.updatedAt).toLocaleDateString("en-GB"),
-        rejectedReason: userData.rejectedReason,
-        reason: userData.reason,
+        // rejectedReason: userData.rejectedReason,
+        // reason: userData.reason,
         status: userData?.requestLogId?.status,
       });
     }
@@ -44,30 +45,35 @@ const ViewUserReqeuest = () => {
       navigate("/admin/requests", {
         state: { selectedRequests: "Approved" },
       });
-    }else if (prevPage === "Canceled") {
-      navigate("/admin/requests",{
+    } else if (prevPage === "Canceled") {
+      navigate("/admin/requests", {
         state: { selectedRequests: "Canceled" },
       });
-    }
-    else if (prevPage === "Completed") {
-      navigate("/admin/requests",{
+    } else if (prevPage === "Completed") {
+      navigate("/admin/requests", {
         state: { selectedRequests: "Completed" },
       });
-    }
-    else if (prevPage === "Rejected") {
-      navigate("/admin/requests",{
+    } else if (prevPage === "Rejected") {
+      navigate("/admin/requests", {
         state: { selectedRequests: "Rejected" },
       });
-    }
-    else if (prevPage === "Pending") {
-      navigate("/admin/requests",{
+    } else if (prevPage === "Pending") {
+      navigate("/admin/requests", {
         state: { selectedRequests: "Pending" },
       });
-    } 
-    else {
+    } else {
       navigate("/viewMyRequest");
     }
   };
+
+  const reasonOptions = userData?.reason
+    ? [{ label: userData.reason, value: userData.reason }]
+    : [];
+
+  const rejectedReasonOptions = userData?.rejectedReason
+    ? [{ label: userData.rejectedReason, value: userData.rejectedReason }]
+    : [];
+
   return (
     <div>
       <div>
@@ -123,13 +129,22 @@ const ViewUserReqeuest = () => {
 
               {userData?.requestLogId?.status === "rejected" && (
                 <>
-                  <InputWithLabel
+                  {/* <InputWithLabel
                     type="text"
                     label="Rejected Reason"
                     name="rejectedReason"
                     placeholder="rejected reason"
                     readOnly={true}
                     inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
+                  /> */}
+                  <DropDown
+                    name="rejectedReason"
+                    labelName="Rejected Reason"
+                    options={rejectedReasonOptions}
+                    placeholder="Click to see the rejected reason"
+                    dropDownMenuClassName={"w-52 sm:w-64 md:w-72 lg:w-80"}
+                    isReadOnly={true}
+                    dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
                   />
                   <InputWithLabel
                     type="text"
@@ -183,14 +198,14 @@ const ViewUserReqeuest = () => {
                 />
               )}
 
-              <InputWithLabel
+              {/* <InputWithLabel
                 type="text"
                 label="Reason"
                 name="reason"
                 placeholder="Reason"
                 readOnly={true}
                 inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
-              />
+              /> */}
               <InputWithLabel
                 type="text"
                 label="Status"
@@ -198,6 +213,15 @@ const ViewUserReqeuest = () => {
                 placeholder="status"
                 readOnly={true}
                 inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
+              />
+              <DropDown
+                name="reason"
+                labelName="Reason"
+                options={reasonOptions}
+                placeholder="Click to see the reason"
+                dropDownMenuClassName={"w-52 sm:w-64 md:w-72 lg:w-80"}
+                isReadOnly={true}
+                dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
               />
             </div>
           </form>

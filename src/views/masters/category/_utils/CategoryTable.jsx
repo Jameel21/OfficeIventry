@@ -36,17 +36,17 @@ const CategoryTable = ({ selectedCategory }) => {
 
   const handleMenuChange = async (value, categoryId) => {
     switch (value) {
-      case "view":
+      case "View":
         navigate(`/admin/viewCategory/${categoryId}`,{
           state: { selectedCategory },
         });
         break;
-      case "edit":
+      case "Edit":
         navigate(`/admin/editCategory/${categoryId}`, {
           state: { selectedCategory },
         });
         break;
-      case "delete":
+      case "Delete":
         setSelectedCategoryId(categoryId);
         setShowModal(true);
         break;
@@ -75,7 +75,7 @@ const CategoryTable = ({ selectedCategory }) => {
         render: () => (
           <div className="flex items-center gap-2">
             <BreadCrumbs
-              data={["view", "edit", "delete"]}
+              data={["View", "Edit", "Delete"]}
               onChange={(value) => handleMenuChange(value, item._id)}
             />
             <span>{item.equipmentName}</span>

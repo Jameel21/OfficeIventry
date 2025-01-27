@@ -48,6 +48,7 @@ import ViewRequestLog from "./views/log/request/view/ViewRequestLog";
 import ForgotPassword from "./views/auth/ForgotPassword";
 import ResetPassword from "./views/auth/ResetPassword";
 import ViewUsersRequest from "./views/admin/request/viewAll/ViewUsersRequest";
+import ViewAllCategory from "./views/masters/category/viewAll/ViewAllCategory";
 
 
 function App() {
@@ -109,6 +110,7 @@ function App() {
               <Route path="category" element={<ListAllCategory />}></Route>
               <Route path="addCategory" element={<AddCategory />}></Route>
               <Route path="viewCategory/:id" element={<ViewCategory />}></Route>
+              <Route path="categoryDetails/:id" element={<ViewAllCategory />}></Route>
               <Route path="editCategory/:id" element={<EditCategory />}></Route>
 
               <Route path="brand" element={<ListAllBrand />}></Route>

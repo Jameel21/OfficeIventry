@@ -16,7 +16,7 @@ const EmployeeTable = ({ page, limit, setPage, setLimit }) => {
 
   const refetch = useQueryClient();
 
-  const headers = ["Employee Name", "Equipment", "Request date", "status"];
+  const headers = ["Employee Name", "Equipment", "Request date", "Status"];
   const columnWidths = ["w-[25%]", "w-[25%]", "w-[25%]", "w-[25%]"];
 
   const { data, isLoading, error } = useGetMyRequest({ page, limit });
@@ -29,10 +29,10 @@ const EmployeeTable = ({ page, limit, setPage, setLimit }) => {
 
   const handleMenuChange = async (value, id) => {
     switch (value) {
-      case "view":
+      case "View":
         navigate(`/viewRequest/${id}`);
         break;
-      case "cancel":
+      case "Cancel":
         setSelectedRequestId(id);
         setShowModal(true);
         break;
@@ -63,8 +63,8 @@ const EmployeeTable = ({ page, limit, setPage, setLimit }) => {
             <BreadCrumbs
               data={
                 item.requestLogId.status === "pending"
-                  ? ["view", "cancel"]
-                  : ["view"]
+                  ? ["View", "Cancel"]
+                  : ["View"]
               }
               onChange={(value) => handleMenuChange(value, item._id)}
             />

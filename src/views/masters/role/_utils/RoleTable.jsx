@@ -25,13 +25,13 @@ const RoleTable = ({ page, limit, setPage, setLimit }) => {
 
   const handleMenuChange = async (value, roleId) => {
     switch (value) {
-      case "view":
+      case "View":
         navigate(`/admin/viewRole/${roleId}`);
         break;
-      case "edit":
+      case "Edit":
         navigate(`/admin/editRole/${roleId}`);
         break;
-      case "delete":
+      case "Delete":
         setSelectedRoleId(roleId);
         setShowModal(true);
         break;
@@ -60,7 +60,7 @@ const RoleTable = ({ page, limit, setPage, setLimit }) => {
         render: () => (
           <div className="flex items-center gap-2">
             <BreadCrumbs
-              data={["view", "edit", "delete"]}
+              data={["View", "Edit", "Delete"]}
               onChange={(value) => handleMenuChange(value, item._id)}
             />
             <span>{item.role}</span>

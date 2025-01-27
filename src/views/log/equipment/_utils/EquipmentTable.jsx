@@ -2,8 +2,10 @@ import Pagination from "@/components/pagination/Pagination";
 import DataTable from "@/components/table/DataTable";
 import { useGetAllCategory } from "@/store/hooks/MasterHooks";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const EquipmentTable = ({ selectedCategory }) => {
+  const navigate = useNavigate()
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const headersMapping = {
@@ -58,6 +60,12 @@ const EquipmentTable = ({ selectedCategory }) => {
 
     return baseData;
   });
+  const handleView = (row) => {
+    const categoryId = row.cells[0].id;
+    navigate(`/admin/categoryDetails/${categoryId}`,{
+      state: { selectedCategory },
+    })
+  }
   return (
     <div>
       <div>
@@ -68,6 +76,7 @@ const EquipmentTable = ({ selectedCategory }) => {
           columnWidths={columnWidths}
           error={error}
           showBreadCrumbs={false}
+          onRowClick={(row) => handleView(row)}
         />
       </div>
       <Pagination

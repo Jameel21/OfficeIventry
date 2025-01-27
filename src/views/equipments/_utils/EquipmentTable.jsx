@@ -17,7 +17,7 @@ const EquipmentTable = ({ equipmentType }) => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
 
-  const headers = ["Equipment", "brand", "Price", "Date Of Purchase"];
+  const headers = ["Equipment", "Brand", "Price", "Date Of Purchase"];
   const columnWidths = ["w-[25%]", "w-[25%]", "w-[25%]", "w-[25%]"];
 
   const { data, isLoading, error } = useGetAllEquipment(
@@ -34,17 +34,17 @@ const EquipmentTable = ({ equipmentType }) => {
 
   const handleMenuChange = async (value, equipmentId) => {
     switch (value) {
-      case "view":
+      case "View":
         navigate(`/admin/viewEquipment/${equipmentId}`, {
           state: { pathname: equipmentType },
         });
         break;
-      case "edit":
+      case "Edit":
         navigate(`/admin/editEquipment/${equipmentId}`, {
           state: { pathname: equipmentType },
         });
         break;
-      case "delete":
+      case "Delete":
         setSelectedEquipmentId(equipmentId);
         setShowModal(true);
         break;
@@ -73,7 +73,7 @@ const EquipmentTable = ({ equipmentType }) => {
         render: () => (
           <div className="flex items-center gap-2">
             <BreadCrumbs
-              data={["view", "edit", "delete"]}
+              data={["View", "Edit", "Delete"]}
               onChange={(value) => handleMenuChange(value, item._id)}
             />
             <span>{ item.equipmentNameId.equipmentName}</span>

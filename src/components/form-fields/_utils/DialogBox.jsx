@@ -19,6 +19,7 @@ const DialogBox = ({
   firstName,
   firstPlaceholder,
   secondName,
+  isSubmitting,
   secondPlaceholder,
   firstButtonName,
   secondButtonName,
@@ -76,6 +77,7 @@ const DialogBox = ({
                 variant="secondary"
                 type="submit"
                 buttonName={firstButtonName}
+                isSubmitting={isSubmitting}
                 className="w-24 h-8 mt-3 sm:w-28 sm:h-8 md:w-32 md:h-10 lg:w-28 lg:h-12"
               />
             )}

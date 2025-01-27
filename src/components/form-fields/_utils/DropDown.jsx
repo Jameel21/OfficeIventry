@@ -8,7 +8,7 @@ import {
   DropdownMenuContent,
   DropdownMenuRadioItem,
   DropdownMenuRadioGroup,
-  DropdownMenuCheckboxItem
+  DropdownMenuCheckboxItem,
 } from "@/components/ui/dropdown-menu";
 import { useState } from "react";
 
@@ -24,7 +24,7 @@ const DropDown = ({
   isMultiSelect = false,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-    const {control} = useFormContext();
+  const { control } = useFormContext();
   const {
     field,
     fieldState: { error },
@@ -86,12 +86,23 @@ const DropDown = ({
             )}
           </button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className={cn("z-50 w-64 overflow-y-auto rounded-md shadow-lg bg-primary max-h-40", dropDownMenuClassName)}>
+        <DropdownMenuContent
+          className={cn(
+            "z-50 w-64 overflow-y-auto rounded-md shadow-lg bg-primary max-h-40",
+            dropDownMenuClassName
+          )}
+          style={{
+            wordBreak: "break-word", // Ensure long text wraps
+            whiteSpace: "pre-wrap", // Preserve spaces and line breaks
+          }}
+        >
           {isMultiSelect ? (
             options.map((option, index) => (
               <DropdownMenuCheckboxItem
                 key={index}
-                checked={field.value.includes(option.value) || option.isSelected}
+                checked={
+                  field.value.includes(option.value) || option.isSelected
+                }
                 onCheckedChange={() => handleSelect(option.value)}
               >
                 {option.label}

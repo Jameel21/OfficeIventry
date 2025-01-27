@@ -96,6 +96,15 @@ export const useGetCategory = (id) => {
     }
   })
 }
+export const useGetCategoryDetails = ({ id,page = 1, limit = 10 }) => {
+  return useQuery({
+    queryKey: ["CategoryDetails",id, page, limit],
+    queryFn: async () => {
+      const response = await masterService.getCategoryDetails({id, page, limit })
+      return response?.data?.data || []
+    }
+  })
+}
 export const useUpdateCategory = () => {
   return useMutation({
     mutationFn: ({id, data}) => masterService.updateCategory(id,data)

@@ -1,10 +1,14 @@
 import { useState } from "react";
 import BreadCrumbs from "@/components/form-fields/_utils/BreadCrumbs";
 import EquipmentTable from "./_utils/EquipmentTable";
+import { useLocation } from "react-router-dom";
 
 const EquipmentLog = () => {
+  const location = useLocation()
+  const initialCategory =
+ location.state?.equipmentType || "Employee Equipment";
   const [selectedCategory, setSelectedCategory] =
-    useState("Employee Equipment");
+    useState(initialCategory);
 
   const mainMenu = ["Employee Equipment", "Office Equipment"];
 

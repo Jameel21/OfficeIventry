@@ -6,16 +6,15 @@ import { useParams } from "react-router-dom";
 
 const UsersTable = () => {
   const { id } = useParams();
-  console.log("id", id)
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const headers = ["Employee Name", "Equipment", "Request date", "status"];
   const columnWidths = ["w-[25%]", "w-[25%]", "w-[25%]", "w-[25%]"];
 
   const { data, isLoading, error } = useGetUserRequest({id, page, limit });
-  console.log("data",data)
+
   const requestData = data?.requests;
-  console.log("requestData", requestData)
+ 
 
   const tableData = requestData?.map((item) => ({
     cells: [

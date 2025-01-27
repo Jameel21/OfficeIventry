@@ -87,73 +87,70 @@ const EditUser = () => {
     })) || [];
 
   return (
-    <div className="w-full ">
+    <div className="flex flex-col w-full h-full lg:items-start lg:justify-start">
       <div>
         <CircleArrowLeft
-          className="fixed w-4 cursor-pointer sm:w-auto hover:opacity-90"
+          className="w-4 h-4 cursor-pointer md:w-5 md:h-5 hover:opacity-90"
           onClick={handlePreviousPage}
         />
       </div>
-      <div>
-        <div className="flex flex-col">
-          <div className="mt-24 ml-12 sm:mt-12 md:ml-16 lg:ml-18">
-            <UiButton
-              variant="secondary"
-              buttonName="Edit Profile"
-              className="h-8 cursor-default w-28 sm:w-28 sm:h-8 md:w-36 md:h-10 lg:w-52 lg:h-12"
-            ></UiButton>
-          </div>
-        </div>
+      <div className="mt-5">
+        <h1 className="text-lg font-medium text-center sm:text-start text-slate-700">
+          Edit User
+        </h1>
+      </div>
         <FormProvider {...methods}>
-          <form
-            className="flex flex-col gap-3 mt-8 sm:gap-2 md:gap-3"
-            onSubmit={handleSubmit(onSubmit)}
+          <form onSubmit={handleSubmit(onSubmit)}
           >
-            <InputWithLabel
-              type="text"
-              id="userName"
-              name="userName"
-              placeholder="username"
-              inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
-            />
-            <InputWithLabel
-              type="text"
-              id="email"
-              name="email"
-              placeholder="email"
-              inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
-            />
-            <InputWithLabel
-              type="text"
-              id="employeeId"
-              name="employeeId"
-              placeholder="employee id"
-              inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
-            />
-            <DropDown
-              name="roleId"
-              options={roleOptions}
-              placeholder={userData?.roleId.role}
-              dropDownMenuClassName={"sm:w-64 md:w-72 lg:w-80"}
-              dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
-            />
-            <DropDown
-              name="departmentId"
-              options={departmentOptions}
-              placeholder={userData?.departmentId.department}
-              dropDownMenuClassName={"sm:w-64 md:w-72 lg:w-80"}
-              dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
-            />
-            <div className="ml-16 md:ml-16 lg:ml-24">
-              <UiButton
-                variant="secondary"
-                buttonName="save"
-                className="w-20 h-8 cursor-default sm:w-24 sm:h-7 md:w-28 md:h-8 lg:w-32 lg:h-10"
-              ></UiButton>
+            <div className="grid grid-cols-1 gap-4 mt-4 lg:gap-8 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+              <InputWithLabel
+                type="text"
+                label="Username"
+                id="userName"
+                name="userName"
+                placeholder="username"
+                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
+              />
+              <InputWithLabel
+                type="text"
+                label="Email"
+                id="email"
+                name="email"
+                placeholder="email"
+                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
+              />
+              <InputWithLabel
+                type="text"
+                label="Employee ID"
+                id="employeeId"
+                name="employeeId"
+                placeholder="employee id"
+                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
+              />
+              <DropDown
+                name="roleId"
+                labelName="Role"
+                options={roleOptions}
+                placeholder={userData?.roleId.role}
+                dropDownMenuClassName={"sm:w-64 md:w-72 lg:w-80"}
+                dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
+              />
+              <DropDown
+                name="departmentId"
+                labelName="Department"
+                options={departmentOptions}
+                placeholder={userData?.departmentId.department}
+                dropDownMenuClassName={"sm:w-64 md:w-72 lg:w-80"}
+                dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
+              />
+                <UiButton
+                  variant="secondary"
+                  buttonName="save"
+                   className="w-24 h-8 mt-3 lg:mt-9 sm:w-28 sm:h-8 md:w-32 md:h-10 lg:w-80 lg:h-12"
+                ></UiButton>
             </div>
           </form>
         </FormProvider>
-      </div>
     </div>
   );
 };

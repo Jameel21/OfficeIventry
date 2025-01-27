@@ -28,13 +28,13 @@ const DepartmentTable = ({ page, limit, setPage, setLimit }) => {
 
   const handleMenuChange = async (value, departmentId) => {
     switch (value) {
-      case "view":
+      case "View":
         navigate(`/admin/viewDepartment/${departmentId}`);
         break;
-      case "edit":
+      case "Edit":
         navigate(`/admin/editDepartment/${departmentId}`);
         break;
-      case "delete":
+      case "Delete":
         setSelectedDepartmentId(departmentId);
         setShowModal(true); 
         break;
@@ -63,7 +63,7 @@ const DepartmentTable = ({ page, limit, setPage, setLimit }) => {
         render: () => (
           <div className="flex items-center gap-2">
             <BreadCrumbs
-              data={["view", "edit", "delete"]}
+              data={["View", "Edit", "Delete"]}
               onChange={(value) => handleMenuChange(value, item._id)}
             />
             <span>{item.department}</span>

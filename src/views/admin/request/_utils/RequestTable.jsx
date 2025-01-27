@@ -17,38 +17,13 @@ const RequestTable = ({ selectedRequests }) => {
   const [limit, setLimit] = useState(10);
 
   const headersMapping = {
-    Pending: [
-      "Username",
-      "Equipment",
-      "Request Date",
-      "Reason",
-    ],
-    Canceled: [
-      "Username",
-      "Equipment",
-      "Request Date",
-      "Reason",
-    ],
-    Approved: [
-      "Username",
-      "Equipment",
-      "Issue Date",
-      "Mark as Return",
-    ],
-    Completed: [
-      "Username",
-      "Equipment",
-      "Request Date",
-      "Reason",
-    ],
-    Rejected: [
-      "Username",
-      "Equipment",
-      "Request Date",
-      "Rejected Reason",
-    ],
+    Pending: ["Username", "Equipment", "Request Date", "Reason"],
+    Canceled: ["Username", "Equipment", "Request Date", "Reason"],
+    Approved: ["Username", "Equipment", "Issue Date", "Mark as Return"],
+    Completed: ["Username", "Equipment", "Request Date", "Reason"],
+    Rejected: ["Username", "Equipment", "Request Date", "Rejected Reason"],
   };
-  const columnWidths = ["w-[25%]", "w-[25%]", "w-[25%]", "w-[25%]",];
+  const columnWidths = ["w-[20%]", "w-[20%]", "w-[20%]", "w-[40%]"];
   const headers = headersMapping[selectedRequests] || headersMapping["Pending"];
 
   const { data, isLoading, error } = useGetAllRequests(
@@ -58,7 +33,7 @@ const RequestTable = ({ selectedRequests }) => {
   );
   const requestData = data?.requests;
 
-  const {mutateAsync} = useUpdateRequestFields();
+  const { mutateAsync } = useUpdateRequestFields();
 
   const handleCheckboxChange = async (id, currentValue) => {
     const payload = {
@@ -78,10 +53,12 @@ const RequestTable = ({ selectedRequests }) => {
 
   const handleMenuChange = (value, id, equipmentId = null) => {
     switch (value) {
-      case "view":
-        navigate(`/viewRequest/${id}`, { state: { prevPage: selectedRequests } });
+      case "View":
+        navigate(`/viewRequest/${id}`, {
+          state: { prevPage: selectedRequests },
+        });
         break;
-      case "update":
+      case "Update":
         navigate(`/admin/approveRequest/${id}`, { state: { equipmentId } });
     }
   };
@@ -113,12 +90,18 @@ const RequestTable = ({ selectedRequests }) => {
         },
         selectedRequests !== "Approved" && {
           render: () =>
-            selectedRequests === "Rejected"
-              ? item.rejectedReason
-              : item.reason || "N/A",
+            selectedRequests === "Rejected" ? (
+              <div className="md:w-[200px] lg:w-[250px] xl:w-[450px] break-words whitespace-normal">
+                {item.rejectedReason}
+              </div>
+            ) : (
+              <div className="w-[200px] md:w-[200px] lg:w-[250px] xl:w-[450px] break-words whitespace-normal">
+                {item.reason || "N/A"}
+              </div>
+            ),
         },
       ].filter(Boolean), // Remove undefined cells
-      menu: selectedRequests === "Pending" ? ["view", "update"] : ["view"],
+      menu: selectedRequests === "Pending" ? ["View", "Update"] : ["View"],
     }));
   };
 

@@ -25,13 +25,13 @@ const BrandTable = ({ page, limit, setPage, setLimit }) => {
 
   const handleMenuChange = async (value, brandId) => {
     switch (value) {
-      case "view":
+      case "View":
         navigate(`/admin/viewBrand/${brandId}`);
         break;
-      case "edit":
+      case "Edit":
         navigate(`/admin/editBrand/${brandId}`);
         break;
-      case "delete":
+      case "Delete":
         setSelectedBrandId(brandId); 
         setShowModal(true); 
         break;
@@ -60,7 +60,7 @@ const BrandTable = ({ page, limit, setPage, setLimit }) => {
         render: () => (
           <div className="flex items-center gap-2">
             <BreadCrumbs
-              data={["view", "edit", "delete"]}
+              data={["View", "Edit", "Delete"]}
               onChange={(value) => handleMenuChange(value, item._id)}
             />
             <span>{item.brand}</span>

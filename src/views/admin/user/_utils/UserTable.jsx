@@ -33,13 +33,13 @@ const UserTable = ({
 
   const handleMenuChange = async (value, userId) => {
     switch (value) {
-      case "view":
+      case "View":
         navigate(`/viewUser/${userId}`);
         break;
-      case "edit":
+      case "Edit":
         navigate(`/admin/editUser/${userId}`);
         break;
-      case "delete":
+      case "Delete":
         setSelectedUserId(userId);
         setShowModal(true);
         break;
@@ -82,7 +82,7 @@ const UserTable = ({
         render: () => (
           <div className="flex items-center gap-2">
             <BreadCrumbs
-              data={["view", "edit", "delete"]}
+              data={["View", "Edit", "Delete"]}
               onChange={(value) => handleMenuChange(value, item._id)}
             />
             <span>{item.userName}</span>

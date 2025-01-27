@@ -17,11 +17,12 @@ const RequestForm = () => {
   const methods = useForm({
     resolver: yupResolver(employeeSchema),
   });
-  const { handleSubmit, reset, formState: { isSubmitting }, } = methods;
+  const { handleSubmit, reset, formState: { isSubmitting },watch } = methods;
 
   const { data: equipmentNames } = useGetEquipmentName("Employee Equipment");
 
   const { mutateAsync } = useAddRequest();
+  const requestDate = watch("requestDate");
 
   const onSubmitForm = async (data) => {
     const formattedData = {
@@ -76,7 +77,8 @@ const RequestForm = () => {
             name="expectedReturn"
             label="Expected Return"
             placeholder="Expected return"
-            className="h-8 p-2 mt-2 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 "
+            className="h-8 p-2 mt-2 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80"
+            disableBeforeDate={requestDate} 
           />
           <InputWithLabel
             type="text"

@@ -9,7 +9,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { format } from "date-fns";
+import { format, isBefore, startOfDay, isSameDay, isAfter } from "date-fns";
 
 const DatePickerDemo = ({
   name,
@@ -17,6 +17,8 @@ const DatePickerDemo = ({
   className,
   label,
   labelClassName,
+  disableBeforeDate,
+  disableAfterToday,
 }) => {
   const { control } = useFormContext();
   const {
@@ -27,6 +29,19 @@ const DatePickerDemo = ({
     name,
     defaultValue: "",
   });
+
+  const disableDates = (date) => {
+    const today = startOfDay(new Date());
+    if (disableAfterToday) {
+      return isAfter(date, today); // Disable dates after today (tomorrow onwards).
+    }
+    if (disableBeforeDate) {
+      return isBefore(date, today) || // Disable dates before today.
+             isSameDay(date, disableBeforeDate) ||   // Disable the exact disableBeforeDate (today).
+             isBefore(date, disableBeforeDate); //Disable dates before disableBeforeDate
+    }
+    return isBefore(date, today);
+  };
 
   return (
     <div className="flex flex-col">
@@ -63,6 +78,7 @@ const DatePickerDemo = ({
             selected={field.value}
             onSelect={field.onChange}
             initialFocus
+            disabled={(date) => disableDates(date)}
           />
         </PopoverContent>
       </Popover>

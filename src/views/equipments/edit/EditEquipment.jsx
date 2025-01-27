@@ -150,6 +150,7 @@ const EditEquipmentForm = () => {
               label={"Date Of Purchase"}
               name="dateOfPurchase"
               placeholder="Date of Purchase"
+              disableAfterToday
               className="h-8 p-2 mt-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 "
             />
             <UiButton
