@@ -10,16 +10,17 @@ const CategoryDetailsTable = () => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const headers = ["Equipment Name", "Brand", "Date of purchase"];
-  const columnWidths = ["w-[33.33%]", "w-[33.33%]","w-[33.33%]"];
-  const { data, isLoading, error } = useGetCategoryDetails({id, page, limit });
+  const columnWidths = ["w-[33.33%]", "w-[33.33%]", "w-[33.33%]"];
+  const { data, isLoading, error } = useGetCategoryDetails({ id, page, limit });
   const categoryData = data?.categories;
-  
+
   const tableData = categoryData?.map((item) => ({
     cells: [
-      { id: item._id, render: () => item.equipmentNameId
-        .equipmentName },
-      { render: () => item.brandId.brand},
-      { render: () => new Date(item.dateOfPurchase).toLocaleDateString("en-GB") },
+      { id: item._id, render: () => item.equipmentNameId.equipmentName },
+      { render: () => item.brandId?.brand ?? "none" },
+      {
+        render: () => new Date(item.dateOfPurchase).toLocaleDateString("en-GB"),
+      },
     ],
   }));
 
