@@ -54,7 +54,7 @@ export const GetSidebarmenu = () =>{
     },
     {
       icon: Building2,
-      menu: "Inventry",
+      menu: "Inventory",
       visible: true,
       submenu: [
         {

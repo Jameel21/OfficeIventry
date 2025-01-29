@@ -53,7 +53,7 @@ const ViewUser = () => {
                 label="Username"
                 readOnly={true}
                 name="userName"
-                placeholder="username"
+                placeholder="Username"
                 inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
               />
               <InputWithLabel
@@ -62,7 +62,7 @@ const ViewUser = () => {
                 label="Email"
                 readOnly={true}
                 name="email"
-                placeholder="email"
+                placeholder="Email"
                 inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
               />
               <InputWithLabel
@@ -71,7 +71,7 @@ const ViewUser = () => {
                 label="Employee ID"
                 readOnly={true}
                 name="employeeId"
-                placeholder="employee id"
+                placeholder="Employee id"
                 inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
               />
               <InputWithLabel
@@ -80,7 +80,7 @@ const ViewUser = () => {
                 label="Role"
                 name="roleId"
                 readOnly={true}
-                placeholder="role"
+                placeholder="Role"
                 inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
               />
               <InputWithLabel
@@ -89,7 +89,7 @@ const ViewUser = () => {
                 label="Department"
                 name="departmentId"
                 readOnly={true}
-                placeholder="department"
+                placeholder="Department"
                 inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
               />
               <InputWithLabel
@@ -98,7 +98,7 @@ const ViewUser = () => {
                 label="Status"
                 name="status"
                 readOnly={true}
-                placeholder="status"
+                placeholder="Status"
                 inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
               />
             </div>

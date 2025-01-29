@@ -43,7 +43,7 @@ const EquipmentForm = ({
           type="number"
           name="quantity"
           label="Quantity"
-          placeholder="quantity"
+          placeholder="Quantity"
           inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80"
         />
       )}
@@ -51,21 +51,21 @@ const EquipmentForm = ({
         type="text"
         name="price"
         label="Price"
-        placeholder="price"
+        placeholder="Price"
         inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80"
       />
       <DatePickerDemo
         name="dateOfPurchase"
         label="Date Of Purchase"
         disableAfterToday
-        placeholder="date of purchase"
+        placeholder="Date of purchase"
         className="h-8 p-2 mt-2 w-52 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 "
       />
       <InputWithLabel
         type="text"
         name="warrantyPeriod"
         label="Warranty Period"
-        placeholder="warranty period"
+        placeholder="Warranty period"
         inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80"
       />
       <UiButton

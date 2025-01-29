@@ -27,7 +27,10 @@ const ViewEquipmentForm = () => {
         equipmentName: userData?.equipmentNameId?.equipmentName,
         brand: userData?.brandId?.brand,
         serialNumber: userData?.serialNumber,
-        price: userData?.price,
+        price:`₹ ${parseFloat(userData?.price).toLocaleString("en-IN", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}`,
         currentStatus: userData?.currentStatus,
         warrantyPeriod: userData?.warrantyPeriod,
         dateOfPurchase: new Date(userData.dateOfPurchase).toLocaleDateString(
@@ -96,7 +99,6 @@ const ViewEquipmentForm = () => {
                 placeholder="price"
                 inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
               />
-
               {userData?.warrantyPeriod && (
                 <InputWithLabel
                   type="text"
@@ -104,18 +106,17 @@ const ViewEquipmentForm = () => {
                   label="Warranty Period"
                   name="warrantyPeriod"
                   readOnly={true}
-                  placeholder="current status"
+                  placeholder="Warranty period"
                   inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
                 />
               )}
-
               <InputWithLabel
                 type="text"
                 id="currentStatus"
                 label="Current Status"
                 name="currentStatus"
                 readOnly={true}
-                placeholder="current status"
+                placeholder="Current status"
                 inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
               />
               <InputWithLabel
@@ -124,7 +125,7 @@ const ViewEquipmentForm = () => {
                 label="Date Of Purchase"
                 name="dateOfPurchase"
                 readOnly={true}
-                placeholder="current status"
+                placeholder="Date Of purchase"
                 inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
               />
               <InputWithLabel
@@ -133,7 +134,7 @@ const ViewEquipmentForm = () => {
                 label="Quantity"
                 name="quantity"
                 readOnly={true}
-                placeholder="current status"
+                placeholder="Quantity"
                 inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
               />
               <InputWithLabel
@@ -142,7 +143,7 @@ const ViewEquipmentForm = () => {
                 label="Created At"
                 name="createdAt"
                 readOnly={true}
-                placeholder="current status"
+                placeholder="Created at"
                 inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
               />
             </div>

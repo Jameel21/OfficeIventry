@@ -27,6 +27,7 @@ const EquipmentTable = ({ equipmentType }) => {
   );
 
   const equipmentData = data?.equipment;
+  console.log("equipmentData", equipmentData)
   const { mutateAsync } = useDeleteEquipment();
 
   const [showModal, setShowModal] = useState(false);
@@ -81,7 +82,13 @@ const EquipmentTable = ({ equipmentType }) => {
         ),
       },
       { render: () => (item.brandId ? item.brandId.brand : "none") },
-      { render: () => item.price },
+      {
+        render: () =>
+          `₹ ${parseFloat(item.price).toLocaleString("en-IN", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}`,
+      },
       {
         render: () => new Date(item.dateOfPurchase).toLocaleDateString("en-GB"),
       },

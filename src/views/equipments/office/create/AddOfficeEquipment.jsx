@@ -89,10 +89,9 @@ const AddOfficeEquipment = () => {
           />
         </div>
         <div className="ml-8 text-lg font-medium text-slate-700">
-          Add OfficeEquipment
+          Add Office Equipment
         </div>
       </div>
-
       <div>
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmitForm)}>

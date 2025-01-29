@@ -55,7 +55,7 @@ const ViewCategory = () => {
             type="text"
             id="equipmentName"
             name="equipmentName"
-            placeholder="equipment name"
+            placeholder="Equipment name"
             readOnly={true}
             inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
           />
@@ -64,7 +64,7 @@ const ViewCategory = () => {
             type="text"
             id="totalQuantity"
             name="totalQuantity"
-            placeholder="total quantity"
+            placeholder="Total quantity"
             readOnly={true}
             inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
           />
@@ -73,7 +73,7 @@ const ViewCategory = () => {
             type="text"
             id="isSerialNumber"
             name="isSerialNumber"
-            placeholder="serial number availability"
+            placeholder="Serial number availability"
             readOnly={true}
             inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
           />
@@ -82,7 +82,7 @@ const ViewCategory = () => {
             type="text"
             id="createdAt"
             name="createdAt"
-            placeholder="created at"
+            placeholder="Created at"
             readOnly={true}
             inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
           />
@@ -91,7 +91,7 @@ const ViewCategory = () => {
             type="text"
             id="createdAt"
             name="brands"
-            placeholder="created at"
+            placeholder="Brand"
             readOnly={true}
             inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
           />

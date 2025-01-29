@@ -76,7 +76,7 @@ const ViewProfile = () => {
             id="userName"
             readOnly={true}
             name="userName"
-            placeholder="username"
+            placeholder="Username"
             inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
           />
           <InputWithLabel
@@ -85,7 +85,7 @@ const ViewProfile = () => {
             id="email"
             readOnly={true}
             name="email"
-            placeholder="email"
+            placeholder="Email"
             inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
           />
           <InputWithLabel
@@ -94,7 +94,7 @@ const ViewProfile = () => {
             id="employeeId"
             readOnly={true}
             name="employeeId"
-            placeholder="employee id"
+            placeholder="Employee id"
             inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
           />
           <InputWithLabel
@@ -103,7 +103,7 @@ const ViewProfile = () => {
             id="roleId"
             name="roleId"
             readOnly={true}
-            placeholder="role"
+            placeholder="Role"
             inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
           />
           <InputWithLabel
@@ -112,7 +112,7 @@ const ViewProfile = () => {
             id="departmentId"
             name="departmentId"
             readOnly={true}
-            placeholder="department"
+            placeholder="Department"
             inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-60 lg:w-96"
           />
           <div className="flex items-center gap-4 text-white">

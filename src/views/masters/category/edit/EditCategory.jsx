@@ -141,14 +141,14 @@ const EditCategory = () => {
             type="text"
             id="equipmentName"
             name="equipmentName"
-            placeholder="equipment name"
+            placeholder="Equipment name"
             inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
           />
           <DropDown
             name="isSerialNumber"
             labelName="Serial Number"
             options={serialNumberOptions}
-            placeholder="select serial num"
+            placeholder="Serial number availability"
             dropDownMenuClassName={"sm:w-64 md:w-72 lg:w-80"}
             dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
           />
@@ -157,7 +157,7 @@ const EditCategory = () => {
             labelName="Add New Brand"
             options={newBrandOptions}
             isMultiSelect={true}
-            placeholder="select  a brand"
+            placeholder="Select a brand"
             dropDownMenuClassName={"sm:w-64 md:w-72 lg:w-80"}
             dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
           />

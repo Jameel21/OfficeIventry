@@ -89,7 +89,7 @@ const AddEmployeeEquipment = () => {
           />
         </div>
         <div className="ml-8 text-lg font-medium text-slate-700">
-          Add EmployeeEquipment
+          Add Employee Equipment
         </div>
       </div>
 

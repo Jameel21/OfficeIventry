@@ -128,7 +128,7 @@ const ViewRequestLog = () => {
                   type="text"
                   label="Issue Date"
                   name="issueDate"
-                  placeholder="issue date"
+                  placeholder="Issue date"
                   readOnly={true}
                   inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
                 />
@@ -139,7 +139,7 @@ const ViewRequestLog = () => {
                   type="text"
                   label="Actual Return"
                   name="actualReturn"
-                  placeholder="actual return"
+                  placeholder="Actual return"
                   readOnly={true}
                   inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
                 />
@@ -150,7 +150,7 @@ const ViewRequestLog = () => {
                   type="text"
                   label="Updated By"
                   name="updatedBy"
-                  placeholder="updated by"
+                  placeholder="Updated by"
                   readOnly={true}
                   inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
                 />
@@ -161,7 +161,7 @@ const ViewRequestLog = () => {
                   type="text"
                   label="Rejected Reason"
                   name="rejectedReason"
-                  placeholder="rejected reason"
+                  placeholder="Rejected reason"
                   readOnly={true}
                   inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
                 />

@@ -22,8 +22,8 @@ const PasswordDialogBox = ({ onClick }) => {
         dialogTitle="Change Password"
         firstName="currentPassword"
         secondName="newPassword"
-        firstPlaceholder="current password"
-        secondPlaceholder="new password"
+        firstPlaceholder="Current password"
+        secondPlaceholder="New password"
         firstButtonName="Save"
         type="password"
         onSubmit={onSubmit}

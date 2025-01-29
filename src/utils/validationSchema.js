@@ -54,7 +54,8 @@ export const updatePasswordSchema = yup.object().shape({
 export const equipmentSchema = yup.object().shape({
   equipmentNameId: yup.string().required("equipment is required"),
   dateOfPurchase: yup.string().required("purchase date is required"),
-  price: yup.string().required("price is required"),
+  price: yup.string().required("price is required")
+  .max(10, "price cannot exceed 10 characters"),
   brandId:yup
   .string()
   .required("brand is required")

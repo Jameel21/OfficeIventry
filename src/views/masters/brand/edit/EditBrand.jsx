@@ -64,7 +64,7 @@ const EditBrand = () => {
             type="text"
             id="brand"
             name="brand"
-            placeholder="brand"
+            placeholder="Brand"
             inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
           />
           <UiButton

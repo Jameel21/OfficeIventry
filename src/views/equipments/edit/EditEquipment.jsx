@@ -99,7 +99,7 @@ const EditEquipmentForm = () => {
               label="Equipment Name"
               readOnly={true}
               name="equipmentName"
-              placeholder="equipment name"
+              placeholder="Equipment name"
               inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
             />
             <DropDown
@@ -116,7 +116,7 @@ const EditEquipmentForm = () => {
                 id="serialNumber"
                 label="Serial Number"
                 name="serialNumber"
-                placeholder="serial Number"
+                placeholder="Serial Number"
                 inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
               />
             )}
@@ -125,7 +125,7 @@ const EditEquipmentForm = () => {
               id="price"
               label="Price"
               name="price"
-              placeholder="price"
+              placeholder="Price"
               inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
             />
             <InputWithLabel
@@ -134,7 +134,7 @@ const EditEquipmentForm = () => {
               label="Quantity"
               readOnly={true}
               name="quantity"
-              placeholder="quantity"
+              placeholder="Quantity"
               inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
             />
             <InputWithLabel
@@ -143,11 +143,11 @@ const EditEquipmentForm = () => {
               label="Current Status"
               name="currentStatus"
               readOnly={true}
-              placeholder="current status"
+              placeholder="Current status"
               inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
             />
             <DatePickerDemo
-              label={"Date Of Purchase"}
+              label="Date Of Purchase"
               name="dateOfPurchase"
               placeholder="Date of Purchase"
               disableAfterToday

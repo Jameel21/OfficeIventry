@@ -8,7 +8,7 @@ const UsersTable = () => {
   const { id } = useParams();
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
-  const headers = ["Employee Name", "Equipment", "Request date", "status"];
+  const headers = ["Employee Name", "Equipment", "Request date", "Status"];
   const columnWidths = ["w-[25%]", "w-[25%]", "w-[25%]", "w-[25%]"];
 
   const { data, isLoading, error } = useGetUserRequest({id, page, limit });
@@ -23,8 +23,6 @@ const UsersTable = () => {
       { render: () => new Date(item.requestDate).toLocaleDateString("en-GB") },
       { render: () => item.requestLogId.status },
     ],
-    menu:
-      item.requestLogId.status === "pending" ? ["view", "cancel"] : ["view"],
   }));
   return (
     <div>

@@ -84,11 +84,11 @@ const AddRoleForm = () => {
   };
   const notifyOptions = [
     {
-      label: "true",
+      label: "Yes",
       value: true,
     },
     {
-      label: "false",
+      label: "No",
       value: false,
     },
   ];
@@ -102,7 +102,7 @@ const AddRoleForm = () => {
             type="text"
             id="role"
             name="role"
-            placeholder="enter a role"
+            placeholder="Enter the role name"
             inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
           />
           <DropDown

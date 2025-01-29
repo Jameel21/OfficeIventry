@@ -18,7 +18,7 @@ const CategoryTable = ({ selectedCategory }) => {
 
   const refetch = useQueryClient();
 
-  const headers = ["Equipment Name", "Created At"];
+  const headers = ["Category Name", "Created At"];
   const columnWidths = ["w-[50%]", "w-[50%]"];
 
   const { data, isLoading, error } = useGetAllCategory(

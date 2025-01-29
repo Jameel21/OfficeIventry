@@ -44,7 +44,7 @@ const ViewBrand = () => {
             type="text"
             id="brand"
             name="brand"
-            placeholder="brand"
+            placeholder="Brand"
             readOnly={true}
             inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
           />
@@ -53,7 +53,7 @@ const ViewBrand = () => {
             type="text"
             id="createdAt"
             name="createdAt"
-            placeholder="created at"
+            placeholder="Created at"
             readOnly={true}
             inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
           />

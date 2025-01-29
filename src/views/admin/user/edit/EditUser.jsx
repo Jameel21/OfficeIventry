@@ -108,7 +108,7 @@ const EditUser = () => {
                 label="Username"
                 id="userName"
                 name="userName"
-                placeholder="username"
+                placeholder="Username"
                 inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
               />
               <InputWithLabel
@@ -116,7 +116,7 @@ const EditUser = () => {
                 label="Email"
                 id="email"
                 name="email"
-                placeholder="email"
+                placeholder="Email"
                 inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
               />
               <InputWithLabel
@@ -124,7 +124,7 @@ const EditUser = () => {
                 label="Employee ID"
                 id="employeeId"
                 name="employeeId"
-                placeholder="employee id"
+                placeholder="Employee id"
                 inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
               />
               <DropDown

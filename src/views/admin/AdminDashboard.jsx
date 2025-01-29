@@ -115,7 +115,7 @@ const AdminDashboard = () => {
           onClick={handleViewEquipmentTable}
         >
           <h1 className="p-2 text-lg text-center text-black ">
-            Employee Equipment details
+            Employee equipment details
           </h1>
           <EquipmentTable />
         </div>

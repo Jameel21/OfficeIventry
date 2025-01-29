@@ -37,11 +37,11 @@ const AddCategoryForm = ({ equipmentType }) => {
 
   const serialNumberOptions = [
     {
-      label: "true",
+      label: "Yes",
       value: true,
     },
     {
-      label: "false",
+      label: "No",
       value: false,
     },
   ];
@@ -77,14 +77,14 @@ const AddCategoryForm = ({ equipmentType }) => {
             type="text"
             id="equipmentName"
             name="equipmentName"
-            placeholder="enter a equipment"
+            placeholder="Enter the equipment name"
             inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
           />
           <DropDown
             name="isSerialNumber"
             labelName="Serial Number"
             options={serialNumberOptions}
-            placeholder="select serial number availability"
+            placeholder="Select serial number availability"
             dropDownMenuClassName={"sm:w-64 md:w-72 lg:w-80"}
             dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
           />
@@ -93,7 +93,7 @@ const AddCategoryForm = ({ equipmentType }) => {
             labelName="Brand"
             options={brandOptions}
             isMultiSelect={true}
-            placeholder="select brand"
+            placeholder="Select brand"
             dropDownMenuClassName={"sm:w-64 md:w-72 lg:w-80"}
             dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
           />

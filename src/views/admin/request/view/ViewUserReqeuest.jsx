@@ -112,7 +112,7 @@ const ViewUserReqeuest = () => {
                     type="text"
                     label="Brand"
                     name="brand"
-                    placeholder="brand"
+                    placeholder="Brand"
                     readOnly={true}
                     inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
                   />
@@ -120,7 +120,7 @@ const ViewUserReqeuest = () => {
                     type="text"
                     label="Serial Number"
                     name="serialNumber"
-                    placeholder="serial number"
+                    placeholder="Serial number"
                     readOnly={true}
                     inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
                   />
@@ -150,7 +150,7 @@ const ViewUserReqeuest = () => {
                     type="text"
                     label="Rejected Date"
                     name="rejectedDate"
-                    placeholder="rejected date"
+                    placeholder="Rejected date"
                     readOnly={true}
                     inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
                   />
@@ -181,7 +181,7 @@ const ViewUserReqeuest = () => {
                   type="text"
                   label="Cancel Date"
                   name="rejectedDate"
-                  placeholder="cancel return"
+                  placeholder="Cancel return"
                   readOnly={true}
                   inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
                 />
@@ -192,7 +192,7 @@ const ViewUserReqeuest = () => {
                   type="text"
                   label="Actual Return"
                   name="actualReturn"
-                  placeholder="actual return"
+                  placeholder="Actual return"
                   readOnly={true}
                   inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
                 />
@@ -210,7 +210,7 @@ const ViewUserReqeuest = () => {
                 type="text"
                 label="Status"
                 name="status"
-                placeholder="status"
+                placeholder="Status"
                 readOnly={true}
                 inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
               />

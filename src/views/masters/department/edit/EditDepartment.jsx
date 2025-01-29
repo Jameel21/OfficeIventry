@@ -67,7 +67,7 @@ const EditDepartment = () => {
             type="text"
             id="department"
             name="department"
-            placeholder="department"
+            placeholder="Department"
             inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
           />
           <UiButton

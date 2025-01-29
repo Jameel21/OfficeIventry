@@ -75,7 +75,7 @@ const AddUserForm = () => {
             type="text"
             id="userName"
             name="userName"
-            placeholder="username"
+            placeholder="Username"
             inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
           />
           <InputWithLabel
@@ -83,7 +83,7 @@ const AddUserForm = () => {
             type="text"
             id="email"
             name="email"
-            placeholder="email"
+            placeholder="Email"
             inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
           />
           <InputWithLabel
@@ -91,7 +91,7 @@ const AddUserForm = () => {
             type="text"
             id="employeeId"
             name="employeeId"
-            placeholder="employee id"
+            placeholder="Employee id"
             inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
           />
           <DropDown
@@ -115,7 +115,7 @@ const AddUserForm = () => {
             type="password"
             id="password"
             name="password"
-            placeholder="password"
+            placeholder="Password"
             iconClassName="right-3 md:right-28 lg:right-3"
             inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
           />
