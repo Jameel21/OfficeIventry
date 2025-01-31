@@ -62,7 +62,7 @@ const EmployeeTable = ({ page, limit, setPage, setLimit }) => {
           <div className="flex items-center gap-4">
             <BreadCrumbs
               data={
-                item.requestLogId.status === "pending"
+                item.requestLogId.status === "Pending"
                   ? ["View", "Cancel"]
                   : ["View"]
               }

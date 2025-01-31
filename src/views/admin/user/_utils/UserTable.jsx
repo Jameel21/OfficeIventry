@@ -23,7 +23,7 @@ const UserTable = ({
   const refetch = useQueryClient();
  
   const headers = ["Username", "Email", "Id", "Role", "Status"];
-  const columnWidths = ["w-[25%]", "w-[30%]", "w-[10%]", "w-[20%]", "w-[15%]"];
+  const columnWidths = ["w-[20%]", "w-[30%]", "w-[15%]", "w-[20%]", "w-[15%]"];
 
   const { mutateAsync } = useDeleteUser();
   const updateUser = useUpdateUser();

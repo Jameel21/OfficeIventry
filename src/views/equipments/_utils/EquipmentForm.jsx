@@ -48,7 +48,7 @@ const EquipmentForm = ({
         />
       )}
       <InputWithLabel
-        type="text"
+        type="number"
         name="price"
         label="Price"
         placeholder="Price"

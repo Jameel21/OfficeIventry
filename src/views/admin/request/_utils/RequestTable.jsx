@@ -31,7 +31,7 @@ const RequestTable = ({ selectedRequests }) => {
   const { data, isLoading, error } = useGetAllRequests(
     page,
     limit,
-    selectedRequests.toLowerCase()
+    selectedRequests
   );
   const requestData = data?.requests;
 
@@ -128,9 +128,11 @@ const RequestTable = ({ selectedRequests }) => {
         },
       ].filter(Boolean), // Remove undefined cells
       menu:
-        selectedRequests === "Pending"
-          ? ["View", "Update", "Delete"]
-          : ["View", "Delete"],
+      selectedRequests === "Pending"
+      ? ["View", "Update"]
+      : selectedRequests === "Completed"
+      ? ["View", "Delete"]
+      : ["View"]
     }));
   };
 

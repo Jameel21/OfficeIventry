@@ -7,6 +7,7 @@ import InputWithLabel from "@/components/form-fields/_utils/InputWithLabel";
 import { useForgotPassword } from "@/store/hooks/AuthHooks";
 import toast from "react-hot-toast";
 import { forgotPasswordSchema } from "@/utils/validationSchema";
+import * as yup from "yup";
 
 const ForgotPassword = () => {
   const methods = useForm({
@@ -18,8 +19,23 @@ const ForgotPassword = () => {
 
   const onSubmitForm = async (data) => {
     try {
-      const response = await mutateAsync(data);
-      toast.success(response?.data?.message || "Email send sucessfully");
+       // Check if the input is empty
+       if (!data.userInput) {
+        toast.error("Either email or username is required");
+        return;
+      }
+
+      // Determine if the input is an email or a username
+      const isEmail = yup.string().email().isValidSync(data.userInput);
+
+      // Prepare the payload based on the input type
+      const payload = isEmail
+        ? { email: data.userInput } // Send email
+        : { userName: data.userInput }; // Send username
+
+      // Call the API
+      const response = await mutateAsync(payload);
+      toast.success(response?.data?.message || "Email sent sucessfully");
       reset();
     } catch (error) {
       const errorMessage =
@@ -47,21 +63,21 @@ const ForgotPassword = () => {
                 onSubmit={handleSubmit(onSubmitForm)}
               >
                 <InputWithLabel
-                  label="Registered Username"
+                  label="Username or Email"
                   type="text"
-                  id="userName"
-                  name="userName"
-                  placeholder="Enter your username"
+                  id="userInput"
+                  name="userInput"
+                  placeholder="Enter your username or email"
                   inputClassName="w-56 h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
                 />
-                <InputWithLabel
+                {/* <InputWithLabel
                   label="Registered Email"
                   type="email"
                   id="email"
                   name="email"
                   placeholder="Enter your email"
                   inputClassName="w-56 h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
-                />
+                /> */}
                 <span className="text-xs text-right cursor-pointer sm:text-sm md:text-base">
                   <Link to={"/auth/login"}>Back to login?</Link>
                 </span>

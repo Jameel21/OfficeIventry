@@ -88,7 +88,7 @@ const ApproveRequests = () => {
       return;
     }
     const payload = {
-      status: "rejected",
+      status: "Rejected",
       rejectedReason: reason,
     };
     setIsRejecting(true);
@@ -108,7 +108,7 @@ const ApproveRequests = () => {
   };
 
   const onSubmitForm = async (formData, status) => {
-    if (!["approved"].includes(status)) {
+    if (!["Approved"].includes(status)) {
       console.error("Invalid status provided");
       return;
     }
@@ -231,7 +231,7 @@ const ApproveRequests = () => {
                   buttonName="Approve"
                   isSubmitting={isSubmitting}
                   onClick={handleSubmit((formData) =>
-                    onSubmitForm(formData, "approved")
+                    onSubmitForm(formData, "Approved")
                   )}
                   className="w-24 h-8 mt-10 text-white sm:w-28 sm:h-8 md:w-28 md:h-10 lg:w-32 xl:w-52 lg:h-12"
                 />

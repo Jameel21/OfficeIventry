@@ -31,8 +31,6 @@ const ViewUserReqeuest = () => {
           "en-GB"
         ),
         rejectedDate: new Date(userData.updatedAt).toLocaleDateString("en-GB"),
-        // rejectedReason: userData.rejectedReason,
-        // reason: userData.reason,
         status: userData?.requestLogId?.status,
       });
     }
@@ -106,7 +104,7 @@ const ViewUserReqeuest = () => {
                 inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
               />
 
-              {userData?.requestLogId?.status === "approved" && (
+              {userData?.requestLogId?.status === "Approved" && (
                 <>
                   <InputWithLabel
                     type="text"
@@ -127,7 +125,7 @@ const ViewUserReqeuest = () => {
                 </>
               )}
 
-              {userData?.requestLogId?.status === "rejected" && (
+              {userData?.requestLogId?.status === "Rejected" && (
                 <>
                   {/* <InputWithLabel
                     type="text"
@@ -176,7 +174,7 @@ const ViewUserReqeuest = () => {
                 />
               )}
 
-              {userData?.requestLogId?.status === "canceled" && (
+              {userData?.requestLogId?.status === "Canceled" && (
                 <InputWithLabel
                   type="text"
                   label="Cancel Date"
@@ -187,7 +185,7 @@ const ViewUserReqeuest = () => {
                 />
               )}
 
-              {userData?.requestLogId?.status === "completed" && (
+              {userData?.requestLogId?.status === "Completed" && (
                 <InputWithLabel
                   type="text"
                   label="Actual Return"

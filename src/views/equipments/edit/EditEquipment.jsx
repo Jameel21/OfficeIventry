@@ -121,7 +121,7 @@ const EditEquipmentForm = () => {
               />
             )}
             <InputWithLabel
-              type="text"
+              type="number"
               id="price"
               label="Price"
               name="price"

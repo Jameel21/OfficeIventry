@@ -27,7 +27,7 @@ const EquipmentTable = ({ equipmentType }) => {
   );
 
   const equipmentData = data?.equipment;
-  console.log("equipmentData", equipmentData)
+
   const { mutateAsync } = useDeleteEquipment();
 
   const [showModal, setShowModal] = useState(false);

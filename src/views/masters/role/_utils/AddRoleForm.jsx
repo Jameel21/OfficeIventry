@@ -68,6 +68,8 @@ const AddRoleForm = () => {
       notifyForRequest: data.notifyForRequest,
     };
 
+    console.log("payload", payload)
+
     try {
       const response = await mutateAsync(payload);
       toast.success(response?.data?.message || "Role was created successfully");
