@@ -72,7 +72,7 @@ const EmployeeTable = ({ page, limit, setPage, setLimit }) => {
           </div>
         ),
       },
-      { render: () => item.equipmentId.equipmentNameId.equipmentName },
+      { render: () => item.equipmentId.equipmentNameId.equipmentName ?? "none" },
       { render: () => new Date(item.requestDate).toLocaleDateString("en-GB") },
       { render: () => item.requestLogId.status },
     ],

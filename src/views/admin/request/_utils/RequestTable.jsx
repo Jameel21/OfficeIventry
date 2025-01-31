@@ -1,5 +1,6 @@
 import DataTable from "@/components/table/DataTable";
 import {
+  useDeleteRequest,
   useGetAllRequests,
   useUpdateRequestFields,
 } from "@/store/hooks/EmployeeHooks";
@@ -9,6 +10,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import Pagination from "@/components/pagination/Pagination";
 import { useState } from "react";
+import ConfirmationModal from "@/components/modal/ConfirmationModal";
 
 const RequestTable = ({ selectedRequests }) => {
   const navigate = useNavigate();
@@ -34,6 +36,10 @@ const RequestTable = ({ selectedRequests }) => {
   const requestData = data?.requests;
 
   const { mutateAsync } = useUpdateRequestFields();
+  const deleteRequest = useDeleteRequest();
+
+  const [showModal, setShowModal] = useState(false);
+  const [selectedRequestId, setSelectedRequestId] = useState(null);
 
   const handleCheckboxChange = async (id, currentValue) => {
     const payload = {
@@ -60,6 +66,26 @@ const RequestTable = ({ selectedRequests }) => {
         break;
       case "Update":
         navigate(`/admin/approveRequest/${id}`, { state: { equipmentId } });
+        break;
+      case "Delete":
+        setSelectedRequestId(id);
+        setShowModal(true);
+        break;
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      const response = await deleteRequest.mutateAsync(selectedRequestId);
+      refetch.refetchQueries(["pendingRequests"]);
+      toast.success(response?.data?.message || "Request deleted successfully");
+    } catch (error) {
+      const errorMessage =
+        error.response?.data?.message ||
+        "Failed to delete request. Please try again.";
+      toast.error(errorMessage);
+    } finally {
+      setShowModal(false);
     }
   };
 
@@ -71,7 +97,7 @@ const RequestTable = ({ selectedRequests }) => {
           equipmentId: item?.equipmentId?.equipmentNameId,
           render: () => item?.employeeId?.userName,
         },
-        { render: () => item?.equipmentId?.equipmentNameId?.equipmentName },
+        { render: () => item?.equipmentId?.equipmentNameId?.equipmentName ?? "none" },
         selectedRequests !== "Approved" && {
           render: () => new Date(item?.requestDate).toLocaleDateString("en-GB"),
         },
@@ -101,7 +127,10 @@ const RequestTable = ({ selectedRequests }) => {
             ),
         },
       ].filter(Boolean), // Remove undefined cells
-      menu: selectedRequests === "Pending" ? ["View", "Update"] : ["View"],
+      menu:
+        selectedRequests === "Pending"
+          ? ["View", "Update", "Delete"]
+          : ["View", "Delete"],
     }));
   };
 
@@ -120,6 +149,12 @@ const RequestTable = ({ selectedRequests }) => {
           handleMenuChange={handleMenuChange}
         />
       </div>
+      <ConfirmationModal
+        showModal={showModal}
+        title={"Are you sure you want to delete ?"}
+        onClose={() => setShowModal(false)}
+        onConfirm={handleDelete}
+      />
       <Pagination
         page={page}
         limit={limit}

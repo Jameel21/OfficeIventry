@@ -70,3 +70,9 @@ export const useCancelPendingRequest = () => {
     mutationFn: (id) => employeeService.cancelPendingRequest(id),
   });
 };
+
+export const useDeleteRequest = () => {
+  return useMutation({
+    mutationFn: (id) => employeeService.deleteRequest(id),
+  });
+};

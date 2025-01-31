@@ -46,6 +46,11 @@ const cancelPendingRequest = async (id) => {
   return response;
 };
 
+const deleteRequest = async (id) => {
+  const response = await API.delete(`/equipmentRequest/delete/${id}`);
+  return response;
+};
+
 export default {
   addRequest,
   getMyRequest,
@@ -54,5 +59,6 @@ export default {
   getRequestById,
   getAllRequests,
   updatePendingRequest,
-  cancelPendingRequest
+  cancelPendingRequest,
+  deleteRequest
 };

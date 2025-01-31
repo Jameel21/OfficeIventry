@@ -69,7 +69,7 @@ const ForgotPassword = () => {
                   <UiButton
                     variant="secondary"
                     type="submit"
-                    buttonName="Save"
+                    buttonName="Submit"
                     isSubmitting={isSubmitting}
                     className="w-24 h-8 text-white sm:w-28 sm:h-8 md:w-32 md:h-10 lg:w-36 lg:h-12"
                   />
