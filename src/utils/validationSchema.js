@@ -45,9 +45,8 @@ export const registerSchema = yup.object().shape({
     .required("username is required")
     .min(3, "username must be atleast 3 characters")
     .max(16, "username cannot exceed 16 characters")
-    .matches(
-      /^[A-Za-z0-9\s]+$/,
-      "username should not contain special characters"
+    .matches(/^(?=.*[A-Za-z])[\w\s\-_@!#$%^&*]+$/,
+      "username must include a letter"
     ),
   email: yup
     .string()
@@ -63,8 +62,8 @@ export const registerSchema = yup.object().shape({
     .min(3, "employee id must be atleast 3 characters")
     .max(12, "employee id cannot exceed 12 characters")
     .matches(
-      /^[A-Za-z0-9\s]+$/,
-      "employee id should not contain special characters"
+      /^(?=.*\d)[A-Za-z0-9\s@!#$%^&*]+$/,
+      "employee id must include a number"
     ),
   departmentId: yup.string().required("department is required"),
   roleId: yup.string().required("role is required"),
@@ -125,7 +124,7 @@ export const brandSchema = yup.object().shape({
     .required("brand is required")
     .min(3, "brand must be atleast 3 characters")
     .max(25, "brand cannot exceed 25 characters")
-    .matches(/^[A-Za-z0-9\s]+$/, "brand should not contain special characters"), // Allows only alphabets & spaces "/^[A-Za-z\s]+$/""
+    .matches(/^(?=.*[A-Za-z])[\w\s\-_@!#$%^&*]+$/, "brand must include a letter"),
 });
 
 export const departmentSchema = yup.object().shape({
@@ -135,10 +134,7 @@ export const departmentSchema = yup.object().shape({
     .required("department is required")
     .min(3, "department must be atleast 3 characters")
     .max(25, "department cannot exceed 25 characters")
-    .matches(
-      /^[A-Za-z0-9\s]+$/,
-      "department should not contain special characters"
-    ), // Allows only alphabets & spaces "/^[A-Za-z\s]+$/""
+    .matches(/^(?=.*[A-Za-z])[\w\s\-_@!#$%^&*]+$/, "department must include a letter"),
 });
 
 export const roleSchema = yup.object().shape({
@@ -148,7 +144,7 @@ export const roleSchema = yup.object().shape({
     .required("role is required")
     .min(2, "role must be at least 2 characters")
     .max(16, "role cannot exceed 16 characters")
-    .matches(/^(?![\d]+$)(?![^\w\s]+$)[A-Za-z0-9\s\-_@]+$/, "role not to be numeric or special characters"), 
+    .matches(/^(?=.*[A-Za-z])[\w\s\-_@!#$%^&*]+$/,"role must include a letter"), 
   notifyForRequest: yup
     .string()
     .required("notification availability is required"),
@@ -161,10 +157,7 @@ export const categorySchema = yup.object().shape({
     .required("equipment is required")
     .min(2, "equipment must be atleast 2 characters")
     .max(25, "equipment cannot exceed 25 characters")
-    .matches(
-      /^[A-Za-z0-9\s]+$/,
-      "equipment should not contain special characters"
-    ), // Allows only alphabets & spaces,
+    .matches(/^(?=.*[A-Za-z])[\w\s\-_@!#$%^&*]+$/,"equipment must include a letter"), 
   isSerialNumber: yup
     .string()
     .required("serial number availability is required"),
