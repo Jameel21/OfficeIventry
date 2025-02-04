@@ -56,7 +56,7 @@ const EquipmentForm = ({
       />
       <DatePickerDemo
         name="dateOfPurchase"
-        label="Date Of Purchase"
+        label="Date of purchase"
         disableAfterToday
         placeholder="Date of purchase"
         className="h-8 p-2 mt-2 w-52 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 "

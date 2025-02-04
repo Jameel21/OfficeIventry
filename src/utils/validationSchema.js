@@ -27,35 +27,45 @@ export const forgotPasswordSchema = yup.object().shape({
   userInput: yup
     .string()
     .required("Either email or username is required")
-    .test(
-      "is-email-or-username",
-      "Invalid email or username",
-      (value) => {
-        // Check if the input is a valid email or a valid username
-        const isEmail = yup.string().email().isValidSync(value);
-        const isUsername = /^[a-zA-Z0-9_]+$/.test(value); // Example username regex
-        return isEmail || isUsername;
-      }
-    ),
+    .test("is-email-or-username", "Invalid email or username", (value) => {
+      // Check if the input is a valid email or a valid username
+      const isEmail = yup.string().email().isValidSync(value);
+      const isUsername = yup
+        .string()
+        // .matches(/^[a-zA-Z0-9_ ]+$/, "Invalid username") // Allows letters, numbers, underscores, and spaces
+        .isValidSync(value);
+      return isEmail || isUsername;
+    }),
 });
 
 export const registerSchema = yup.object().shape({
   userName: yup
     .string()
+    .trim()
     .required("username is required")
     .min(3, "username must be atleast 3 characters")
-    .max(16, "username cannot exceed 16 characters"),
+    .max(16, "username cannot exceed 16 characters")
+    .matches(
+      /^[A-Za-z0-9\s]+$/,
+      "username should not contain special characters"
+    ),
   email: yup
     .string()
+    .trim()
     .email("invalid email")
     .required("email is required")
     .min(10, "email must be atleast 10 characters")
     .max(30, "email cannot exceed 30 characters"),
   employeeId: yup
     .string()
+    .trim()
     .required("employee id is required")
     .min(3, "employee id must be atleast 3 characters")
-    .max(12, "employee id cannot exceed 12 characters"),
+    .max(12, "employee id cannot exceed 12 characters")
+    .matches(
+      /^[A-Za-z0-9\s]+$/,
+      "employee id should not contain special characters"
+    ),
   departmentId: yup.string().required("department is required"),
   roleId: yup.string().required("role is required"),
   password: yup
@@ -68,8 +78,12 @@ export const registerSchema = yup.object().shape({
 export const employeeSchema = yup.object().shape({
   equipmentId: yup.string().required("equipment name is required"),
   requestDate: yup.string().required("request date is required"),
-  reason: yup.string().required("reason is required").min(3, "reason must be atleast 3 characters")
-  .max(250, "reason cannot exceed 250 characters"),
+  reason: yup
+    .string()
+    .trim()
+    .required("reason is required")
+    .min(3, "reason must be atleast 3 characters")
+    .max(250, "reason cannot exceed 250 characters"),
 });
 
 export const requestSchema = yup.object().shape({
@@ -77,21 +91,27 @@ export const requestSchema = yup.object().shape({
 });
 
 export const rejectedSchema = yup.object().shape({
-  rejectedReason: yup.string().required("rejected reason is required").min(3, "rejected reason must be atleast 3 characters").max(150, "rejected reason cannot exceed 150 characters")
+  rejectedReason: yup
+    .string()
+    .trim()
+    .required("rejected reason is required")
+    .min(3, "rejected reason must be atleast 3 characters")
+    .max(150, "rejected reason cannot exceed 150 characters"),
 });
 
 export const updatePasswordSchema = yup.object().shape({
-  currentPassword: yup.string().required("current password is required"),
-  newPassword: yup.string().required("new password is required"),
+  currentPassword: yup.string().trim().required("current password is required"),
+  newPassword: yup.string().trim().required("new password is required"),
 });
 
 export const equipmentSchema = yup.object().shape({
   equipmentNameId: yup.string().required("equipment is required"),
-  serialNumber: yup.string().optional(),
+  serialNumber: yup.string().trim().optional(),
   quantity: yup.string().optional(),
   dateOfPurchase: yup.string().required("purchase date is required"),
   price: yup
     .string()
+    .trim()
     .required("price is required")
     .min(1, "price must be atleast 1 character")
     .max(10, "price cannot exceed 10 characters"),
@@ -101,36 +121,50 @@ export const equipmentSchema = yup.object().shape({
 export const brandSchema = yup.object().shape({
   brand: yup
     .string()
+    .trim()
     .required("brand is required")
     .min(3, "brand must be atleast 3 characters")
-    .max(25, "brand cannot exceed 25 characters"),
+    .max(25, "brand cannot exceed 25 characters")
+    .matches(/^[A-Za-z0-9\s]+$/, "brand should not contain special characters"), // Allows only alphabets & spaces "/^[A-Za-z\s]+$/""
 });
 
 export const departmentSchema = yup.object().shape({
   department: yup
     .string()
+    .trim()
     .required("department is required")
     .min(3, "department must be atleast 3 characters")
-    .max(25, "department cannot exceed 25 characters"),
+    .max(25, "department cannot exceed 25 characters")
+    .matches(
+      /^[A-Za-z0-9\s]+$/,
+      "department should not contain special characters"
+    ), // Allows only alphabets & spaces "/^[A-Za-z\s]+$/""
 });
 
 export const roleSchema = yup.object().shape({
   role: yup
     .string()
+    .trim()
     .required("role is required")
-    .min(2, "role must be atleast 2 characters")
-    .max(25, "role cannot exceed 25 characters"),
+    .min(2, "role must be at least 2 characters")
+    .max(16, "role cannot exceed 16 characters")
+    .matches(/^(?![\d]+$)(?![^\w\s]+$)[A-Za-z0-9\s\-_@]+$/, "role not to be numeric or special characters"), 
   notifyForRequest: yup
     .string()
-    .required("notification availabilty is required"),
+    .required("notification availability is required"),
 });
 
 export const categorySchema = yup.object().shape({
   equipmentName: yup
     .string()
+    .trim()
     .required("equipment is required")
-    .min(3, "equipment must be atleast 3 characters")
-    .max(25, "equipment cannot exceed 25 characters"),
+    .min(2, "equipment must be atleast 2 characters")
+    .max(25, "equipment cannot exceed 25 characters")
+    .matches(
+      /^[A-Za-z0-9\s]+$/,
+      "equipment should not contain special characters"
+    ), // Allows only alphabets & spaces,
   isSerialNumber: yup
     .string()
     .required("serial number availability is required"),

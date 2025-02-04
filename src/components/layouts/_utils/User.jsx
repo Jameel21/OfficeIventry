@@ -37,7 +37,7 @@ const User = () => {
 
   return (
     <div>
-      <div className="flex flex-row items-center gap-6 mt-3 md:justify-between sm:gap-10 text-primary">
+      <div className="flex flex-row items-center justify-between gap-2 mt-3 sm:gap-3 text-primary">
         <div onClick={handleProfile}>
           <Avatar className="cursor-pointer">
             <AvatarImage src={user_icon}/>
@@ -45,7 +45,7 @@ const User = () => {
           </Avatar>
         </div>
         <div className="">
-            <h1 className="text-base sm:text-lg text-slate-200">{user}</h1>
+            <h1 className="text-sm sm:text-lg text-slate-200">{user}</h1>
             <p className="text-sm text-slate-400">{role}</p>
         </div>
          <div onClick={handleLogoutClick}>

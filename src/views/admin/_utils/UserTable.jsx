@@ -2,8 +2,8 @@ import DataTable from "@/components/table/DataTable";
 import { useGetAllUsers } from "@/store/hooks/UserHooks";
 
 const UserTable = () => {
-  const headers = ["Username", "Email", "Role"];
-  const columnWidths = ["w-[30%]", "w-[30%]", "w-[30%]"];
+  const headers = ["Username", "Employee Id", "Role"];
+  const columnWidths = ["w-[35%]", "w-[35%]", "w-[30%]"];
   const page = 1;
   const limit = 7;
   const { data, isLoading, error } = useGetAllUsers({ page, limit });
@@ -15,7 +15,7 @@ const UserTable = () => {
         id: item._id,
         render: () => item.userName,
       },
-      { render: () => item.email },
+      { render: () => item.employeeId },
       { render: () => item.roleId.role },
     ],
   }));

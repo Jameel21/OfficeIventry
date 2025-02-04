@@ -38,7 +38,7 @@ const EditEquipmentForm = () => {
         equipmentName: userData?.equipmentNameId?.equipmentName,
         brandId: userData?.brandId?._id,
         serialNumber: userData?.serialNumber,
-        price: userData?.price,
+        price: userData?.price ? parseFloat(userData?.price).toFixed(2) : "",
         quantity: userData?.quantity,
         currentStatus: userData?.currentStatus,
         dateOfPurchase: userData?.dateOfPurchase,
@@ -147,7 +147,7 @@ const EditEquipmentForm = () => {
               inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
             />
             <DatePickerDemo
-              label="Date Of Purchase"
+              label="Date of purchase"
               name="dateOfPurchase"
               placeholder="Date of Purchase"
               disableAfterToday

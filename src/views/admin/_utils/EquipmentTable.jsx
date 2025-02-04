@@ -17,7 +17,7 @@ const EquipmentTable = () => {
       "In Use",
     ]
     const categoryData = data?.category;
-    const columnWidths = ["w-[30%]","w-[30%]","w-[30%]",]
+    const columnWidths = ["w-[50%]","w-[25%]","w-[20%]",]
 
     const tableData = categoryData?.map((item) => ({
       cells:[

@@ -41,7 +41,7 @@ const LoginForm = () => {
       toast.success(response?.data?.message || "Login Success");
 
       switch (userRole) {
-        case "SuperAdmin":
+        case "Super Admin":
           navigate("/admin");
           break;
         case "Admin":

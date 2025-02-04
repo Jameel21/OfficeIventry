@@ -122,7 +122,7 @@ const ViewEquipmentForm = () => {
               <InputWithLabel
                 type="text"
                 id="dateOfPurchase"
-                label="Date Of Purchase"
+                label="Date of purchase"
                 name="dateOfPurchase"
                 readOnly={true}
                 placeholder="Date Of purchase"

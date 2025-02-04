@@ -53,6 +53,32 @@ const ViewRole = () => {
     navigate("/admin/role");
   };
 
+  const customOrder = [
+    "Dashboard", 
+    "Department",
+    "Role",
+    "Brand", 
+    "Category",
+    "Inventory",
+    "User",
+    "My Request", 
+    "All Request",
+    "Logs",
+    "Request Log",
+    "Notification",
+    
+  ];
+  
+  // Sort the menuData based on customOrder
+  const sortedMenuData = menuData
+  ?.filter((item) => item.pageName !== "Menu") // Exclude "Menu" from UI
+  .sort((a, b) => {
+    return (
+      customOrder.indexOf(a.pageName === "Equipment" ? "Inventory" : a.pageName) -
+      customOrder.indexOf(b.pageName === "Equipment" ? "Inventory" : b.pageName)
+    );
+  });
+
   return (
     <FormProvider {...methods}>
       <form>
@@ -89,15 +115,15 @@ const ViewRole = () => {
               Role Permissions
             </h1>
             <UiTable headers={headers} headerClass={"h-12 text-sm md:text-lg"}>
-              {menuData && menuData?.length > 0 ? (
-                menuData.map((item, index) => (
+              {sortedMenuData && sortedMenuData?.length > 0 ? (
+                sortedMenuData.map((item, index) => (
                   <TableRow
                     key={index}
                     className={`border border-gray-300 hover:bg-red-50 h-10 ${
                       index % 2 === 0 ? "bg-gray-200" : "bg-slate-100"
                     }`}
                   >
-                    <TableCell>{item.pageName}</TableCell>
+                    <TableCell>{item.pageName === "Equipment" ? "Inventory" : item.pageName === "Logs" ? "Allocation Log" : item.pageName}</TableCell>
                     {["create", "update", "delete", "view"].map((action) => (
                       <TableCell key={action}>
                         <Checkbox

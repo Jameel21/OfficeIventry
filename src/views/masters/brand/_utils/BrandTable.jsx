@@ -53,6 +53,9 @@ const BrandTable = ({ page, limit, setPage, setLimit }) => {
     }
   };
 
+  // const sortData = brandData?.sort((a,b) =>
+  //   a.brand.localeCompare(b.brand));
+
   const tableData = brandData?.map((item) => ({
     cells: [
       {
