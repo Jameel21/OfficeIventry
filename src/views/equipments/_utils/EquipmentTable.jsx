@@ -10,14 +10,21 @@ import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import ConfirmationModal from "@/components/modal/ConfirmationModal";
 import BreadCrumbs from "@/components/form-fields/_utils/BreadCrumbs";
+import { getDecodedData } from "@/utils/encryptDecrypt";
 
 const EquipmentTable = ({ equipmentType }) => {
+  const userData = getDecodedData("userData");
+      const menuPermission = userData?.menuPermission || [];
+  
+      const equipmentPermission = menuPermission.find(
+        (perm) => perm?.menu?.pageName === "Equipment"
+      );
   const navigate = useNavigate();
   const refetch = useQueryClient();
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
 
-  const headers = ["Equipment", "Brand", "Price", "Date Of Purchase"];
+  const headers = ["Equipment", "Brand", "Price", "Date of purchase"];
   const columnWidths = ["w-[25%]", "w-[25%]", "w-[25%]", "w-[25%]"];
 
   const { data, isLoading, error } = useGetAllEquipment(
@@ -41,6 +48,10 @@ const EquipmentTable = ({ equipmentType }) => {
         });
         break;
       case "Edit":
+        if (!equipmentPermission?.update) {
+          toast.error("You don't have permission to perform this action.");
+          return;
+        }
         navigate(`/admin/editEquipment/${equipmentId}`, {
           state: { pathname: equipmentType },
         });
@@ -107,7 +118,7 @@ const EquipmentTable = ({ equipmentType }) => {
       </div>
       <ConfirmationModal
         showModal={showModal}
-        title={"Are you sure you want to delete ?"}
+        title={"Are you sure you want to delete?"}
         onClose={() => setShowModal(false)}
         onConfirm={handleDelete}
       />

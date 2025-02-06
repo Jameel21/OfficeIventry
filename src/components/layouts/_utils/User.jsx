@@ -59,7 +59,7 @@ const User = () => {
         {/* Confirmation Modal */}
         <ConfirmationModal
         showModal={showModal}
-        title={"Are you sure you want to log out ?"}
+        title={"Are you sure you want to log out?"}
         onClose={() => setShowModal(false)} 
         onConfirm={confirmLogout} 
        

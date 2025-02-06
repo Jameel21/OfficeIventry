@@ -11,8 +11,16 @@ import { useNavigate } from "react-router-dom";
 import Pagination from "@/components/pagination/Pagination";
 import { useState } from "react";
 import ConfirmationModal from "@/components/modal/ConfirmationModal";
+import { getDecodedData } from "@/utils/encryptDecrypt";
 
 const RequestTable = ({ selectedRequests }) => {
+  const userData = getDecodedData("userData");
+  const menuPermission = userData?.menuPermission || [];
+
+  const requestPermission = menuPermission.find(
+    (perm) => perm?.menu?.pageName === "All Request"
+  );
+
   const navigate = useNavigate();
   const refetch = useQueryClient();
   const [page, setPage] = useState(1);
@@ -65,6 +73,10 @@ const RequestTable = ({ selectedRequests }) => {
         });
         break;
       case "Update":
+        if (!requestPermission?.update) {
+          toast.error("You don't have permission to perform this action.");
+          return;
+        }
         navigate(`/admin/approveRequest/${id}`, { state: { equipmentId } });
         break;
       case "Delete":
@@ -97,7 +109,10 @@ const RequestTable = ({ selectedRequests }) => {
           equipmentId: item?.equipmentId?.equipmentNameId,
           render: () => item?.employeeId?.userName,
         },
-        { render: () => item?.equipmentId?.equipmentNameId?.equipmentName ?? "none" },
+        {
+          render: () =>
+            item?.equipmentId?.equipmentNameId?.equipmentName ?? "none",
+        },
         selectedRequests !== "Approved" && {
           render: () => new Date(item?.requestDate).toLocaleDateString("en-GB"),
         },
@@ -128,11 +143,11 @@ const RequestTable = ({ selectedRequests }) => {
         },
       ].filter(Boolean), // Remove undefined cells
       menu:
-      selectedRequests === "Pending"
-      ? ["View", "Update"]
-      : selectedRequests === "Completed"
-      ? ["View", "Delete"]
-      : ["View"]
+        selectedRequests === "Pending"
+          ? ["View", "Update"]
+          : selectedRequests === "Completed"
+          ? ["View", "Delete"]
+          : ["View"],
     }));
   };
 
@@ -153,7 +168,7 @@ const RequestTable = ({ selectedRequests }) => {
       </div>
       <ConfirmationModal
         showModal={showModal}
-        title={"Are you sure you want to delete ?"}
+        title={"Are you sure you want to delete?"}
         onClose={() => setShowModal(false)}
         onConfirm={handleDelete}
       />

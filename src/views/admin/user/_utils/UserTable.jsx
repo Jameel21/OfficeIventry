@@ -8,6 +8,7 @@ import Pagination from "@/components/pagination/Pagination";
 import ConfirmationModal from "@/components/modal/ConfirmationModal";
 import BreadCrumbs from "@/components/form-fields/_utils/BreadCrumbs";
 import { useState } from "react";
+import { getDecodedData } from "@/utils/encryptDecrypt";
 
 const UserTable = ({
   page,
@@ -19,6 +20,12 @@ const UserTable = ({
   error,
   data,
 }) => {
+   const userDetails = getDecodedData("userData");
+    const menuPermission = userDetails?.menuPermission || [];
+  
+    const userPermission = menuPermission.find(
+      (perm) => perm?.menu?.pageName === "User"
+    );
   const navigate = useNavigate();
   const refetch = useQueryClient();
  
@@ -37,6 +44,10 @@ const UserTable = ({
         navigate(`/viewUser/${userId}`);
         break;
       case "Edit":
+        if (!userPermission?.update) {
+          toast.error("You don't have permission to perform this action.");
+          return;
+        }
         navigate(`/admin/editUser/${userId}`);
         break;
       case "Delete":
@@ -127,7 +138,7 @@ const UserTable = ({
       </div>
       <ConfirmationModal
         showModal={showModal}
-        title={"Are you sure you want to delete ?"}
+        title={"Are you sure you want to delete?"}
         onClose={() => setShowModal(false)}
         onConfirm={handleDelete}
       />

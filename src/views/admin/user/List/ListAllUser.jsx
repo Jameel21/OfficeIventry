@@ -4,24 +4,34 @@ import { useState } from "react";
 import UserTable from "../_utils/UserTable";
 import UiInput from "@/components/form-fields/_utils/UiInput";
 import { useGetAllUsers } from "@/store/hooks/UserHooks";
+import { getDecodedData } from "@/utils/encryptDecrypt";
 
 const ListAllUser = () => {
+  const userDetails = getDecodedData("userData");
+  const menuPermission = userDetails?.menuPermission || [];
+
+  const userPermission = menuPermission.find(
+    (perm) => perm?.menu?.pageName === "User"
+  );
+
   const navigate = useNavigate();
 
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const { data, isLoading, error} = useGetAllUsers({ page, limit });
+  const { data, isLoading, error } = useGetAllUsers({ page, limit });
   const userData = data?.users;
 
   const filteredUsers = userData?.filter((user) => {
-    return user?.userName.toLowerCase().includes(searchTerm.toLocaleLowerCase());
+    return user?.userName
+      .toLowerCase()
+      .includes(searchTerm.toLocaleLowerCase());
   });
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
-    console.log("SearchTerm",searchTerm);
+    console.log("SearchTerm", searchTerm);
   };
 
   const handleAddUser = () => {
@@ -39,12 +49,14 @@ const ListAllUser = () => {
             value={searchTerm}
             onChange={handleSearchChange}
           />
-          <UiButton
-            onClick={handleAddUser}
-            className={"w-28 h-7 md:w-40 md:h-11 text-white"}
-            variant={"secondary"}
-            buttonName={"Create User"}
-          />
+          {userPermission?.create && (
+            <UiButton
+              onClick={handleAddUser}
+              className={"w-28 h-7 md:w-40 md:h-11 text-white"}
+              variant={"secondary"}
+              buttonName={"Create User"}
+            />
+          )}
         </div>
       </div>
       <div className="mt-7">

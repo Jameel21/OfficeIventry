@@ -17,7 +17,12 @@ const RequestForm = () => {
   const methods = useForm({
     resolver: yupResolver(employeeSchema),
   });
-  const { handleSubmit, reset, formState: { isSubmitting },watch } = methods;
+  const {
+    handleSubmit,
+    reset,
+    formState: { isSubmitting },
+    watch,
+  } = methods;
 
   const { data: equipmentNames } = useGetEquipmentName("Employee Equipment");
 
@@ -34,6 +39,8 @@ const RequestForm = () => {
         ? format(new Date(data.requestDate), "yyyy-MM-dd")
         : "",
     };
+    delete formattedData.abc;
+  
     try {
       const response = await mutateAsync(formattedData);
       toast.success(
@@ -73,13 +80,24 @@ const RequestForm = () => {
             placeholder="Request date"
             className="h-8 p-2 mt-2 w-52 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 "
           />
-          <DatePickerDemo
-            name="expectedReturn"
-            label="Expected Return"
-            placeholder="Expected return"
-            className="h-8 p-2 mt-2 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80"
-            disableBeforeDate={requestDate} 
-          />
+          {requestDate ? (
+            <DatePickerDemo
+              name="expectedReturn"
+              label="Expected Return"
+              placeholder="Expected return"
+              className="h-8 p-2 mt-2 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80"
+              disableBeforeDate={requestDate}
+            />
+          ) : (
+            <InputWithLabel
+              type="text"
+              name="abc"
+              readOnly={true}
+              label="Expected Return"
+              placeholder="Expected return"
+              inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80"
+            />
+          )}
           <InputWithLabel
             type="text"
             name="reason"

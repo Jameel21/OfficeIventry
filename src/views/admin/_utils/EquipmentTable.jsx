@@ -13,8 +13,8 @@ const EquipmentTable = () => {
 
   const headers = [
       "Equipment",
-      "Total Quantity",
-      "In Use",
+      "Total quantity",
+      "In use",
     ]
     const categoryData = data?.category;
     const columnWidths = ["w-[50%]","w-[25%]","w-[20%]",]

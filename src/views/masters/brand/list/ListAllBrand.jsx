@@ -2,8 +2,16 @@ import UiButton from "@/components/form-fields/_utils/Button";
 import { useNavigate } from "react-router-dom";
 import BrandTable from "../_utils/BrandTable";
 import { useState } from "react";
+import { getDecodedData } from "@/utils/encryptDecrypt";
 
 const ListAllBrand = () => {
+  const userData = getDecodedData("userData");
+  const menuPermission = userData?.menuPermission || [];
+
+  const brandPermission = menuPermission.find(
+    (perm) => perm?.menu?.pageName === "Brand"
+  );
+
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
@@ -19,12 +27,15 @@ const ListAllBrand = () => {
           Brand
         </div>
         <div className="flex items-center gap-2">
-          <UiButton
-            onClick={handleAddBrand}
-            className={"w-28 h-7 md:w-40 md:h-11 text-white"}
-            variant={"secondary"}
-            buttonName={"Add Brand"}
-          />
+          {/* Show button only if create permission is true */}
+          {brandPermission?.create && (
+            <UiButton
+              onClick={handleAddBrand}
+              className={"w-28 h-7 md:w-40 md:h-11 text-white"}
+              variant={"secondary"}
+              buttonName={"Add Brand"}
+            />
+          )}
         </div>
       </div>
       <div className="mt-8">

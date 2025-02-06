@@ -10,12 +10,20 @@ import Pagination from "@/components/pagination/Pagination";
 import ConfirmationModal from "@/components/modal/ConfirmationModal";
 import BreadCrumbs from "@/components/form-fields/_utils/BreadCrumbs";
 import { useState } from "react";
+import { getDecodedData } from "@/utils/encryptDecrypt";
 
 const DepartmentTable = ({ page, limit, setPage, setLimit }) => {
+  const userData = getDecodedData("userData");
+    const menuPermission = userData?.menuPermission || [];
+  
+    const departmentPermission = menuPermission.find(
+      (perm) => perm?.menu?.pageName === "Department"
+    );
+
   const navigate = useNavigate();
   const refetch = useQueryClient();
 
-  const headers = ["Department", "Created At"];
+  const headers = ["Department", "Created Date"];
   const columnWidths = ["w-[50%]", "w-[50%]"];
 
   const { data, isLoading, error } = useGetAllDepartment({ page, limit });
@@ -32,6 +40,10 @@ const DepartmentTable = ({ page, limit, setPage, setLimit }) => {
         navigate(`/admin/viewDepartment/${departmentId}`);
         break;
       case "Edit":
+        if (!departmentPermission?.update) {
+          toast.error("You don't have permission to perform this action.");
+          return;
+        }
         navigate(`/admin/editDepartment/${departmentId}`);
         break;
       case "Delete":
@@ -86,7 +98,7 @@ const DepartmentTable = ({ page, limit, setPage, setLimit }) => {
       </div>
       <ConfirmationModal
         showModal={showModal}
-        title={"Are you sure you want to delete ?"}
+        title={"Are you sure you want to delete?"}
         onClose={() => setShowModal(false)}
         onConfirm={handleDelete}
       />

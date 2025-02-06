@@ -13,7 +13,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useNavigate } from "react-router-dom";
 import DropDown from "@/components/form-fields/_utils/DropDown";
 import { roleSchema } from "@/utils/validationSchema";
-
+import CustomCheckbox from "@/components/form-fields/_utils/CheckboxField";
 
 const AddRoleForm = () => {
   const refetch = useQueryClient();
@@ -21,17 +21,22 @@ const AddRoleForm = () => {
   const methods = useForm({
     resolver: yupResolver(roleSchema),
     defaultValues: {
-      role: "", 
-      notifyForRequest: ""
+      role: "",
+      notifyForRequest: "",
     },
   });
-  const { handleSubmit, reset, formState: { isSubmitting }, } = methods;
+  const {
+    handleSubmit,
+    reset,
+    formState: { isSubmitting },
+  } = methods;
   const [permissions, setPermissions] = useState({});
+  const [allPermissions, setAllPermissions] = useState(false);
 
   const headers = ["Menu", "Create", "Update", "Delete", "View"];
 
   const { data: menuData } = useGetAllMenu();
-  console.log("menuData", menuData)
+  console.log("menuData", menuData);
 
   const { mutateAsync } = useAddRole();
 
@@ -61,17 +66,37 @@ const AddRoleForm = () => {
   };
 
   const onSubmitForm = async (data) => {
+    let hasViewPermission = false;
+    const menuPageId = "675c1abfb42832b8f2d0edf8";
+    // Ensure 'view' is true if 'create', 'update', or 'delete' is selected
+    let updatedPermissions = Object.keys(permissions).map((menuId) => {
+      const { create, update, delete: del, view } = permissions[menuId];
+      let updatedView = view || create || update || del; // Ensure 'view' is true if any other permission is true
+      if (updatedView && menuId !== menuPageId) {
+        hasViewPermission = true; // Track if at least one view is selected (excluding "Menu")
+      }
+      return {
+        menu: menuId,
+        create,
+        update,
+        delete: del,
+        view: updatedView, // Force 'view' to true if any other permission is true
+      };
+    });
+    // Show toast if no 'view' permission is selected
+    if (!allPermissions && !hasViewPermission) {
+      toast.error("You have to select at least one 'View' permission.");
+      return;
+    }
+    updatedPermissions = updatedPermissions.map((perm) =>
+      perm.menu === menuPageId ? { ...perm, view: true } : perm
+    );
     const payload = {
       role: data.role,
-      permissions: Object.keys(permissions).map((menuId) => ({
-        menu: menuId,
-        ...permissions[menuId],
-      })),
       notifyForRequest: data.notifyForRequest,
+      permissions: updatedPermissions,
+      allPermissions: allPermissions,
     };
-
-    console.log("payload", payload)
-
     try {
       const response = await mutateAsync(payload);
       toast.success(response?.data?.message || "Role was created successfully");
@@ -98,29 +123,86 @@ const AddRoleForm = () => {
   ];
 
   const customOrder = [
-    "Dashboard", 
+    "Dashboard",
     "Department",
     "Role",
-    "Brand", 
+    "Brand",
     "Category",
     "Inventory",
     "User",
-    "My Request", 
+    "My Request",
     "All Request",
     "Logs",
     "Request Log",
     "Notification",
   ];
-  
+
   // Sort the menuData based on customOrder
   const sortedMenuData = menuData
-  ?.filter((item) => item.pageName !== "Menu") // Exclude "Menu" from UI
-  .sort((a, b) => {
-    return (
-      customOrder.indexOf(a.pageName === "Equipment" ? "Inventory" : a.pageName) -
-      customOrder.indexOf(b.pageName === "Equipment" ? "Inventory" : b.pageName)
-    );
-  });
+    ?.filter((item) => item.pageName !== "Menu") // Exclude "Menu" from UI
+    .sort((a, b) => {
+      return (
+        customOrder.indexOf(
+          a.pageName === "Equipment" ? "Inventory" : a.pageName
+        ) -
+        customOrder.indexOf(
+          b.pageName === "Equipment" ? "Inventory" : b.pageName
+        )
+      );
+    });
+
+  const handleSelectAll = (checked) => {
+    setAllPermissions(checked);
+    const updatedPermissions = {};
+    sortedMenuData.forEach((item) => {
+      updatedPermissions[item._id] = {
+        create:
+          !(
+            ["Dashboard", "Request Log", "Logs"].includes(item.pageName) &&
+            ["create", "update", "delete"].includes("create")
+          ) &&
+          !(
+            ["Notification", "All Request"].includes(item.pageName) &&
+            ["create"].includes("create")
+          ) &&
+          !(
+            item.pageName === "My Request" &&
+            ["update", "delete"].includes("create")
+          ) &&
+          checked,
+        update:
+          !(
+            ["Dashboard", "Request Log", "Logs"].includes(item.pageName) &&
+            ["create", "update", "delete"].includes("update")
+          ) &&
+          !(
+            ["Notification", "All Request"].includes(item.pageName) &&
+            ["create"].includes("update")
+          ) &&
+          !(
+            item.pageName === "My Request" &&
+            ["update", "delete"].includes("update")
+          ) &&
+          checked,
+        delete:
+          !(
+            ["Dashboard", "Request Log", "Logs"].includes(item.pageName) &&
+            ["create", "update", "delete"].includes("delete")
+          ) &&
+          !(
+            ["Notification", "All Request"].includes(item.pageName) &&
+            ["create"].includes("delete")
+          ) &&
+          !(
+            item.pageName === "My Request" &&
+            ["update", "delete"].includes("delete")
+          ) &&
+          checked,
+        view: checked, // Always allow view to be checked
+      };
+    });
+    setPermissions(updatedPermissions);
+  };
 
   return (
     <FormProvider {...methods}>
@@ -143,9 +225,20 @@ const AddRoleForm = () => {
             dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
           />
           <div className="mt-2">
-            <h1 className="text-xs font-medium sm:text-sm md:text-bold lg:text-lg text-slate-700">
-              Role Permissions
-            </h1>
+            <div className="flex justify-between">
+              <h1 className="text-xs font-medium sm:text-sm md:text-bold lg:text-lg text-slate-700">
+                Role Permissions
+              </h1>
+              <h1 className="text-xs font-medium sm:text-sm md:text-bold lg:text-lg text-slate-700">
+                Select All
+                <CustomCheckbox
+                  className="ml-2"
+                  checked={allPermissions}
+                  onChange={handleSelectAll}
+                />
+              </h1>
+            </div>
+
             <UiTable headers={headers} headerClass={"h-12 text-sm md:text-lg "}>
               {sortedMenuData && sortedMenuData?.length > 0 ? (
                 sortedMenuData.map((item, index) => (
@@ -155,18 +248,45 @@ const AddRoleForm = () => {
                       index % 2 === 0 ? "bg-gray-200" : "bg-slate-100"
                     }`}
                   >
-                     <TableCell>{item.pageName === "Equipment" ? "Inventory" : item.pageName === "Logs" ? "Allocation Log" : item.pageName}</TableCell>
+                    <TableCell>
+                      {item.pageName === "Equipment"
+                        ? "Inventory"
+                        : item.pageName === "Logs"
+                        ? "Allocation Log"
+                        : item.pageName}
+                    </TableCell>
                     {["create", "update", "delete", "view"].map((action) => (
                       <TableCell key={action}>
                         <Checkbox
                           checked={permissions[item._id]?.[action] || false}
-                          disabled={ (["Dashboard", "Request Log", "Logs"].includes(item.pageName) && ["create", "update", "delete"].includes(action)) ||
-                            (["Notification", "All Request"].includes(item.pageName) && ["create",].includes(action)) ||
-                            (item.pageName === "My Request" && ["update", "delete"].includes(action))}
+                          disabled={
+                            (["Dashboard", "Request Log", "Logs"].includes(
+                              item.pageName
+                            ) &&
+                              ["create", "update", "delete"].includes(
+                                action
+                              )) ||
+                            (["Notification", "All Request"].includes(
+                              item.pageName
+                            ) &&
+                              ["create"].includes(action)) ||
+                            (item.pageName === "My Request" &&
+                              ["update", "delete"].includes(action))
+                          }
                           onCheckedChange={() =>
                             !(
-                              (["Dashboard", "Request Log", "Logs"].includes(item.pageName) && ["create", "update", "delete"].includes(action)) ||
-                              (["Notification", "All Request"].includes(item.pageName) && ["create"].includes(action)) ||  (item.pageName === "My Request" && ["update", "delete"].includes(action))
+                              (["Dashboard", "Request Log", "Logs"].includes(
+                                item.pageName
+                              ) &&
+                                ["create", "update", "delete"].includes(
+                                  action
+                                )) ||
+                              (["Notification", "All Request"].includes(
+                                item.pageName
+                              ) &&
+                                ["create"].includes(action)) ||
+                              (item.pageName === "My Request" &&
+                                ["update", "delete"].includes(action))
                             ) && handleCheckboxChange(item._id, action)
                           }
                         />
@@ -187,7 +307,7 @@ const AddRoleForm = () => {
             variant="secondary"
             type="submit"
             buttonName="Save"
-            isSubmitting={isSubmitting} 
+            isSubmitting={isSubmitting}
             className="w-24 h-8 mt-3 sm:w-28 sm:h-8 md:w-32 md:h-10 lg:w-40 lg:h-10"
           />
         </div>

@@ -91,7 +91,7 @@ const EmployeeTable = ({ page, limit, setPage, setLimit }) => {
       </div>
       <ConfirmationModal
         showModal={showModal}
-        title={"Are you sure you want to cancel ?"}
+        title={"Are you sure you want to cancel?"}
         onClose={() => setShowModal(false)}
         onConfirm={handleCancel}
       />

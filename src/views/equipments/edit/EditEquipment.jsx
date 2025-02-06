@@ -96,7 +96,7 @@ const EditEquipmentForm = () => {
             <InputWithLabel
               type="text"
               id="equipmentName"
-              label="Equipment Name"
+              label="Equipment"
               readOnly={true}
               name="equipmentName"
               placeholder="Equipment name"
@@ -114,7 +114,7 @@ const EditEquipmentForm = () => {
               <InputWithLabel
                 type="text"
                 id="serialNumber"
-                label="Serial Number"
+                label="Serial number"
                 name="serialNumber"
                 placeholder="Serial Number"
                 inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
@@ -140,7 +140,7 @@ const EditEquipmentForm = () => {
             <InputWithLabel
               type="text"
               id="currentStatus"
-              label="Current Status"
+              label="Current status"
               name="currentStatus"
               readOnly={true}
               placeholder="Current status"

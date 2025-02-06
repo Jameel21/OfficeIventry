@@ -37,7 +37,7 @@ const ViewRole = () => {
       setPermissions(initialPermissions);
     }
     reset({
-      notifyForRequest: roleData?.notifyForRequest ? "true" : "false",
+      notifyForRequest: roleData?.notifyForRequest ? "Yes" : "No",
     });
   }, [roleData, reset]);
 

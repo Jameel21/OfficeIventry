@@ -32,7 +32,7 @@ const EquipmentForm = ({
       {isSerialNumber && (
         <InputWithLabel
           type="text"
-          label="SerialNumber"
+          label="Serial number"
           name="serialNumber"
           placeholder="Serial number"
           inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80"
@@ -64,7 +64,7 @@ const EquipmentForm = ({
       <InputWithLabel
         type="text"
         name="warrantyPeriod"
-        label="Warranty Period"
+        label="Warranty period"
         placeholder="Warranty period"
         inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80"
       />

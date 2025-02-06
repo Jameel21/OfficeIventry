@@ -64,7 +64,7 @@ const ViewEquipmentForm = () => {
               <InputWithLabel
                 type="text"
                 id="equipmentName"
-                label="Equipment Name"
+                label="Equipment"
                 readOnly={true}
                 name="equipmentName"
                 placeholder="equipment name"
@@ -83,7 +83,7 @@ const ViewEquipmentForm = () => {
                 <InputWithLabel
                   type="text"
                   id="serialNumber"
-                  label="Serial Number"
+                  label="Serial number"
                   readOnly={true}
                   name="serialNumber"
                   placeholder="serial Number"
@@ -103,7 +103,7 @@ const ViewEquipmentForm = () => {
                 <InputWithLabel
                   type="text"
                   id="warrantyPeriod"
-                  label="Warranty Period"
+                  label="Warranty period"
                   name="warrantyPeriod"
                   readOnly={true}
                   placeholder="Warranty period"
@@ -113,7 +113,7 @@ const ViewEquipmentForm = () => {
               <InputWithLabel
                 type="text"
                 id="currentStatus"
-                label="Current Status"
+                label="Current status"
                 name="currentStatus"
                 readOnly={true}
                 placeholder="Current status"
@@ -140,7 +140,7 @@ const ViewEquipmentForm = () => {
               <InputWithLabel
                 type="text"
                 id="createdAt"
-                label="Created At"
+                label="Created at"
                 name="createdAt"
                 readOnly={true}
                 placeholder="Created at"

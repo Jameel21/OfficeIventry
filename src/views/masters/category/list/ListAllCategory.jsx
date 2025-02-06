@@ -3,8 +3,16 @@ import { useState } from "react";
 import BreadCrumbs from "@/components/form-fields/_utils/BreadCrumbs";
 import { useLocation, useNavigate } from "react-router-dom";
 import CategoryTable from "../_utils/CategoryTable";
+import { getDecodedData } from "@/utils/encryptDecrypt";
 
 const ListAllCategory = () => {
+  const userData = getDecodedData("userData");
+    const menuPermission = userData?.menuPermission || [];
+
+  const categoryPermission = menuPermission.find(
+    (perm) => perm?.menu?.pageName === "Category"
+  );
+
   const navigate = useNavigate();
  const location = useLocation();
  const initialCategory =
@@ -43,12 +51,12 @@ const ListAllCategory = () => {
         </div>
 
         <div className="flex justify-end gap-2 md:items-center">
-          <UiButton
+          {categoryPermission?.create &&<UiButton
             onClick={handleAddCategory}
             className={"w-28 h-7 md:w-40 md:h-11 text-white"}
             variant={"secondary"}
             buttonName={"Add Category"}
-          />
+          />}
         </div>
       </div>
       <div className="mt-5">

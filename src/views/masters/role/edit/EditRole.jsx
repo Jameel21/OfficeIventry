@@ -46,7 +46,7 @@ const EditRole = () => {
       setPermissions(initialPermissions);
       reset({
         role: roleData?.role,
-        notifyForRequest: roleData?.notifyForRequest
+        notifyForRequest: roleData?.notifyForRequest,
       });
     }
   }, [menuData, roleData, reset]);
@@ -62,15 +62,43 @@ const EditRole = () => {
   };
 
   const onSubmitForm = async (data) => {
+    let hasViewPermission = false;
+    const menuPageId = "675c1abfb42832b8f2d0edf8";
+
+    // Ensure 'view' is true if 'create', 'update', or 'delete' is selected
+    let updatedPermissions = Object.keys(permissions).map((menuId) => {
+      const { create, update, delete: del, view } = permissions[menuId];
+
+      let updatedView = view || create || update || del; // Ensure 'view' is true if any other permission is true
+
+      if (updatedView && menuId !== menuPageId) {
+        hasViewPermission = true; // Track if at least one view is selected (excluding "Menu")
+      }
+
+      return {
+        menu: menuId,
+        create,
+        update,
+        delete: del,
+        view: updatedView, // Force 'view' to true if any other permission is true
+      };
+    });
+
+    // Show toast if no 'view' permission is selected
+    if (!hasViewPermission) {
+      toast.error("You have to select at least one 'View' permission.");
+      return;
+    }
+    updatedPermissions = updatedPermissions.map((perm) =>
+      perm.menu === menuPageId ? { ...perm, view: true } : perm
+    );
+
     const payload = {
       role: data.role,
       notifyForRequest: data.notifyForRequest,
-      permissions: Object.keys(permissions).map((menuId) => ({
-        menu: menuId,
-        ...permissions[menuId],
-      })),
+      permissions: updatedPermissions,
     };
-    console.log("payload",payload)
+    console.log("payload", payload);
 
     try {
       const response = await mutateAsync({ id: id, data: payload });
@@ -90,7 +118,6 @@ const EditRole = () => {
     navigate("/admin/role");
   };
 
-  
   const notifyOptions = [
     {
       label: "Yes",
@@ -103,29 +130,33 @@ const EditRole = () => {
   ];
 
   const customOrder = [
-    "Dashboard", 
+    "Dashboard",
     "Department",
     "Role",
-    "Brand", 
+    "Brand",
     "Category",
     "Inventory",
     "User",
-    "My Request", 
+    "My Request",
     "All Request",
     "Logs",
     "Request Log",
     "Notification",
   ];
-  
+
   // Sort the menuData based on customOrder
   const sortedMenuData = menuData
-  ?.filter((item) => item.pageName !== "Menu") // Exclude "Menu" from UI
-  .sort((a, b) => {
-    return (
-      customOrder.indexOf(a.pageName === "Equipment" ? "Inventory" : a.pageName) -
-      customOrder.indexOf(b.pageName === "Equipment" ? "Inventory" : b.pageName)
-    );
-  });
+    ?.filter((item) => item.pageName !== "Menu") // Exclude "Menu" from UI
+    .sort((a, b) => {
+      return (
+        customOrder.indexOf(
+          a.pageName === "Equipment" ? "Inventory" : a.pageName
+        ) -
+        customOrder.indexOf(
+          b.pageName === "Equipment" ? "Inventory" : b.pageName
+        )
+      );
+    });
 
   return (
     <FormProvider {...methods}>
@@ -148,7 +179,7 @@ const EditRole = () => {
             placeholder="Role"
             inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
           />
-            <DropDown
+          <DropDown
             name="notifyForRequest"
             labelName="For Notifications"
             options={notifyOptions}
@@ -169,20 +200,47 @@ const EditRole = () => {
                       index % 2 === 0 ? "bg-gray-200" : "bg-slate-100"
                     }`}
                   >
-                    <TableCell>{item.pageName === "Equipment" ? "Inventory" : item.pageName === "Logs" ? "Allocation Log" : item.pageName}</TableCell>
+                    <TableCell>
+                      {item.pageName === "Equipment"
+                        ? "Inventory"
+                        : item.pageName === "Logs"
+                        ? "Allocation Log"
+                        : item.pageName}
+                    </TableCell>
                     {["create", "update", "delete", "view"].map((action) => (
                       <TableCell key={action}>
                         <Checkbox
-                         checked={permissions[item._id]?.[action] || false}
-                         disabled={ (["Dashboard", "Request Log", "Logs"].includes(item.pageName) && ["create", "update", "delete"].includes(action)) ||
-                           (["Notification", "All Request"].includes(item.pageName) && ["create",].includes(action)) ||
-                           (item.pageName === "My Request" && ["update", "delete"].includes(action))}
-                         onCheckedChange={() =>
-                           !(
-                             (["Dashboard", "Request Log", "Logs"].includes(item.pageName) && ["create", "update", "delete"].includes(action)) ||
-                             (["Notification", "All Request"].includes(item.pageName) && ["create"].includes(action)) ||  (item.pageName === "My Request" && ["update", "delete"].includes(action))
-                           ) && handleCheckboxChange(item._id, action)
-                         }
+                          checked={permissions[item._id]?.[action] || false}
+                          disabled={
+                            (["Dashboard", "Request Log", "Logs"].includes(
+                              item.pageName
+                            ) &&
+                              ["create", "update", "delete"].includes(
+                                action
+                              )) ||
+                            (["Notification", "All Request"].includes(
+                              item.pageName
+                            ) &&
+                              ["create"].includes(action)) ||
+                            (item.pageName === "My Request" &&
+                              ["update", "delete"].includes(action))
+                          }
+                          onCheckedChange={() =>
+                            !(
+                              (["Dashboard", "Request Log", "Logs"].includes(
+                                item.pageName
+                              ) &&
+                                ["create", "update", "delete"].includes(
+                                  action
+                                )) ||
+                              (["Notification", "All Request"].includes(
+                                item.pageName
+                              ) &&
+                                ["create"].includes(action)) ||
+                              (item.pageName === "My Request" &&
+                                ["update", "delete"].includes(action))
+                            ) && handleCheckboxChange(item._id, action)
+                          }
                         />
                       </TableCell>
                     ))}

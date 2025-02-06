@@ -38,24 +38,77 @@ const LoginForm = () => {
         loginTime
       };
       setEncodedData("userData", userData);
-      toast.success(response?.data?.message || "Login Success");
+      
+      // console.log("menuPermision", menuPermission)
 
-      switch (userRole) {
-        case "Super Admin":
-          navigate("/admin");
-          break;
-        case "Admin":
-          navigate("/admin");
-          break;
-        case "HR":
-          navigate("/admin");
-          break;
-        case "Employee":
-          navigate("/viewMyRequest");
-          break;
-        default:
-          navigate("/viewMyRequest");
+      //new one
+      const dashboardPage = menuPermission?.find(
+        (perm) => perm.menu?.pageName === "Dashboard" && perm.view
+      );
+      const reuestPage = menuPermission?.find(
+        (perm) => perm.menu?.pageName === "My Request" && perm.view
+      );
+      const departmentPage = menuPermission?.find(
+        (perm) => perm.menu?.pageName === "Department" && perm.view
+      );
+      const rolePage = menuPermission?.find(
+        (perm) => perm.menu?.pageName === "Role" && perm.view
+      );
+      const brandPage = menuPermission?.find(
+        (perm) => perm.menu?.pageName === "Brand" && perm.view
+      );
+      const categoryPage = menuPermission?.find(
+        (perm) => perm.menu?.pageName === "Category" && perm.view
+      );
+      const equipmentPage = menuPermission?.find(
+        (perm) => perm.menu?.pageName === "Equipment" && perm.view
+      );
+      const userPage = menuPermission?.find(
+        (perm) => perm.menu?.pageName === "User" && perm.view
+      );
+      const allRequestPage = menuPermission?.find(
+        (perm) => perm.menu?.pageName === "All Request" && perm.view
+      );
+      const allocationLogPage = menuPermission?.find(
+        (perm) => perm.menu?.pageName === "Logs" && perm.view
+      );
+      const reuestLogPage = menuPermission?.find(
+        (perm) => perm.menu?.pageName === "Request Log" && perm.view
+      );
+      const notificationPage = menuPermission?.find(
+        (perm) => perm.menu?.pageName === "Notification" && perm.view
+      );
+
+      let redirectPath = ""; 
+
+      if (dashboardPage) {
+        redirectPath = "/admin";
+      } else if(reuestPage){
+        redirectPath = "/viewMyRequest";
+      }else if(departmentPage){
+        redirectPath = "/admin/department";
+      }else if(rolePage){
+        redirectPath = "/admin/role";
+      }else if(brandPage){
+        redirectPath = "/admin/brand";
+      }else if(categoryPage){
+        redirectPath = "/admin/category";
+      }else if(equipmentPage){
+        redirectPath = "/admin/employeeequipment";
+      }else if(userPage){
+        redirectPath = "/admin/viewAllUser";
+      }else if(allRequestPage){
+        redirectPath = "/admin/requests";
+      }else if(allocationLogPage){
+        redirectPath = "/admin/allocationLog";
       }
+      else if(reuestLogPage){
+        redirectPath = "/admin/requestLog";
+      }else if(notificationPage){
+        redirectPath = "/notification";
+      }
+      navigate(redirectPath);
+      toast.success(response?.data?.message || "Login Success");
     } catch (error) {
       const errorMessage =
         error.response?.data?.message || `Login failed. Please try again.`;
