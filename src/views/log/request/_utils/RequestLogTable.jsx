@@ -47,6 +47,7 @@ const RequestLogTable = ({ page, limit, setPage, setLimit }) => {
           error={error}
           showBreadCrumbs={true}
           handleMenuChange={handleMenuChange}
+          bodyClassName={"cursor-default"}
         />
       </div>
 

@@ -27,8 +27,9 @@ const RequestTable = ({ selectedRequests }) => {
   const [limit, setLimit] = useState(10);
 
   const headersMapping = {
+    All: ["Username", "Equipment", "Request Date", "Status"],
     Pending: ["Username", "Equipment", "Request Date", "Reason"],
-    Canceled: ["Username", "Equipment", "Request Date", "Reason"],
+    Cancelled: ["Username", "Equipment", "Request Date", "Reason"],
     Approved: ["Username", "Equipment", "Issue Date", "Mark as Return"],
     Completed: ["Username", "Equipment", "Request Date", "Reason"],
     Rejected: ["Username", "Equipment", "Request Date", "Rejected Reason"],
@@ -116,6 +117,11 @@ const RequestTable = ({ selectedRequests }) => {
         selectedRequests !== "Approved" && {
           render: () => new Date(item?.requestDate).toLocaleDateString("en-GB"),
         },
+
+        // selectedRequests === "All" && {
+        //   render: () => item?.requestLogId?.status
+        // },
+
         selectedRequests === "Approved" && {
           render: () => new Date(item?.issueDate).toLocaleDateString("en-GB"),
         },
@@ -131,7 +137,11 @@ const RequestTable = ({ selectedRequests }) => {
         },
         selectedRequests !== "Approved" && {
           render: () =>
-            selectedRequests === "Rejected" ? (
+            selectedRequests === "All" ? (
+              <div className="md:w-[200px] lg:w-[250px] xl:w-[450px] break-words whitespace-normal">
+                {item?.requestLogId?.status ?? "N/A"}
+              </div>
+            ) : selectedRequests === "Rejected" ? (
               <div className="md:w-[200px] lg:w-[250px] xl:w-[450px] break-words whitespace-normal">
                 {item.rejectedReason}
               </div>
@@ -163,6 +173,7 @@ const RequestTable = ({ selectedRequests }) => {
           error={error}
           showBreadCrumbs={true}
           tableData={tableData}
+          bodyClassName={"cursor-default"}
           handleMenuChange={handleMenuChange}
         />
       </div>

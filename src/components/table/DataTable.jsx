@@ -46,7 +46,7 @@ const DataTable = ({
         </TableHeader>
       </Table>
 
-      <div className={cn("overflow-y-auto", containerClassName)}>
+      <div className={cn("overflow-y-auto scrollbar-hide", containerClassName)}>
         <Table>
           <TableBody
             className={cn(

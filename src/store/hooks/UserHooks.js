@@ -8,11 +8,11 @@ export const useAddUser = () => {
   });
 };
 
-export const useGetAllUsers = ({ page = 1, limit = 10 }) => {
+export const useGetAllUsers = ({ page = 1, limit = 10, searchTerm = "" }) => {
   return useQuery({
-    queryKey:["AllUsers",page, limit],
+    queryKey:["AllUsers",page, limit,searchTerm],
     queryFn: async () => {
-     const response = await userService.getAllUser({ page, limit })
+     const response = await userService.getAllUser({ page, limit, searchTerm  })
      return response?.data?.data || []
     } 
   })

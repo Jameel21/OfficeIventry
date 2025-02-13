@@ -5,8 +5,8 @@ const adduser = async (data) => {
   return response
   }
 
-const getAllUser = async ({ page = 1, limit = 10 }) => {
-  const response = await API.get(`/user/getAllUsers?page=${page}&limit=${limit}`)
+const getAllUser = async ({ page = 1, limit = 10, searchTerm = "" }) => {
+  const response = await API.get(`/user/getAllUsers?page=${page}&limit=${limit}&searchTerm=${searchTerm}`)
   return response
 }
 

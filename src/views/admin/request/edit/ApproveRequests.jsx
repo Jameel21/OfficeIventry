@@ -60,6 +60,7 @@ const ApproveRequests = () => {
     label: serial.serialNumber,
     value: serial.serialNumber,
   })) || [{ label: "No serial numbers available", value: "" }];
+  console.log("serialNumberOptions", serialNumOptions);
 
   useEffect(() => {
     if (selectedBrandId) {
@@ -216,14 +217,16 @@ const ApproveRequests = () => {
                 dropDownMenuClassName={"w-52 sm:w-64 md:w-72 lg:w-80"}
                 dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 w-52  sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
               />
-              <DropDown
-                name="serialNumber"
-                labelName="Serial Number"
-                options={serialNumOptions}
-                placeholder="Serial Number"
-                dropDownMenuClassName={"w-52 sm:w-64 md:w-72 lg:w-80"}
-                dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 w-52  sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
-              />
+              {serialNumOptions.length > 0 && serialNumOptions[0].value && (
+                <DropDown
+                  name="serialNumber"
+                  labelName="Serial Number"
+                  options={serialNumOptions}
+                  placeholder="Serial Number"
+                  dropDownMenuClassName={"w-52 sm:w-64 md:w-72 lg:w-80"}
+                  dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
+                />
+              )}
               <div className="flex gap-4 sm:gap-16 lg:gap-0 lg:flex-none lg:justify-between xl:w-[620px]">
                 <UiButton
                   variant="secondary"

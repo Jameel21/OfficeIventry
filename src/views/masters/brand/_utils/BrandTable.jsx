@@ -95,6 +95,7 @@ const BrandTable = ({ page, limit, setPage, setLimit }) => {
           isLoading={isLoading}
           columnWidths={columnWidths}
           error={error}
+          bodyClassName={"cursor-default"}
         />
       </div>
       <ConfirmationModal

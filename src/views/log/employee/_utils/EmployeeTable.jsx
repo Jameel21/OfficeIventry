@@ -1,15 +1,12 @@
 import Pagination from "@/components/pagination/Pagination";
 import DataTable from "@/components/table/DataTable";
-import { useGetAllUsers } from "@/store/hooks/UserHooks";
 import { useNavigate } from "react-router-dom";
 
-const EmployeeTable = ({ page, limit, setPage, setLimit }) => {
+const EmployeeTable = ({ page, limit, setPage, setLimit, userData, isLoading, error, data }) => {
   const navigate = useNavigate()
   const headers = ["Employee name", "Email", "Employee Id", "Role"];
   const columnWidths = ["w-[25%]", "w-[25%]", "w-[25%]", "w-[25%]"];
 
-  const { data, isLoading, error } = useGetAllUsers({ page, limit });
-  const userData = data?.users;
 
   const tableData = userData?.map((item) => ({
     cells: [

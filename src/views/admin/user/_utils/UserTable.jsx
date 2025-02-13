@@ -134,6 +134,7 @@ const UserTable = ({
           isLoading={isLoading}
           columnWidths={columnWidths}
           error={error}
+          bodyClassName={"cursor-default"}
         />
       </div>
       <ConfirmationModal

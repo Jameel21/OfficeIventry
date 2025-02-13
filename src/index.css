@@ -12,6 +12,14 @@
   background-color: rgb(114, 128, 146);
 }
 
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Hide scrollbar in WebKit browsers */
+}
+.scrollbar-hide {
+  -ms-overflow-style: none; /* Hide scrollbar in IE/Edge */
+  scrollbar-width: none; /* Hide scrollbar in Firefox */
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

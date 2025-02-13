@@ -36,6 +36,7 @@ const AllocationTable = ({
           columnWidths={columnWidths}
           error={error}
           showBreadCrumbs={false}
+          bodyClassName={"cursor-default"}
         />
       </div>
       <Pagination

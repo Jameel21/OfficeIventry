@@ -1,8 +1,8 @@
 import API from "@/helper/AxiosConfig";
 
-const getEquipmentsName = async (equipmentType) => {
+const getEquipmentsName = async (equipmentType, includeAll = false) => {
   const response = await API.get("/master/category/getNames", {
-    params: { equipmentType },
+    params: { equipmentType,  includeAll  },
   });
   return response
 }

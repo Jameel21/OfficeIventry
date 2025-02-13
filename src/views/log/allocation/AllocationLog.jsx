@@ -10,7 +10,7 @@ const AllocationLog = () => {
   const [keyword, setKeyword] = useState("Allocated To");
   const [searchTerm, setSearchTerm] = useState("");
 
-  const mainMenu = ["Equipment", "Allocated To", "Allocated By", "Date"];
+  const mainMenu = ["Equipment", "Allocated To", "Allocated By",];
   const { data, isLoading, error } = useGetAllocationLog({ page, limit });
   const logData = data?.logs;
 
@@ -30,10 +30,6 @@ const AllocationLog = () => {
       return log?.requestLogId?.updatedBy?.userName
         .toLowerCase()
         .includes(lowerCaseSearchTerm);
-    case "Date":
-      return new Date(log?.issueDate)
-      .toLocaleDateString("en-GB")
-      .includes(searchTerm); 
     default:
       return log?.employeeId?.userName
       .toLowerCase()

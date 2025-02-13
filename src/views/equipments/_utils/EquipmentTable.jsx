@@ -114,6 +114,7 @@ const EquipmentTable = ({ equipmentType }) => {
           isLoading={isLoading}
           columnWidths={columnWidths}
           error={error}
+          bodyClassName={"cursor-default"}
         />
       </div>
       <ConfirmationModal

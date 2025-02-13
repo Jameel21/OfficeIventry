@@ -34,6 +34,7 @@ const UsersTable = () => {
           columnWidths={columnWidths}
           error={error}
           showBreadCrumbs={false}
+          bodyClassName={"cursor-default"}
           // handleMenuChange={handleMenuChange}
         />
       </div>

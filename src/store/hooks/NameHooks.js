@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import nameService from "../services/NameService";
 
-export const useGetEquipmentName = (equipmentType) => {
+export const useGetEquipmentName = (equipmentType, includeAll = false) => {
   return useQuery({
-    queryKey: ["equipmentName", equipmentType],
+    queryKey: ["equipmentName", equipmentType,includeAll ],
     queryFn:async () => {
-      const response = await nameService.getEquipmentsName(equipmentType);
+      const response = await nameService.getEquipmentsName(equipmentType, includeAll);
       return response?.data?.data || []
     }
   })

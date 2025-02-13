@@ -9,15 +9,17 @@ const CategoryDetailsTable = () => {
 
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
-  const headers = ["Equipment Name", "Brand", "Date of purchase"];
-  const columnWidths = ["w-[33.33%]", "w-[33.33%]", "w-[33.33%]"];
+  const headers = ["Equipment Name", "Brand", "Quantity", "Date of purchase"];
+  const columnWidths = ["w-[25%]", "w-[25%]", "w-[25%]", "w-[25%]",];
   const { data, isLoading, error } = useGetCategoryDetails({ id, page, limit });
   const categoryData = data?.categories;
+  console.log("categoryData", categoryData)
 
   const tableData = categoryData?.map((item) => ({
     cells: [
       { id: item._id, render: () => item.equipmentNameId.equipmentName },
       { render: () => item.brandId?.brand ?? "none" },
+      { render: () => item.quantity ?? "none" },
       {
         render: () => new Date(item.dateOfPurchase).toLocaleDateString("en-GB"),
       },
@@ -34,6 +36,7 @@ const CategoryDetailsTable = () => {
           columnWidths={columnWidths}
           error={error}
           showBreadCrumbs={false}
+          bodyClassName={"cursor-default"}
         />
       </div>
       <Pagination

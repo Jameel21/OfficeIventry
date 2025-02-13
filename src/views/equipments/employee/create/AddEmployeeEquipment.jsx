@@ -16,7 +16,7 @@ const AddEmployeeEquipment = () => {
   const { handleSubmit, reset, watch, setFocus,formState: { isSubmitting }, } = methods;
 
   const navigate = useNavigate();
-  const { data: equipmentNames } = useGetEquipmentName("Employee Equipment");
+  const { data: equipmentNames } = useGetEquipmentName("Employee Equipment", true);
 
   const equipmentOptions =
     equipmentNames?.map((item) => ({

@@ -5,10 +5,10 @@ import { useLocation } from "react-router-dom";
 
 const Requests = () => {
   const location = useLocation();
-  const initialRequest = location.state?.selectedRequests || "Pending"
+  const initialRequest = location.state?.selectedRequests || "All"
   const [selectedRequests, setSelectedRequests] = useState(initialRequest);
 
-  const mainMenu = ["Pending", "Approved", "Completed", "Rejected", "Canceled"];
+  const mainMenu = ["All","Pending", "Approved", "Completed", "Rejected", "Cancelled",];
 
   const handleMainMenuChange = (value) => {
     setSelectedRequests(value);

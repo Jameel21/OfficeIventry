@@ -16,7 +16,7 @@ const AddOfficeEquipment = () => {
   const { handleSubmit, reset, watch, setFocus, formState: { isSubmitting }, } = methods;
 
   const navigate = useNavigate();
-  const { data: equipmentNames } = useGetEquipmentName("Office Equipment");
+  const { data: equipmentNames } = useGetEquipmentName("Office Equipment", true);
 
   const equipmentOptions =
     equipmentNames?.map((item) => ({

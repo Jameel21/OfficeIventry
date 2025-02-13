@@ -239,7 +239,7 @@ const AddRoleForm = () => {
               </h1>
             </div>
 
-            <UiTable headers={headers} headerClass={"h-12 text-sm md:text-lg "}>
+            <UiTable headers={headers} headerClass={"h-12 text-sm md:text-lg"} bodyClassName={"cursor-default"}>
               {sortedMenuData && sortedMenuData?.length > 0 ? (
                 sortedMenuData.map((item, index) => (
                   <TableRow

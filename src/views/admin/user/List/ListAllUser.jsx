@@ -20,14 +20,14 @@ const ListAllUser = () => {
   const [limit, setLimit] = useState(10);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const { data, isLoading, error } = useGetAllUsers({ page, limit });
+  const { data, isLoading, error } = useGetAllUsers({ page, limit, searchTerm });
   const userData = data?.users;
 
-  const filteredUsers = userData?.filter((user) => {
-    return user?.userName
-      .toLowerCase()
-      .includes(searchTerm.toLocaleLowerCase());
-  });
+  // const filteredUsers = userData?.filter((user) => {
+  //   return user?.userName
+  //     .toLowerCase()
+  //     .includes(searchTerm.toLocaleLowerCase());
+  // });
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -65,7 +65,7 @@ const ListAllUser = () => {
           limit={limit}
           setPage={setPage}
           setLimit={setLimit}
-          userData={filteredUsers}
+          userData={userData}
           isLoading={isLoading}
           error={error}
           data={data}

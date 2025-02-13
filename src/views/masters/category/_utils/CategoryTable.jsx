@@ -108,6 +108,7 @@ const CategoryTable = ({ selectedCategory }) => {
           isLoading={isLoading}
           columnWidths={columnWidths}
           error={error}
+          bodyClassName={"cursor-default"}
         />
       </div>
       <ConfirmationModal

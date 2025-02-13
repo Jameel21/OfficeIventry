@@ -25,6 +25,7 @@ const EditEquipmentForm = () => {
     : "Employee Equipment";
 
   const { data: userData } = useGetSingleEquipment(id);
+  console.log("EditEquipment", userData)
   const { data: equipmentNames } = useGetEquipmentName(equipmentType);
   const { mutateAsync } = useUpdateEquipment(equipmentType);
 
