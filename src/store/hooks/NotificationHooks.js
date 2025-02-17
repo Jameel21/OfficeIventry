@@ -22,3 +22,19 @@ export const useDeleteNotifications = () => {
     mutationFn: notificationService.deleteNotifications
   })
 }
+
+export const useResetNotification = () => {
+  return useMutation({
+    mutationFn: notificationService.resetNotificationCount
+  })
+}
+
+export const useGetNotificationCount = () => {
+  return useQuery({
+    queryKey: ["notificationCount"],
+    queryFn: async () => {
+      const response = await notificationService.getNotificationCount();
+      return response?.data?.data || []
+    }
+  })
+}

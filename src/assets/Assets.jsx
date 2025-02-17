@@ -1,10 +1,45 @@
-import { getDecodedData } from '@/utils/encryptDecrypt';
-import { Lock, Bell ,FileText, Building2, User, GitPullRequestArrow,SquareCheckBig,UserRoundPen,CirclePlus, Plus, Logs, LayoutDashboard, ChartColumnStacked, Bitcoin, FileUser, BellElectric, Laptop, Cable} from 'lucide-react'
+import { useGetNotificationCount, useResetNotification } from "@/store/hooks/NotificationHooks";
+import { getDecodedData } from "@/utils/encryptDecrypt";
+import {
+  Lock,
+  Bell,
+  FileText,
+  Building2,
+  User,
+  GitPullRequestArrow,
+  SquareCheckBig,
+  UserRoundPen,
+  CirclePlus,
+  Plus,
+  Logs,
+  LayoutDashboard,
+  ChartColumnStacked,
+  Bitcoin,
+  FileUser,
+  BellElectric,
+  Laptop,
+  Cable,
+} from "lucide-react";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
 
- 
-export const GetSidebarmenu = () =>{
+export const GetSidebarmenu = () => {
   const userData = getDecodedData("userData");
   const menuPermission = userData?.menuPermission || [];
+
+  const { data, refetch } = useGetNotificationCount(); // Add `refetch`
+  console.log("notificationCount", data);
+
+  const { mutateAsync } = useResetNotification()
+
+ 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refetch(); // This will trigger a re-fetch of notification count
+    }, 1000); // Fetch every 1 seconds
+
+    return () => clearInterval(interval); // Cleanup on unmount
+  }, [refetch]);
 
   const isMenuVisible = (menuName) => {
     // Find the permission for the menu based on the pageName
@@ -13,6 +48,31 @@ export const GetSidebarmenu = () =>{
     );
     return permission?.view || false; // Return true if view is true, otherwise false
   };
+
+  const NotificationIcon = ({ count }) => (
+    <div className="relative">
+      <Bell className="w-5 h-5" />
+      {count > 0 && (
+        <span className="absolute px-1 text-xs text-white bg-red-500 rounded-full bottom-2 left-2">
+          {count }
+        </span>
+      )}
+    </div>
+  );
+
+  const onSubmit = async() => {
+    try {
+      const response = await mutateAsync();
+      console.log(response)
+      toast.success(response?.data?.message || "User updated successfully");
+      refetch(); 
+    } catch (error) {
+      const errorMessage = error.response?.data?.message ||
+      "Notification count reset successfully.";
+    toast.error(errorMessage);
+    }
+  }
+
 
   const menus = [
     {
@@ -128,21 +188,25 @@ export const GetSidebarmenu = () =>{
       ],
     },
     {
-      icon: Bell,
+      icon: () => <NotificationIcon count={data?.unreadCount || 0} />,
       url: "/notification",
       menu: "Notification",
       visible: isMenuVisible("Notification"),
+      onClick: onSubmit,
     },
   ];
   const filterVisibleMenus = (menuList) => {
     return menuList
       .map((menu) => {
         // Recursively filter submenus
-        const filteredSubmenus = menu.submenu ? filterVisibleMenus(menu.submenu) : undefined;
-  
+        const filteredSubmenus = menu.submenu
+          ? filterVisibleMenus(menu.submenu)
+          : undefined;
+
         // Determine visibility of the current menu
-        const isVisible = menu.visible && (filteredSubmenus?.length > 0 || !menu.submenu);
-  
+        const isVisible =
+          menu.visible && (filteredSubmenus?.length > 0 || !menu.submenu);
+
         return {
           ...menu,
           submenu: filteredSubmenus, // Update submenu with filtered submenus
@@ -154,5 +218,4 @@ export const GetSidebarmenu = () =>{
   return {
     menus: filterVisibleMenus(menus),
   };
-}
- 
+};

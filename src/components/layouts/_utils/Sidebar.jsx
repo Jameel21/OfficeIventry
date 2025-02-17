@@ -105,7 +105,10 @@ const DemoSidebar = () => {
                     <Link
                       key={index}
                       to={menu.url}
-                      onClick={() => handleMenuClick(menu.menu)}
+                      onClick={() => {handleMenuClick(menu.menu);
+                        menu.onClick?.()}
+                      }
+                      
                     >
                       <SidebarMenuItem>
                         <SidebarMenuButton

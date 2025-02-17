@@ -43,6 +43,7 @@ const RequestTable = ({ selectedRequests }) => {
     selectedRequests
   );
   const requestData = data?.requests;
+  console.log("requestData", requestData);
 
   const { mutateAsync } = useUpdateRequestFields();
   const deleteRequest = useDeleteRequest();
@@ -153,9 +154,9 @@ const RequestTable = ({ selectedRequests }) => {
         },
       ].filter(Boolean), // Remove undefined cells
       menu:
-        selectedRequests === "Pending"
+        item?.requestLogId?.status === "Pending"
           ? ["View", "Update"]
-          : selectedRequests === "Completed"
+          : item?.requestLogId?.status === "Completed"
           ? ["View", "Delete"]
           : ["View"],
     }));

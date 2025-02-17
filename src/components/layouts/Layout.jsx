@@ -11,6 +11,7 @@ const Layout = () => {
   const userData = getDecodedData("userData");
   const expiresIn = userData?.expiresIn;
 
+  
   useEffect(() => {
     if (expiresIn) {
       // Parse the `expiresIn` value into milliseconds
@@ -43,6 +44,8 @@ const Layout = () => {
       return () => clearInterval(interval); // Cleanup the interval on component unmount
     }
   }, [expiresIn, navigate]);
+
+
   return (
     <div className="flex">
       <div className="w-[5%] md:w-[272px]">
