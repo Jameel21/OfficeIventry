@@ -49,16 +49,20 @@ const EditEquipmentForm = () => {
   }, [userData, reset]);
 
   const onSubmit = async (formData) => {
+    const formattedPrice = formData.price ? parseInt(formData.price).toString() : "";
+console.log("formattedPrice", formattedPrice)
     const payload = {
       equipmentNameId: userData?.equipmentNameId?._id,
       brandId: formData.brandId,
       serialNumber: formData.serialNumber,
-      price: formData.price,
+      price: formattedPrice,
       quantity: formData.quantity,
       dateOfPurchase: formData.dateOfPurchase
         ? format(new Date(formData.dateOfPurchase), "yyyy-MM-dd")
         : "",
     };
+
+
 
     try {
       const response = await mutateAsync({ id, data: payload });

@@ -8,12 +8,24 @@ import resetPassword from "@assets/key.png";
 
 import toast from "react-hot-toast";
 import { resetPasswordSchema } from "@/utils/validationSchema";
+import { useEffect, useRef } from "react";
 
 const ResetPassword = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
   const token = queryParams.get("token");
+  const expires = queryParams.get("expires");
+  const hasShownToast = useRef(false); 
+
+  useEffect(() => {
+    const currentTime = Date.now();
+    if (currentTime > Number(expires) && !hasShownToast.current) {
+      toast.error("Reset link has expired. Please request a new one.");
+      hasShownToast.current = true;
+      navigate("/auth/forgotPassword");
+    }
+  }, [ expires, navigate]);
 
   const methods = useForm({
     resolver: yupResolver(resetPasswordSchema),
@@ -25,7 +37,7 @@ const ResetPassword = () => {
   const { handleSubmit, reset, formState: { isSubmitting }, } = methods;
 
   const { mutateAsync } = useResetPassword();
-
+  
   const onSubmitForm = async (data) => {
     try {
       const formattedData = {

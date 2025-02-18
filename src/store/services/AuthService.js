@@ -16,5 +16,4 @@ const forgotPassword = async (data) => {
 };
 
 export default {
-  userLogin,resetPassword, forgotPassword
-};
+  userLogin,resetPassword, forgotPassword,};

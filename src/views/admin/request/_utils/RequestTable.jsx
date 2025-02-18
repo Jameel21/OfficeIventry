@@ -139,15 +139,15 @@ const RequestTable = ({ selectedRequests }) => {
         selectedRequests !== "Approved" && {
           render: () =>
             selectedRequests === "All" ? (
-              <div className="md:w-[200px] lg:w-[250px] xl:w-[450px] break-words whitespace-normal">
+              <div className="md:w-[200px] lg:w-[250px] xl:w-[250px] break-words whitespace-normal">
                 {item?.requestLogId?.status ?? "N/A"}
               </div>
             ) : selectedRequests === "Rejected" ? (
-              <div className="md:w-[200px] lg:w-[250px] xl:w-[450px] break-words whitespace-normal">
+              <div className="md:w-[200px] lg:w-[250px] xl:w-[250px] break-words whitespace-normal">
                 {item.rejectedReason}
               </div>
             ) : (
-              <div className="w-[200px] md:w-[200px] lg:w-[250px] xl:w-[450px] break-words whitespace-normal">
+              <div className="w-[200px] md:w-[200px] lg:w-[250px] xl:w-[250px] break-words whitespace-normal">
                 {item.reason || "N/A"}
               </div>
             ),

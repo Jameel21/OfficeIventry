@@ -52,13 +52,26 @@ const EditRole = () => {
   }, [menuData, roleData, reset]);
 
   const handleCheckboxChange = (menuId, action) => {
-    setPermissions((prev) => ({
-      ...prev,
-      [menuId]: {
-        ...prev[menuId],
-        [action]: !prev[menuId]?.[action],
-      },
-    }));
+    setPermissions((prev) => {
+      const updatedPermissions = { ...prev };
+  
+      // Toggle the selected action
+      updatedPermissions[menuId] = {
+        ...updatedPermissions[menuId],
+        [action]: !updatedPermissions[menuId]?.[action],
+      };
+  
+      // If any of 'create', 'update', or 'delete' is true, force 'view' to be true
+      if (
+        updatedPermissions[menuId].create ||
+        updatedPermissions[menuId].update ||
+        updatedPermissions[menuId].delete
+      ) {
+        updatedPermissions[menuId].view = true;
+      }
+  
+      return updatedPermissions;
+    });
   };
 
   const onSubmitForm = async (data) => {
