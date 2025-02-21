@@ -6,7 +6,6 @@ const API = axios.create({
   
 });
 
-
 API.interceptors.request.use(
   (config) => {
     const userData = getDecodedData("userData"); 
@@ -26,6 +25,15 @@ API.interceptors.response.use(
   return response
  },
  (error) => {
+  if(error.response && error.response.data){
+    const message = error.response.data.message;
+    console.log(message);
+    if(message && message.includes("Token Expired")) {
+      localStorage.removeItem("userData"); 
+      console.error("Session expired, you have to login!")
+      window.location.href = "/auth/login"
+    }
+  }
     return Promise.reject(error);
   }
 );

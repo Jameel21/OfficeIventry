@@ -1,4 +1,5 @@
-import { useGetNotificationCount, useResetNotification } from "@/store/hooks/NotificationHooks";
+
+import { io } from "socket.io-client";
 import { getDecodedData } from "@/utils/encryptDecrypt";
 import {
   Lock,
@@ -20,26 +21,46 @@ import {
   Laptop,
   Cable,
 } from "lucide-react";
-import { useEffect } from "react";
-import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
 
 export const GetSidebarmenu = () => {
   const userData = getDecodedData("userData");
+  const userId = userData?.userId;
   const menuPermission = userData?.menuPermission || [];
 
-  const { data, refetch } = useGetNotificationCount(); // Add `refetch`
-  console.log("notificationCount", data);
+  const [socket, setSocket] = useState(null);
+  const [notificationCount, setNotificationCount] = useState(0);
 
-  const { mutateAsync } = useResetNotification()
+  const baseUrl = import.meta.env.VITE_BASE_URL;
+  const websocketUrl = baseUrl.replace(/\/api$/, "");
+
+    useEffect(() => {
+    const storedCount = localStorage.getItem("notificationCount");
+    if (storedCount) {
+      setNotificationCount(parseInt(storedCount, 10));
+    }
+    const newSocket = io(websocketUrl);
+    setSocket(newSocket);
+
+    if (userId) {
+      newSocket.emit("register", userId);
+    }
+
+    newSocket.on("notification", (notification) => {
+      console.log("New notification received:", notification);
+      setNotificationCount((prevCount) => {
+        const updatedCount = prevCount + 1;
+        localStorage.setItem("notificationCount", updatedCount);
+        return updatedCount;
+      });
+    });
+
+    return () => {
+      newSocket.disconnect();
+    };
+  }, [userId, websocketUrl]);
 
  
-  useEffect(() => {
-    const interval = setInterval(() => {
-      refetch(); // This will trigger a re-fetch of notification count
-    }, 1000); // Fetch every 1 seconds
-
-    return () => clearInterval(interval); // Cleanup on unmount
-  }, [refetch]);
 
   const isMenuVisible = (menuName) => {
     // Find the permission for the menu based on the pageName
@@ -54,24 +75,17 @@ export const GetSidebarmenu = () => {
       <Bell className="w-5 h-5" />
       {count > 0 && (
         <span className="absolute px-1 text-xs text-white bg-red-500 rounded-full bottom-2 left-2">
-          {count }
+          {count}
         </span>
       )}
     </div>
   );
 
-  const onSubmit = async() => {
-    try {
-      const response = await mutateAsync();
-      console.log(response)
-      toast.success(response?.data?.message || "User updated successfully");
-      refetch(); 
-    } catch (error) {
-      const errorMessage = error.response?.data?.message ||
-      "Notification count reset successfully.";
-    toast.error(errorMessage);
-    }
-  }
+  const onSubmit = () => {
+    setNotificationCount(0);
+    localStorage.setItem("notificationCount", "0"); // Reset in storage
+  };
+
 
 
   const menus = [
@@ -188,7 +202,7 @@ export const GetSidebarmenu = () => {
       ],
     },
     {
-      icon: () => <NotificationIcon count={data?.unreadCount || 0} />,
+      icon: () => <NotificationIcon count={notificationCount || 0} />,
       url: "/notification",
       menu: "Notification",
       visible: isMenuVisible("Notification"),
