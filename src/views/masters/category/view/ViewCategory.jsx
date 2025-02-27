@@ -19,7 +19,7 @@ const ViewCategory = () => {
       reset({
         equipmentName: categoryData?.equipmentName,
         totalQuantity: categoryData?.totalQuantity,
-        isSerialNumber: categoryData?.isSerialNumber,
+        isSerialNumber:  categoryData?.isSerialNumber ? "Yes" : "No",
         brands:categoryData?.brands?.map((brand) => 
           brand.brand,
          ),
