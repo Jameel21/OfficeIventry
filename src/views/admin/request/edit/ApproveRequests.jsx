@@ -60,7 +60,6 @@ const ApproveRequests = () => {
     label: serial.serialNumber,
     value: serial.serialNumber,
   })) || [{ label: "No serial numbers available", value: "" }];
-  console.log("serialNumberOptions", serialNumOptions);
 
   useEffect(() => {
     if (selectedBrandId) {
@@ -192,14 +191,6 @@ const ApproveRequests = () => {
                 readOnly={true}
                 inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
               />
-              {/* <InputWithLabel
-              type="text"
-              label="Reason"
-              name="reason"
-              placeholder="Reason"
-              readOnly={true}
-              inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
-            /> */}
               <DropDown
                 name="reason"
                 labelName="Reason"

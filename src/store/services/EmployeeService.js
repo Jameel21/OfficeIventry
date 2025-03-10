@@ -21,9 +21,9 @@ export const getRequestById = async (id) => {
   return response;
 };
 
-export const getUserRequest = async ({ id, page = 1, limit = 10 }) => {
+export const getUserRequest = async ({ id, page = 1, limit = 10, status }) => {
   const response = await API.get(`/equipmentRequest/userDetails/${id}`, {
-    params: { page, limit },
+    params: { page, limit , status},
   });
   return response;
 };

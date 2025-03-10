@@ -39,7 +39,6 @@ const LoginForm = () => {
       };
       setEncodedData("userData", userData);
       
-      // console.log("menuPermision", menuPermission)
 
       //new one
       const dashboardPage = menuPermission?.find(

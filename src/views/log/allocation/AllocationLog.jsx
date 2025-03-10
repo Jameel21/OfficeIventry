@@ -7,42 +7,21 @@ import { useGetAllocationLog } from "@/store/hooks/LogHooks";
 const AllocationLog = () => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
-  const [keyword, setKeyword] = useState("Allocated To");
+  const [keyword, setKeyword] = useState("Employee Name");
   const [searchTerm, setSearchTerm] = useState("");
 
-  const mainMenu = ["Equipment", "Allocated To", "Allocated By",];
-  const { data, isLoading, error } = useGetAllocationLog({ page, limit });
+  const mainMenu = ["Employee Name","Equipment", "Serial Number","Allocated By",];
+  const { data, isLoading, error } = useGetAllocationLog({ page, limit, keyword, searchTerm });
   const logData = data?.logs;
 
-  const filteredLogs = logData?.filter((log) => {
-    const lowerCaseSearchTerm = searchTerm.toLowerCase();
-
-  switch (keyword) {
-    case "Equipment":
-      return log?.equipmentId?.equipmentNameId?.equipmentName
-        .toLowerCase()
-        .includes(lowerCaseSearchTerm);
-    case "Allocated To":
-      return log?.employeeId?.userName
-        .toLowerCase()
-        .includes(lowerCaseSearchTerm);
-    case "Allocated By":
-      return log?.requestLogId?.updatedBy?.userName
-        .toLowerCase()
-        .includes(lowerCaseSearchTerm);
-    default:
-      return log?.employeeId?.userName
-      .toLowerCase()
-      .includes(lowerCaseSearchTerm);
-  }
-  });
 
   const handleMainMenuChange = (value) => {
     setKeyword(value);
+    setPage(1);
   };
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
-    console.log("SearchTerm",searchTerm);
+    setPage(1);
   };
   return (
     <div className="w-full">
@@ -70,7 +49,7 @@ const AllocationLog = () => {
           setLimit={setLimit}
           isLoading={isLoading}
           error={error}
-          logData={filteredLogs}
+          logData={logData}
           data={data}
         />
       </div>

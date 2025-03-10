@@ -23,15 +23,10 @@ const ListAllUser = () => {
   const { data, isLoading, error } = useGetAllUsers({ page, limit, searchTerm });
   const userData = data?.users;
 
-  // const filteredUsers = userData?.filter((user) => {
-  //   return user?.userName
-  //     .toLowerCase()
-  //     .includes(searchTerm.toLocaleLowerCase());
-  // });
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
-    console.log("SearchTerm", searchTerm);
+    setPage(1)
   };
 
   const handleAddUser = () => {

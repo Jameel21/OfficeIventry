@@ -17,12 +17,12 @@ export const useGetMyRequest = ({ page = 1, limit = 10 }) => {
   });
 };
 
-export const useGetUserRequest = ({ id,page = 1, limit = 10 }) => {
+export const useGetUserRequest = ({ id,page = 1, limit = 10, status }) => {
   return useQuery({
-    queryKey: ["userRequest",id, page, limit],
+    queryKey: ["userRequest",id, page, limit, status],
     queryFn: async () => {
-      const response = await employeeService.getUserRequest({id, page, limit });
-      return response?.data?.data || [];
+      const response = await employeeService.getUserRequest({id, page, limit, status });
+      return response?.data?.data ;
     },
   });
 };

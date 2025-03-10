@@ -4,24 +4,76 @@ import { useGetUserRequest } from "@/store/hooks/EmployeeHooks";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 
-const UsersTable = () => {
+const UsersTable = ({ selectedRequests }) => {
   const { id } = useParams();
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
-  const headers = ["Employee Name", "Equipment", "Request date", "Status"];
+  const headersMapping = {
+    All: ["Employee Name", "Equipment", "Request Date", "Status",],
+    Pending: [
+      "Employee Name",
+      "Equipment",
+      "Request Date",
+      "Status",
+    ],
+    Cancelled: [
+      "Employee Name",
+      "Equipment",
+      "Request Date",
+      "Status",
+    ],
+    Approved: [
+      "Employee Name",
+      "Equipment",
+      "Serial Number",
+      "Status",
+    ],
+    Completed: [
+      "Employee Name",
+      "Equipment",
+      "Request Date",
+      "Status",
+    ],
+    Rejected: [
+      "Employee Name",
+      "Equipment",
+      "Request Date",
+      "Status",
+    ],
+  };
+
+  let headers = headersMapping[selectedRequests] || headersMapping["Pending"];
+
   const columnWidths = ["w-[25%]", "w-[25%]", "w-[25%]", "w-[25%]"];
 
-  const { data, isLoading, error } = useGetUserRequest({id, page, limit });
+  const { data, isLoading, error } = useGetUserRequest({
+    id,
+    page,
+    limit,
+    status: selectedRequests,
+  });
 
   const requestData = data?.requests;
- 
 
   const tableData = requestData?.map((item) => ({
     cells: [
-      { id: item._id, render: () => item.employeeId.userName },
-      { render: () => item.equipmentId.equipmentNameId.equipmentName },
-      { render: () => new Date(item.requestDate).toLocaleDateString("en-GB") },
-      { render: () => item.requestLogId.status },
+      { id: item._id, render: () => item?.employeeId?.userName || "none" },
+      {
+        render: () =>
+          item?.equipmentId?.equipmentNameId?.equipmentName || "none",
+      },
+      ...(selectedRequests === "Approved"
+        ? [
+            { render: () => item?.equipmentId?.serialNumber || "none" },
+            { render: () => item?.requestLogId?.status || "none" },
+          ]
+        : [
+            {
+              render: () =>
+                new Date(item?.requestDate).toLocaleDateString("en-GB"),
+            },
+            { render: () => item?.requestLogId?.status || "none" },
+          ]),
     ],
   }));
   return (
@@ -35,7 +87,6 @@ const UsersTable = () => {
           error={error}
           showBreadCrumbs={false}
           bodyClassName={"cursor-default"}
-          // handleMenuChange={handleMenuChange}
         />
       </div>
       <Pagination

@@ -111,7 +111,6 @@ const EditRole = () => {
       notifyForRequest: data.notifyForRequest,
       permissions: updatedPermissions,
     };
-    console.log("payload", payload);
 
     try {
       const response = await mutateAsync({ id: id, data: payload });

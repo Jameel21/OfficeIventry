@@ -10,11 +10,11 @@ export const useAddEquipment = (equipmentType) => {
    })
 }
 
-export const useGetAllEquipment = (page, limit, equipmentType) => {
+export const useGetAllEquipment = (page, limit, equipmentType,searchTerm ) => {
    return useQuery({
-      queryKey: ["AllEquipment", page, limit, equipmentType],
+      queryKey: ["AllEquipment", page, limit, equipmentType,searchTerm ],
       queryFn: async () => {
-         const response = await equipmentService.getAllEquipment(page, limit, equipmentType);
+         const response = await equipmentService.getAllEquipment(page, limit, equipmentType, searchTerm);
          return response?.data?.data || []  
       },
       enabled: !!page && !!limit && !!equipmentType,

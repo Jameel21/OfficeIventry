@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const EquipmentTable = ({ selectedCategory }) => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const headersMapping = {
@@ -13,14 +13,26 @@ const EquipmentTable = ({ selectedCategory }) => {
       "Equipment",
       "Total Quantity",
       "Available",
+      "Not Working",
       "In Use",
     ],
-    "Office Equipment": ["Equipment", "Total Quantity"],
+    "Office Equipment": [
+      "Equipment",
+      "Total Quantity",
+      "Available",
+      "Not Working",
+    ],
   };
 
   const columnWidthsMapping = {
-    "Employee Equipment": ["w-[30%]", "w-[20%]", "w-[20%]", "w-[20%]"],
-    "Office Equipment": ["w-[50%]", "w-[50%]"],
+    "Employee Equipment": [
+      "w-[20%]",
+      "w-[20%]",
+      "w-[20%]",
+      "w-[20%]",
+      "w-[20%]",
+    ],
+    "Office Equipment": ["w-[25%]", "w-[25%]", "w-[25%]", "w-[25%]"],
   };
 
   const headers =
@@ -47,25 +59,24 @@ const EquipmentTable = ({ selectedCategory }) => {
         {
           render: () => item.totalQuantity,
         },
+        { render: () => item.Available },
+        { render: () => item.notWorking || "0" },
       ],
     };
 
     // Add additional columns for "Employee Equipment"
     if (selectedCategory === "Employee Equipment") {
-      baseData.cells.push(
-        { render: () => item.Available },
-        { render: () => item.inUse }
-      );
+      baseData.cells.push({ render: () => item.inUse });
     }
 
     return baseData;
   });
   const handleView = (row) => {
     const categoryId = row.cells[0].id;
-    navigate(`/admin/categoryDetails/${categoryId}`,{
+    navigate(`/admin/categoryDetails/${categoryId}`, {
       state: { selectedCategory },
-    })
-  }
+    });
+  };
   return (
     <div>
       <div>

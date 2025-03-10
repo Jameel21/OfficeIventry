@@ -11,16 +11,18 @@ const AllocationTable = ({
   data,
   logData,
 }) => {
-  const headers = ["Equipment", "Allocated To", "Allocated By", "Date"];
-  const columnWidths = ["w-[25%]", "w-[25%]", "w-[25%]", "w-[25%]"];
+  const headers = ["Employee Name","Equipment", "Serial Number",  "Allocated By", "Date"];
+  const columnWidths = ["w-[20%]","w-[20%]", "w-[20%]", "w-[20%]", "w-[20%]"];
 
   const tableData = logData?.map((item) => ({
     cells: [
+      { render: () => item.employeeId.userName },
       {
         id: item._id,
         render: () => item.equipmentId.equipmentNameId.equipmentName,
       },
-      { render: () => item.requestLogId.createdBy.userName },
+      { render: () => item.equipmentId.serialNumber || "none" },
+      
       { render: () => item.requestLogId.updatedBy.userName },
       { render: () => new Date(item.issueDate).toLocaleDateString("en-GB") },
     ],

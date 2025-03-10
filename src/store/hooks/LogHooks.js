@@ -1,11 +1,11 @@
 import {useQuery } from "@tanstack/react-query";
 import logService from "../services/LogService";
 
-export const useGetAllocationLog = ({ page = 1, limit = 10 }) => {
+export const useGetAllocationLog = ({ page=1, limit=10,  keyword, searchTerm }) => {
   return useQuery({
-    queryKey: ["allocationLog",page, limit],
+    queryKey: ["allocationLog",page, limit,  keyword, searchTerm],
     queryFn: async () => {
-      const response = await logService.getAllocationlogs({ page, limit });
+      const response = await logService.getAllocationlogs({ page, limit,  keyword, searchTerm });
       return response?.data?.data || []
     }
   })

@@ -19,21 +19,17 @@ const ForgotPassword = () => {
 
   const onSubmitForm = async (data) => {
     try {
-       // Check if the input is empty
        if (!data.userInput) {
         toast.error("Either email or username is required");
         return;
       }
 
-      // Determine if the input is an email or a username
       const isEmail = yup.string().email().isValidSync(data.userInput);
 
-      // Prepare the payload based on the input type
       const payload = isEmail
-        ? { email: data.userInput } // Send email
-        : { userName: data.userInput }; // Send username
+        ? { email: data.userInput } 
+        : { userName: data.userInput };
 
-      // Call the API
       const response = await mutateAsync(payload);
       toast.success(response?.data?.message || "Email sent sucessfully");
       reset();

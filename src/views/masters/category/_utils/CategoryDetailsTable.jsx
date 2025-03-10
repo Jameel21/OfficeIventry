@@ -13,7 +13,6 @@ const CategoryDetailsTable = () => {
   const columnWidths = ["w-[25%]", "w-[25%]", "w-[25%]", "w-[25%]",];
   const { data, isLoading, error } = useGetCategoryDetails({ id, page, limit });
   const categoryData = data?.categories;
-  console.log("categoryData", categoryData)
 
   const tableData = categoryData?.map((item) => ({
     cells: [

@@ -68,24 +68,26 @@ const DropDown = ({
       >
         {labelName}
       </Label>
-      <DropdownMenu onOpenChange={(open) => setIsOpen(open)}>
+      <DropdownMenu onOpenChange={(open) => !isReadOnly && setIsOpen(open)}>
         <DropdownMenuTrigger asChild>
           <button
             className={cn(
               "rounded-md sm:rounded-lg lg:rounded-xl text-left text-sm transition-all focus:ring-1 focus:ring-ring border border-gray-300 focus:outline-none flex items-center justify-between",
               isPlaceholder ? "text-muted-foreground" : "text-foreground",
-              dropDownClassName
+              dropDownClassName,
             )}
             disabled={isReadOnly}
           >
             <span>{selectedLabel || placeholder}</span>
-            {isOpen ? (
-              <ChevronUp className="w-4 h-4 mr-2 text-muted-foreground hover:bg-accent hover:text-accent-foreground" />
-            ) : (
-              <ChevronDown className="w-4 h-4 mr-2 text-muted-foreground hover:bg-accent hover:text-accent-foreground" />
-            )}
+            {!isReadOnly &&
+              (isOpen ? (
+                <ChevronUp className="w-4 h-4 mr-2 text-muted-foreground hover:bg-accent hover:text-accent-foreground" />
+              ) : (
+                <ChevronDown className="w-4 h-4 mr-2 text-muted-foreground hover:bg-accent hover:text-accent-foreground" />
+              ))}
           </button>
         </DropdownMenuTrigger>
+        {!isReadOnly && (
         <DropdownMenuContent
           className={cn(
             "z-50 w-64 overflow-y-auto rounded-md shadow-lg bg-primary max-h-40",
@@ -121,6 +123,7 @@ const DropDown = ({
             </DropdownMenuRadioGroup>
           )}
         </DropdownMenuContent>
+        )}
       </DropdownMenu>
       <p className="h-1 text-xs text-red-600 md:text-sm sm:w-64 md:w-72 lg:w-80">
         {error ? error.message : null}

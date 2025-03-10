@@ -93,7 +93,7 @@ const ViewUserReqeuest = () => {
                 name="employeeId"
                 placeholder="Username"
                 readOnly={true}
-                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64  md:w-72 lg:w-80 cursor-pointer"
+                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
               />
               <InputWithLabel
                 type="text"
@@ -127,14 +127,6 @@ const ViewUserReqeuest = () => {
 
               {userData?.requestLogId?.status === "Rejected" && (
                 <>
-                  {/* <InputWithLabel
-                    type="text"
-                    label="Rejected Reason"
-                    name="rejectedReason"
-                    placeholder="rejected reason"
-                    readOnly={true}
-                    inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
-                  /> */}
                   <DropDown
                     name="rejectedReason"
                     labelName="Rejected Reason"
@@ -142,7 +134,7 @@ const ViewUserReqeuest = () => {
                     placeholder="Click to see the rejected reason"
                     dropDownMenuClassName={"w-52 sm:w-64 md:w-72 lg:w-80"}
                     isReadOnly={true}
-                    dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
+                    dropDownClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
                   />
                   <InputWithLabel
                     type="text"
@@ -195,15 +187,6 @@ const ViewUserReqeuest = () => {
                   inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
                 />
               )}
-
-              {/* <InputWithLabel
-                type="text"
-                label="Reason"
-                name="reason"
-                placeholder="Reason"
-                readOnly={true}
-                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 cursor-pointer"
-              /> */}
               <InputWithLabel
                 type="text"
                 label="Status"
@@ -219,7 +202,7 @@ const ViewUserReqeuest = () => {
                 placeholder="Click to see the reason"
                 dropDownMenuClassName={"w-52 sm:w-64 md:w-72 lg:w-80"}
                 isReadOnly={true}
-                dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
+                dropDownClassName="h-8 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
               />
             </div>
           </form>

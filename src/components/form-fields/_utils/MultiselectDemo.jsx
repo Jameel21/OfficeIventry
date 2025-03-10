@@ -6,7 +6,6 @@ import { MultiSelector,
     MultiSelectorTrigger
    
    } from '@/components/ui/multiselector';
-import React from 'react';
 import { useController } from 'react-hook-form';
 
 const MultiSelectors = ({name,control}) => {

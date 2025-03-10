@@ -36,7 +36,6 @@ const AddRoleForm = () => {
   const headers = ["Menu", "Create", "Update", "Delete", "View"];
 
   const { data: menuData } = useGetAllMenu();
-  console.log("menuData", menuData);
 
   const { mutateAsync } = useAddRole();
 

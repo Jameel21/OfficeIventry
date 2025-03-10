@@ -58,6 +58,7 @@ const EditEquipmentForm = () => {
       serialNumber: formData.serialNumber,
       price: formattedPrice,
       quantity: formData.quantity,
+      currentStatus:formData.currentStatus,
       dateOfPurchase: formData.dateOfPurchase
         ? format(new Date(formData.dateOfPurchase), "yyyy-MM-dd")
         : "",
@@ -80,6 +81,17 @@ const EditEquipmentForm = () => {
     ?.find((e) => e._id === userData?.equipmentNameId?._id)
     ?.brands.map((brand) => ({ label: brand.brand, value: brand._id })) || [
     { label: "none", value: "none" },
+  ];
+
+  const statusOptions = [
+    {
+      label: "Available",
+      value: "Available",
+    },
+    {
+      label: "Not Working",
+      value: "Not Working",
+    },
   ];
 
   return (
@@ -143,14 +155,14 @@ const EditEquipmentForm = () => {
                 inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
               />
             )}
-            <InputWithLabel
-              type="text"
-              id="currentStatus"
-              label="Current status"
+            <DropDown
+              labelName={"Current status"}
               name="currentStatus"
-              readOnly={true}
-              placeholder="Current status"
-              inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
+              options={statusOptions}
+              placeholder={userData?.currentStatus}
+              dropDownMenuClassName={"sm:w-64 md:w-72 lg:w-80"}
+              isReadOnly={userData?.currentStatus === "In Use"} 
+              dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
             />
             <DatePickerDemo
               label="Date of purchase"

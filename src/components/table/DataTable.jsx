@@ -23,8 +23,7 @@ const DataTable = ({
   showBreadCrumbs = false,
   handleMenuChange,
   containerClassName= "h-[400px] md:h-[390px] lg:h-[470px]",
-  // menu,
-  onRowClick, // Added for row click handling
+  onRowClick,
   rowClassName, 
 }) => {
   return (

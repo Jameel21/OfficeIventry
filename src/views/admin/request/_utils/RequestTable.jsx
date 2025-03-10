@@ -43,7 +43,6 @@ const RequestTable = ({ selectedRequests }) => {
     selectedRequests
   );
   const requestData = data?.requests;
-  console.log("requestData", requestData);
 
   const { mutateAsync } = useUpdateRequestFields();
   const deleteRequest = useDeleteRequest();

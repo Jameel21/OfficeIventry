@@ -16,11 +16,11 @@ const EmployeeLog = () => {
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
-    console.log("SearchTerm", searchTerm);
+    setPage(1);
   };
   return (
     <div>
-         <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between">
         <div className="text-lg font-medium text-slate-700">Employee Log</div>
         <div className="flex items-center gap-2 mt-1">
           <UiInput
@@ -29,7 +29,6 @@ const EmployeeLog = () => {
             value={searchTerm}
             onChange={handleSearchChange}
           />
-          
         </div>
       </div>
       <div className="mt-7">

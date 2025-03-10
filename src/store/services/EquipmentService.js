@@ -7,12 +7,13 @@ const addEquipment = async (data, equipmentType) => {
   return response;
 };
 
-const getAllEquipment = async (page, limit, equipmentType) => {
+const getAllEquipment = async (page, limit, equipmentType,searchTerm) => {
   const response = await API.get(`/equipment/getAll`, {
     params: {
       page,
       limit,
       equipmentType,
+      searchTerm
     },
   });
   return response;

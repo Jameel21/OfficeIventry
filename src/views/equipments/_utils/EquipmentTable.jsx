@@ -12,7 +12,7 @@ import ConfirmationModal from "@/components/modal/ConfirmationModal";
 import BreadCrumbs from "@/components/form-fields/_utils/BreadCrumbs";
 import { getDecodedData } from "@/utils/encryptDecrypt";
 
-const EquipmentTable = ({ equipmentType }) => {
+const EquipmentTable = ({ equipmentType , searchTerm , page, setPage}) => {
   const userData = getDecodedData("userData");
       const menuPermission = userData?.menuPermission || [];
   
@@ -21,16 +21,16 @@ const EquipmentTable = ({ equipmentType }) => {
       );
   const navigate = useNavigate();
   const refetch = useQueryClient();
-  const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
 
-  const headers = ["Equipment", "Brand", "Price", "Date of purchase"];
-  const columnWidths = ["w-[25%]", "w-[25%]", "w-[25%]", "w-[25%]"];
+  const headers = ["Equipment", "Brand", "Serial Number", "Price", "Date of purchase"];
+  const columnWidths = ["w-[20%]", "w-[20%]", "w-[20%]", "w-[20%]", "w-[20%]"];
 
   const { data, isLoading, error } = useGetAllEquipment(
     page,
     limit,
-    equipmentType
+    equipmentType,
+    searchTerm 
   );
 
   const equipmentData = data?.equipment;
@@ -93,6 +93,7 @@ const EquipmentTable = ({ equipmentType }) => {
         ),
       },
       { render: () => (item.brandId ? item.brandId.brand : "none") },
+      { render: () => (item?.serialNumber || "none") },
       {
         render: () =>
           `₹ ${parseFloat(item.price).toLocaleString("en-IN", {
