@@ -154,10 +154,10 @@ const RequestTable = ({ selectedRequests }) => {
       ].filter(Boolean), // Remove undefined cells
       menu:
         item?.requestLogId?.status === "Pending"
-          ? ["View", "Update", "Delete"]
+          ? ["View", "Update"]
           : item?.requestLogId?.status === "Completed"
           ? ["View", "Delete"]
-          : ["View", "Delete"],
+          : ["View"],
     }));
   };
 
