@@ -72,7 +72,7 @@ const DropDown = ({
         <DropdownMenuTrigger asChild>
           <button
             className={cn(
-              "rounded-md sm:rounded-lg lg:rounded-xl text-left text-sm transition-all focus:ring-1 focus:ring-ring border border-gray-300 focus:outline-none flex items-center justify-between",
+              "rounded-md sm:rounded-lg lg:rounded-xl text-left text-sm transition-all focus:ring-1 focus:ring-ring border border-gray-300 focus:outline-none flex items-center justify-between p-2",
               isPlaceholder ? "text-muted-foreground" : "text-foreground",
               dropDownClassName,
             )}
