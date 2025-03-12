@@ -9,10 +9,11 @@ const CategoryDetailsTable = () => {
 
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
-  const headers = ["Equipment Name", "Brand", "Available quantity", "Date of purchase"];
+  const headers = ["Equipment Name", "Brand", "Quantity", "Date of purchase"];
   const columnWidths = ["w-[25%]", "w-[25%]", "w-[25%]", "w-[25%]",];
   const { data, isLoading, error } = useGetCategoryDetails({ id, page, limit });
   const categoryData = data?.categories;
+  console.log("categoryData",categoryData)
 
   const tableData = categoryData?.map((item) => ({
     cells: [

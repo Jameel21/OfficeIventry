@@ -51,14 +51,13 @@ const EditEquipmentForm = () => {
     const formattedPrice = formData.price
       ? parseInt(formData.price).toString()
       : "";
-    console.log("formattedPrice", formattedPrice);
     const payload = {
       equipmentNameId: userData?.equipmentNameId?._id,
       brandId: formData.brandId,
       serialNumber: formData.serialNumber,
       price: formattedPrice,
       quantity: formData.quantity,
-      currentStatus:formData.currentStatus,
+      currentStatus: formData.currentStatus,
       dateOfPurchase: formData.dateOfPurchase
         ? format(new Date(formData.dateOfPurchase), "yyyy-MM-dd")
         : "",
@@ -155,15 +154,29 @@ const EditEquipmentForm = () => {
                 inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
               />
             )}
-            <DropDown
+            
+            {userData?.currentStatus !== "In Use" && (<DropDown
               labelName={"Current status"}
               name="currentStatus"
               options={statusOptions}
               placeholder={userData?.currentStatus}
               dropDownMenuClassName={"sm:w-64 md:w-72 lg:w-80"}
-              isReadOnly={userData?.currentStatus === "In Use"} 
+              isReadOnly={userData?.currentStatus === "In Use"}
               dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
-            />
+            />)}
+
+            {userData?.currentStatus === "In Use" && (
+              <InputWithLabel
+                type="text"
+                id="quantity"
+                label="Current status"
+                readOnly={true}
+                name="currentStatus"
+                placeholder="Current status"
+                inputClassName="h-8 sm:h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
+              />
+            )}
+
             <DatePickerDemo
               label="Date of purchase"
               name="dateOfPurchase"
