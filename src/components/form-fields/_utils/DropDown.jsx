@@ -68,7 +68,7 @@ const DropDown = ({
       >
         {labelName}
       </Label>
-      <DropdownMenu onOpenChange={(open) => !isReadOnly && setIsOpen(open)}>
+      <DropdownMenu onOpenChange={(open) => setIsOpen(open)}>
         <DropdownMenuTrigger asChild>
           <button
             className={cn(
@@ -79,15 +79,13 @@ const DropDown = ({
             disabled={isReadOnly}
           >
             <span>{selectedLabel || placeholder}</span>
-            {!isReadOnly &&
-              (isOpen ? (
-                <ChevronUp className="w-4 h-4 mr-2 text-muted-foreground hover:bg-accent hover:text-accent-foreground" />
-              ) : (
-                <ChevronDown className="w-4 h-4 mr-2 text-muted-foreground hover:bg-accent hover:text-accent-foreground" />
-              ))}
+            {isOpen ? (
+               <ChevronUp className="w-4 h-4 mr-2 text-muted-foreground hover:bg-accent hover:text-accent-foreground" />
+             ) : (
+               <ChevronDown className="w-4 h-4 mr-2 text-muted-foreground hover:bg-accent hover:text-accent-foreground" />
+             )}
           </button>
         </DropdownMenuTrigger>
-        {!isReadOnly && (
         <DropdownMenuContent
           className={cn(
             "z-50 w-64 overflow-y-auto rounded-md shadow-lg bg-primary max-h-40",
@@ -123,7 +121,6 @@ const DropDown = ({
             </DropdownMenuRadioGroup>
           )}
         </DropdownMenuContent>
-        )}
       </DropdownMenu>
       <p className="h-1 text-xs text-red-600 md:text-sm sm:w-64 md:w-72 lg:w-80">
         {error ? error.message : null}
