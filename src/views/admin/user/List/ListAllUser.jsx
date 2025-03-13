@@ -39,7 +39,7 @@ const ListAllUser = () => {
         <div className="text-lg font-medium text-slate-700">Users</div>
         <div className="flex items-center gap-2 mt-1">
           <UiInput
-            placeholder={"Search by username"}
+            placeholder={"Search by name or email or id"}
             inputClassName="h-7 md:h-9 md:w-40 lg:h-11 lg:w-96 hidden sm:flex"
             value={searchTerm}
             onChange={handleSearchChange}
