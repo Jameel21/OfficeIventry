@@ -67,7 +67,7 @@ export const registerSchema = yup.object().shape({
     .email("invalid email")
     .required("email is required")
     .min(10, "email must be atleast 10 characters")
-    .max(50, "email cannot exceed 30 characters"),
+    .max(50, "email cannot exceed 50 characters"),
   employeeId: yup
     .string()
     .trim()
