@@ -57,7 +57,7 @@ export const registerSchema = yup.object().shape({
     .trim()
     .required("username is required")
     .min(3, "username must be atleast 3 characters")
-    .max(16, "username cannot exceed 16 characters")
+    .max(30, "username cannot exceed 30 characters")
     .matches(/^(?=.*[A-Za-z])[\w\s\-_@!#$%^&*]+$/,
       "username must include a letter"
     ) .matches(/^(?!.*\s{2,})/, "username cannot contain multiple spaces"),
@@ -67,7 +67,7 @@ export const registerSchema = yup.object().shape({
     .email("invalid email")
     .required("email is required")
     .min(10, "email must be atleast 10 characters")
-    .max(30, "email cannot exceed 30 characters"),
+    .max(50, "email cannot exceed 30 characters"),
   employeeId: yup
     .string()
     .trim()
