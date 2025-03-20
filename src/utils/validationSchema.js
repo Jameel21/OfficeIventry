@@ -1,13 +1,26 @@
 import * as yup from "yup";
 
 export const loginSchema = yup.object().shape({
-  userName: yup.string().required("username is required"),
+  usernameOrEmail: yup
+    .string()
+    .required("Username or Email is required")
+    .test(
+      "is-username-or-email",
+      "Invalid username or email",
+      function (value) {
+        // Check if the value is a valid email or a valid username
+        const isEmail = yup.string().email().isValidSync(value);
+        const isUsername = /^[a-zA-Z0-9_]+$/.test(value); // Example username regex
+        return isEmail || isUsername;
+      }
+    ),
   password: yup
     .string()
-    .required("password is required")
-    .min(8, "password must be atleast 8 characters")
-    .max(16, "password cannot exceed 16 characters"),
+    .required("Password is required")
+    .min(8, "Password must be at least 8 characters")
+    .max(16, "Password cannot exceed 16 characters"),
 });
+
 
 export const resetPasswordSchema = yup.object().shape({
   newPassword: yup

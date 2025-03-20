@@ -122,11 +122,11 @@ const LoginForm = () => {
         onSubmit={handleSubmit(onSubmitForm)}
       >
         <InputWithLabel
-          label="Username"
+          label="Username or Email"
           type="text"
           id="userName"
-          name="userName"
-          placeholder="Enter your username"
+          name="usernameOrEmail"
+          placeholder="Enter your username or email"
           inputClassName="w-56 h-10 md:h-12 lg:h-14 sm:w-64 md:w-72 lg:w-80"
         />
         <InputWithLabel
