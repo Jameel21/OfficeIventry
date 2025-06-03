@@ -15,6 +15,11 @@ const getSingleUser = async (id) => {
   return response
 }
 
+const getUsersName = async () => {
+  const response = await API.get(`user/getUserNames`)
+  return response
+}
+
 const updateUser = async (id, data) => {
   const response = await API.patch(`/user/updateUser/${id}`, data);
   return response;
@@ -25,4 +30,4 @@ const deleteUser = async (id) =>{
   return response
 }
 
-export default {getAllUser,adduser,getSingleUser, updateUser, deleteUser}
+export default {getAllUser,adduser,getSingleUser, updateUser, deleteUser, getUsersName}

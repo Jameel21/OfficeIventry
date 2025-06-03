@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import { format } from "date-fns";
 import { useGetEquipmentName } from "@/store/hooks/NameHooks";
 import { useNavigate } from "react-router-dom";
+import { useGetUsersName } from "@/store/hooks/UserHooks";
 
 const RequestForm = () => {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ const RequestForm = () => {
   } = methods;
 
   const { data: equipmentNames } = useGetEquipmentName("Employee Equipment");
+  const { data: usersName } = useGetUsersName();
 
   const { mutateAsync } = useAddRequest();
   const requestDate = watch("requestDate");
@@ -40,7 +42,7 @@ const RequestForm = () => {
         : "",
     };
     delete formattedData.abc;
-  
+
     try {
       const response = await mutateAsync(formattedData);
       toast.success(
@@ -62,11 +64,24 @@ const RequestForm = () => {
       value: equipment._id,
     })) || [];
 
+  const userOptions =
+    usersName?.map((user) => ({
+      label: user.userName,
+      value: user._id,
+    })) || [];
+
   return (
     <FormProvider {...methods}>
       <form onSubmit={handleSubmit(onSubmitForm)}>
-        <div className="grid grid-cols-1 gap-4 mt-4 lg:gap-8 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 mt-4 lg:gap-8 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3"> 
           <DropDown
+            name="employeeId"
+            labelName="Employee"
+            options={userOptions}
+            placeholder="Select a employee"
+            dropDownClassName="h-8 p-2 sm:h-10 md:h-12 lg:h-14 w-52 sm:w-64 md:w-72 lg:w-80 hover:bg-accent hover:text-accent-foreground"
+            dropDownMenuClassName={"w-52 sm:w-64 md:w-72 lg:w-80"}
+          /><DropDown
             name="equipmentId"
             labelName="Equipment"
             options={equipmentOptions}

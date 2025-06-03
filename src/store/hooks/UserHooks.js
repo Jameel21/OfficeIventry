@@ -29,6 +29,16 @@ export const useGetSingleUser = (id) => {
   })
 }
 
+export const useGetUsersName = () => {
+  return useQuery({
+    queryKey: ["AllUsersName"],
+    queryFn: async () => {
+      const response = await userService.getUsersName();
+      return response?.data?.data || null;
+    },
+  })
+}
+
 export const useUpdateUser = () => {
   return useMutation({
     mutationFn: ({id,data}) => userService.updateUser(id,data)
