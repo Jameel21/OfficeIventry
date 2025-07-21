@@ -157,7 +157,7 @@ const RequestTable = ({ selectedRequests }) => {
           ? ["View", "Update"]
           : item?.requestLogId?.status === "Completed"
           ? ["View", "Delete"]
-          : ["View"],
+          : ["View", "Delete"],
     }));
   };
 
